@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ProductoXVendedorComponent } from './Admin/producto-xvendedor/producto-xvendedor.component';
 import { ProductsAllComponent } from './products-all/products-all.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
 
 const routes: Routes = [
   { path: 'productos', component: ProductsAllComponent },
+  { path: 'productos/productodetalle/:idProducto', component: ProductDetailComponent },
   {
-    path: 'productoxvendedor/:idVendedor',
+    path: 'productos/productoxvendedor/:idVendedor',
     component: ProductoXVendedorComponent,
     data: { breadcrumb: 'Lista de productos' },
   },
