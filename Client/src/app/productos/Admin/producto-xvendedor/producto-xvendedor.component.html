@@ -1,0 +1,82 @@
+<mat-card class="full-width">
+    <!-- Titulo del Card -->
+    <mat-card-title>
+      Productos
+      <a
+        mat-fab
+        matTooltip="Crear Videojuego"
+        aria-label="Crear Videojuego"
+        color="primary"
+      >
+        <mat-icon>add</mat-icon>
+      </a>
+    </mat-card-title>
+    <mat-card-content>
+      <!-- Table -->
+      <div class="mat-elevation-z8" *ngIf="dataSource">
+        <table mat-table [dataSource]="dataSource" class="full-width-table" matSort aria-label="Elements">
+          <!-- Columna nombre -->
+          <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+            <td mat-cell *matCellDef="let row">{{ row.nombre }}</td>
+          </ng-container>
+  
+          <!-- Columna precio -->
+          <ng-container matColumnDef="precio">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio</th>
+            <td mat-cell *matCellDef="let row">{{ row.precio }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="stock">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Stock</th>
+            <td mat-cell *matCellDef="let row">{{ row.stock }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="descripcion">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</th>
+            <td mat-cell *matCellDef="let row">{{ row.descripcion }}</td>
+          </ng-container>
+          <!-- Columna acciones -->
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef>Acciones</th>
+            <td mat-cell *matCellDef="let row">
+              <button
+              mat-mini-fab
+              color="accent"
+              matTooltip="Actualizar Videjuego"
+              aria-label="Actualizar Videjuego"
+              color="primary"
+              >
+                <mat-icon class="mat-18">edit</mat-icon>
+              </button>
+              <button
+              mat-mini-fab
+              color="accent"
+              matTooltip="Detalle Videjuego"
+              aria-label="Detalle Videjuego"
+              color="primary"
+              >
+                <mat-icon class="mat-18">remove_red_eye</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+  
+        <mat-paginator
+          #paginator
+          [length]="dataSource?.data?.length"
+          [pageIndex]="0"
+          [pageSize]="3"
+          [pageSizeOptions]="[3, 5, 10]"
+          aria-label="Selecccione una página"
+          
+        >
+        </mat-paginator>
+      </div>
+      <!-- Table -->
+    </mat-card-content>
+  </mat-card>
+  
