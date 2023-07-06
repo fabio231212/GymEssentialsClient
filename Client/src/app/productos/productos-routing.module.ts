@@ -1,13 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {ProductoXVendedorComponent} from './Admin/producto-xvendedor/producto-xvendedor.component';
+import { ProductoXVendedorComponent } from './Admin/producto-xvendedor/producto-xvendedor.component';
+import { ProductsAllComponent } from './products-all/products-all.component';
 
 const routes: Routes = [
-  {path:'productoxvendedor/:idVendedor', component: ProductoXVendedorComponent, data:{ breadcrumb:'Lista de productos' }},
+  { path: 'productos', component: ProductsAllComponent },
+  {
+    path: 'productoxvendedor/:idVendedor',
+    component: ProductoXVendedorComponent,
+    data: { breadcrumb: 'Lista de productos' },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ProductosRoutingModule { }
+export class ProductosRoutingModule {}

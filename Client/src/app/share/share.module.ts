@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-// import { SwiperModule } from '../theme/components/swiper/swiper.module';
+import { SwiperModule } from '../core/swiper/swiper.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -37,12 +37,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 
-
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
-    // SwiperModule,
+    SwiperModule,
     TranslateModule,
     FlexLayoutModule,
     MatAutocompleteModule,
@@ -82,7 +81,7 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
   ],
   exports: [
     RouterModule,
-    // SwiperModule,
+    SwiperModule,
     TranslateModule,
     FlexLayoutModule,
     MatAutocompleteModule,
@@ -119,7 +118,6 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
     MatStepperModule,
     NgScrollbarModule,
   ],
-  declarations: [
-  ], 
+  declarations: [],
 })
-export class ShareModule { }
+export class ShareModule {}

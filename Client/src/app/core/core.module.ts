@@ -9,8 +9,6 @@ import { SwiperComponent } from './swiper/swiper.component';
 import { TopMenuComponent } from './top-menu/top-menu.component';
 import { ShareModule } from '../share/share.module';
 
-
-
 @NgModule({
   declarations: [
     FooterComponent,
@@ -18,21 +16,18 @@ import { ShareModule } from '../share/share.module';
     MenuComponent,
     OptionsComponent,
     SidenavMenuComponent,
-    SwiperComponent,
-    TopMenuComponent
+    //  SwiperComponent,
+    TopMenuComponent,
   ],
-  imports: [
-    CommonModule,
-    ShareModule
-  ],
+  imports: [CommonModule, ShareModule],
   exports: [
     FooterComponent,
     BreadcrumbComponent,
     MenuComponent,
     OptionsComponent,
     SidenavMenuComponent,
-    SwiperComponent,
-    TopMenuComponent
-  ]
+    // SwiperComponent,
+    TopMenuComponent,
+  ],
 })
-export class CoreModule { }
+export class CoreModule {}

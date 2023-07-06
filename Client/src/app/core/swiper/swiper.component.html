@@ -1,9 +1,8 @@
-<div #swiper class="s-wrapper" [class.swiper]="useSwiperClass" [class.swiper-container]="useSwiperClass">
-  <div #swiperSlides class="swiper-wrapper">
+<div #swiper class="s-wrapper" [class.swiper]="useSwiperClass" [class.swiper-container]="useSwiperClass" [swiper]="getConfig()" [index]="index" [disabled]="disabled" [performance]="performance">
+    <div #swiperSlides class="swiper-wrapper">
       <ng-content></ng-content>
     </div>
-  <!-- [index]="index" [disabled]="disabled"  [swiper]="getConfig()"  [performance]="performance"-->
-  <!-- DA FALLO NO SE PORQUE -->
+  
     <div class="swiper-scrollbar" [hidden]="!swiperConfig?.scrollbar || (swiperConfig?.scrollbar !== true && !!swiperConfig?.scrollbar?.el && swiperConfig?.scrollbar?.el !== '.swiper-scrollbar')"></div>
   
     <div class="swiper-button-prev" [hidden]="!swiperConfig?.navigation || (swiperConfig?.navigation !== true && !!swiperConfig?.navigation?.prevEl && swiperConfig?.navigation?.prevEl !== '.swiper-button-prev')" [attr.disabled]="isAtFirst || null"></div>
