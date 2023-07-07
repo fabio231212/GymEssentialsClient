@@ -1,0 +1,92 @@
+<div label="Review Order" *ngIf="datos">
+  <div fxLayout="row wrap">
+    <div fxFlex="100" class="p-1">
+      <h3 class="text-muted">Pedido</h3>
+      <div class="divider"></div>
+      <div class="mat-mdc-table review-order-table">
+        <div class="mat-mdc-header-row">
+          <div class="mat-mdc-header-cell">Producto</div>
+          <div class="mat-mdc-header-cell">Nombre</div>
+          <div class="mat-mdc-header-cell">Precio Unitario</div>
+          <div class="mat-mdc-header-cell">Cantidad</div>
+          <div class="mat-mdc-header-cell">Total</div>
+        </div>
+        <div *ngFor="let item of datos.detallesFactura" class="mat-mdc-row">
+          <!-- <div class="mat-mdc-cell"><img [src]="product.images[0].small"></div> -->
+          <div class="mat-mdc-cell">{{ item.producto.id }}</div>
+          <div class="mat-mdc-cell">{{ item.producto.nombre }}</div>
+          <div class="mat-mdc-cell">
+            ${{ item.producto.precio | number : "1.2-2" }}
+          </div>
+          <div class="mat-mdc-cell text-muted">{{ item.producto.stock }}</div>
+          <div class="mat-mdc-cell">
+            ${{ item.producto.precio * item.producto.stock | number : "1.2-2" }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div fxLayout="row wrap">
+    <div fxFlex="100" class="p-2">
+      <h3 class="text-muted mt-3">Información del Usuario</h3>
+      <div class="divider"></div>
+    </div>
+    <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-2">
+      <p class="text-muted">Nombre:</p>
+      <p>{{ datos.usuario.nombre }} {{ datos.usuario.apellidos }}</p>
+    </div>
+    <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-2">
+      <p class="text-muted">Email:</p>
+      <p>{{ datos.usuario.email }}</p>
+    </div>
+    <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-2">
+      <p class="text-muted">Teléfono:</p>
+      <p>{{ datos.usuario.numCelular }}</p>
+    </div>
+    <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-2">
+      <p class="text-muted">Provincia:</p>
+      <p>{{ datos.direccion.provincia }}</p>
+    </div>
+    <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-2">
+      <p class="text-muted">Cantón:</p>
+      <p>{{ datos.direccion.canton }}</p>
+    </div>
+    <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-2">
+      <p class="text-muted">Distrito:</p>
+      <p>{{ datos.direccion.distrito }}</p>
+    </div>
+    <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-2">
+      <p class="text-muted">Zip/Código Postal</p>
+      <p>{{ datos.direccion.codPostal }}</p>
+    </div>
+    <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-2">
+      <p class="text-muted">Señas:</p>
+      <p>{{ datos.direccion.codPostal }}</p>
+    </div>
+  </div>
+  <div fxLayout="row">
+    <div fxFlex="100" class="p-2">
+      <h3 class="text-muted mt-3">Información de Pago</h3>
+      <div class="divider"></div>
+      <p class="py-2">
+        <span class="text-muted mr-1">Método de Pago:</span
+        ><span>{{ datos.metodoPago.descripcion }}</span>
+      </p>
+      <p class="py-2">
+        <span class="text-muted mr-1">Tarjeta:</span
+        ><span>{{ datos.numTarjeta }}</span>
+      </p>
+    </div>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="center center" class="p-2">
+    <h2>
+      <span class="text-muted mr-1">Total:</span
+      ><span>{{ datos.total | currency : "USD" }}</span>
+    </h2>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="center center" class="mt-3 p-2">
+    <button mat-mini-fab color="primary" class="mr-1" (click)="volver()">
+      <mat-icon>navigate_before</mat-icon>
+    </button>
+  </div>
+</div>

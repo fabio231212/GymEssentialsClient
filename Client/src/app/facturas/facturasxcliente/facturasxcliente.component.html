@@ -1,0 +1,75 @@
+<mat-card class="full-width">
+  <!-- Titulo del Card -->
+  <mat-card-title> Pedidos </mat-card-title>
+  <mat-card-content>
+    <!-- Table -->
+    <div class="mat-elevation-z8" *ngIf="dataSource">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        class="full-width-table"
+        matSort
+        aria-label="Elements"
+      >
+        <!-- Columna nombre -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+          <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+        </ng-container>
+
+        <!-- Columna precio -->
+        <ng-container matColumnDef="fechaCompra">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Fecha de Compra
+          </th>
+          <td mat-cell *matCellDef="let row">{{ row.fechaCompra }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="metodoPago">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Método de Pago
+          </th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.metodoPago.descripcion }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Total</th>
+          <td mat-cell *matCellDef="let row">{{ row.total }}</td>
+        </ng-container>
+
+        <!-- Columna acciones -->
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          <td mat-cell *matCellDef="let row">
+            <button
+              mat-mini-fab
+              color="accent"
+              matTooltip="Detalle"
+              aria-label="Detalle"
+              color="primary"
+              (click)="detalle(row.id)"
+            >
+              <mat-icon class="mat-18">info</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <mat-paginator
+        #paginator
+        [length]="dataSource?.data?.length"
+        [pageIndex]="0"
+        [pageSize]="3"
+        [pageSizeOptions]="[3, 5, 10]"
+        aria-label="Selecccione una página"
+      >
+      </mat-paginator>
+    </div>
+    <!-- Table -->
+  </mat-card-content>
+</mat-card>

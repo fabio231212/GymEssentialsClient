@@ -26,7 +26,7 @@ export class ProductDetailComponent  {
   public form: UntypedFormGroup;
   public relatedProducts: Array<Product>;
 
-  constructor(public appService:AppService, private activatedRoute: ActivatedRoute, public dialog: MatDialog, 
+  constructor(public appService:AppService, private activatedRoute: ActivatedRoute, public dialog: MatDialog,
     public formBuilder: UntypedFormBuilder,private gService: GenericService,
     private route:ActivatedRoute
     ){
@@ -39,13 +39,13 @@ export class ProductDetailComponent  {
     this.config = {
       observer: false,
       slidesPerView: 4,
-      spaceBetween: 10,      
+      spaceBetween: 10,
       keyboard: true,
       navigation: true,
-      pagination: false,       
-      loop: false, 
+      pagination: false,
+      loop: false,
       preloadImages: false,
-      lazy: true, 
+      lazy: true,
       breakpoints: {
         480: {
           slidesPerView: 2
@@ -64,9 +64,9 @@ export class ProductDetailComponent  {
       .pipe(takeUntil(this.destroy$))
       .subscribe((data:any)=>{
         console.log(data);
-        this.datos=data;    
-        this.image=this.datos.imagenes.URL;  
-      });   
+        this.datos=data;
+        this.image=this.datos.imagenes.URL;
+      });
   }
   // public getRelatedProducts(){
   //   this.appService.getProducts('related').subscribe(data => {
@@ -82,7 +82,7 @@ export class ProductDetailComponent  {
   public onMouseMove(e){
     if(window.innerWidth >= 1280){
       var image, offsetX, offsetY, x, y, zoomer;
-      image = e.currentTarget; 
+      image = e.currentTarget;
       offsetX = e.offsetX;
       offsetY = e.offsetY;
       x = offsetX/image.offsetWidth*100;
