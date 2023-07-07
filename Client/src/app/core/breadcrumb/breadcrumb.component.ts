@@ -49,17 +49,17 @@ export class BreadcrumbComponent {
                     return urlSegment.path;
                 }).join('/');
 
-                // if(node.params.name){
-                //     this.breadcrumbs.push({
-                //         name: node.params.name,
-                //         url: '/' + url
-                //     }) 
-                // }else{                
-                //     this.breadcrumbs.push({
-                //         name: node.data['breadcrumb'],
-                //         url: '/' + url
-                //     }) 
-                // }
+                if(node.params['name']){
+                    this.breadcrumbs.push({
+                        name: node.params['name'],
+                        url: '/' + url
+                    }) 
+                }else{                
+                    this.breadcrumbs.push({
+                        name: node.data['breadcrumb'],
+                        url: '/' + url
+                    }) 
+                }
             }         
         }
         if (node.firstChild) {
