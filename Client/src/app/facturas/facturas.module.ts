@@ -7,10 +7,11 @@ import { FacturasxclienteComponent } from './facturasxcliente/facturasxcliente.c
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ShareModule } from '../share/share.module';
 import { FacturaDetailComponent } from './factura-detail/factura-detail.component';
+import { ProdfactxvendedorComponent } from './prodfactxvendedor/prodfactxvendedor.component';
 
 @NgModule({
   providers: [DatePipe],
-  declarations: [FacturasxclienteComponent, FacturaDetailComponent],
+  declarations: [FacturasxclienteComponent, FacturaDetailComponent, ProdfactxvendedorComponent],
   imports: [
     CommonModule,
     FacturasRoutingModule,

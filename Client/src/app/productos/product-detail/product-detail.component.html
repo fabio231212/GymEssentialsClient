@@ -6,15 +6,15 @@
                 <mat-chip-option color="warn" highlighted selectable="false">Descuento</mat-chip-option>
             </mat-chip-listbox>
             <button mat-icon-button (click)="openZoomViewer()" fxHide="false" fxHide.gt-md><mat-icon>fullscreen</mat-icon></button>
-            <img  src="https://emprendepyme.net/wp-content/uploads/2023/03/cualidades-producto.jpg" (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave($event)"/>
+            <img  [src]="datos.imagenes[0].URL" (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave($event)"/>
         </mat-card>       
 
         <div class="small-carousel"> 
             <div class="swiper-container" [swiper]="config">
                 <div class="swiper-wrapper"> 
-                    <div *ngFor="let image of product?.images" class="swiper-slide">
+                    <div *ngFor="let image of datos.imagenes" class="swiper-slide">
                         <mat-card (click)="selectImage(image)" class="p-2">
-                            <img [attr.data-src]="image.small" class="swiper-lazy"/>
+                            <img [attr.data-src]="image.URL" class="swiper-lazy"/>
                             <div class="swiper-lazy-preloader"></div>
                         </mat-card>
                     </div>                    
@@ -244,10 +244,10 @@
     </div> -->
 </div>
 
-<!-- <div class="py-3 mt-3">
+ <div class="py-3 mt-3">
     <h2>Related Products</h2>
     <div class="divider"></div>
-    <app-products-carousel [products]="relatedProducts"></app-products-carousel>
-</div> -->
+    <app-related-products [relatedProducts]="relatedProducts" [idProducto]="idProducto"></app-related-products>
+</div> 
 
 

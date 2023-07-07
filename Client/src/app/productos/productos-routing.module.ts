@@ -5,7 +5,7 @@ import { ProductsAllComponent } from './products-all/products-all.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 
 const routes: Routes = [
-  { path: 'productos', component: ProductsAllComponent, data: { breadcrumb: 'Lista de productos' } },
+  { path: 'productos/', component: ProductsAllComponent, data: { breadcrumb: 'Lista de productos' } },
   { path: 'productos/productodetalle/:idProducto', component: ProductDetailComponent },
   {
     path: 'productos/productoxvendedor/:idVendedor',

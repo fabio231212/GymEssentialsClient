@@ -7,7 +7,7 @@ import { Data, AppService } from '../../app.service';
 import { Product } from "../../app.models";
 import { ProductZoomComponent } from './product-zoom/product-zoom.component';
 import { GenericService } from 'src/app/share/generic.service';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-product-detail',
@@ -24,7 +24,8 @@ export class ProductDetailComponent  {
   datos:any;
   destroy$:Subject<boolean>=new Subject<boolean>();
   public form: UntypedFormGroup;
-  public relatedProducts: Array<Product>;
+  public relatedProducts: Array<any>;
+  public idProducto: number;
 
   constructor(public appService:AppService, private activatedRoute: ActivatedRoute, public dialog: MatDialog,
     public formBuilder: UntypedFormBuilder,private gService: GenericService,
@@ -33,7 +34,9 @@ export class ProductDetailComponent  {
       let id=this.route.snapshot.paramMap.get('idProducto');
       if(!isNaN(Number(id))){
         this.getProductById(Number(id));
-      }}
+        this.idProducto=Number(id);
+      }
+    }
 
   ngAfterViewInit(){
     this.config = {
@@ -55,12 +58,13 @@ export class ProductDetailComponent  {
         }
       }
     }
+    this.getRelatedProducts(this.datos.categoriaProductoId);
   }
 
 
   getProductById(idProducto:any){
     //localhost:3000/videojuego
-    this.gService.list('productos/'+idProducto)
+    this.gService.get('productos/',idProducto)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data:any)=>{
         console.log(data);
@@ -68,11 +72,14 @@ export class ProductDetailComponent  {
         this.image=this.datos.imagenes.URL;
       });
   }
-  // public getRelatedProducts(){
-  //   this.appService.getProducts('related').subscribe(data => {
-  //     this.relatedProducts = data;
-  //   })
-  // }
+  public getRelatedProducts(idCategoria:any){
+    this.gService.list('productos/categoria/'+idCategoria)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data:any)=>{
+        console.log(data);
+        this.relatedProducts=data;
+      });
+  }
 
   public selectImage(image){
     this.image = image.medium;

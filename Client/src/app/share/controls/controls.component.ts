@@ -9,6 +9,7 @@ import { Product } from '../../app.models';
   styleUrls: ['./controls.component.scss']
 })
 export class ControlsComponent implements OnInit {
+  @Input('isRelatedProduct') isRelatedProduct: boolean;
   @Input() product: Product;
   @Input() type: string;
   @Output() onOpenProductDialog: EventEmitter<any> = new EventEmitter();
