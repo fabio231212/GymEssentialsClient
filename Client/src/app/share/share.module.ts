@@ -37,6 +37,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { ControlsComponent } from './controls/controls.component';
+import { ProductsCarouselComponent } from './products-carousel/products-carousel.component';
+import { MatIcon } from '@angular/material/icon';
+import { ProductDialogComponent } from './products-carousel/product-dialog/product-dialog.component';
 
 @NgModule({
   imports: [
@@ -116,12 +119,17 @@ import { ControlsComponent } from './controls/controls.component';
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
+    MatIcon,
     MatStepperModule,
     NgScrollbarModule,
-    ControlsComponent
+    ControlsComponent,
+    ProductsCarouselComponent,
+    ProductDialogComponent,
   ],
   declarations: [
-    ControlsComponent
+    ControlsComponent,
+    ProductsCarouselComponent,
+    ProductDialogComponent,
   ],
 })
 export class ShareModule {}

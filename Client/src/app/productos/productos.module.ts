@@ -7,11 +7,14 @@ import { ProductoXVendedorComponent } from './Admin/producto-xvendedor/producto-
 import { ProductsAllComponent } from './products-all/products-all.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductZoomComponent } from './product-detail/product-zoom/product-zoom.component';
-import { RelatedProductsComponent } from './related-products/related-products.component';
-
 
 @NgModule({
-  declarations: [ProductoXVendedorComponent, ProductsAllComponent, ProductDetailComponent, ProductZoomComponent, RelatedProductsComponent],
+  declarations: [
+    ProductoXVendedorComponent,
+    ProductsAllComponent,
+    ProductDetailComponent,
+    ProductZoomComponent,
+  ],
   imports: [
     CommonModule,
     ProductosRoutingModule,
