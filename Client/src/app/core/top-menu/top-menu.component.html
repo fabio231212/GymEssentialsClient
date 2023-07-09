@@ -32,43 +32,11 @@
             </span>
             <span fxShow="false" fxShow.gt-xs fxLayoutAlign="center center"><mat-icon
                     class="mat-icon-sm">call</mat-icon> Hotline: (+100) 123 456 7890 </span>
-            <span fxShow="false" fxShow.gt-sm>Bienvenido</span>
+            <span fxShow="false"  fxShow.gt-sm>Bienvenido</span>
 
             <!-- TOP MENU INICIO -->
 
             <div class="top-menu">
-
-                <a mat-button [matMenuTriggerFor]="currencyMenu" #currencyMenuTrigger="matMenuTrigger">
-                    {{currency}}<mat-icon class="mat-icon-sm caret" iconPositionEnd>arrow_drop_down</mat-icon>
-                </a>
-                <mat-menu #currencyMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-dropdown">
-                    <span (mouseleave)="currencyMenuTrigger.closeMenu()">
-                        <button mat-menu-item *ngFor="let cur of currencies" (click)="changeCurrency(cur)">
-                            <span>{{cur}}</span>
-                        </button>
-                    </span>
-                </mat-menu>
-
-                <a mat-button [matMenuTriggerFor]="langMenu" #langMenuTrigger="matMenuTrigger">
-                    <img src="" width="18">
-                    <span fxShow="false" fxShow.gt-sm class="flag-menu-title">Traducir</span>
-                    <mat-icon class="mat-icon-sm caret" iconPositionEnd>arrow_drop_down</mat-icon>
-                </a>
-                <mat-menu #langMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-dropdown">
-                    <span (mouseleave)="langMenuTrigger.closeMenu()">
-                        <button  mat-menu-item>
-                            <img src="" width="18" class="mat-elevation-z1">
-                            <span class="px-2">Idioma</span>
-                        </button>
-                    </span>
-                </mat-menu>
-
-                <span fxShow="false" fxShow.gt-sm>
-                    <a mat-button routerLink="/compare">Comparar<span
-                            *ngIf="settings.rtl">&rlm;</span>({{appService.Data.compareList.length}})</a>
-                    <a mat-button routerLink="/wishlist">Lista de Deseos<span
-                            *ngIf="settings.rtl">&rlm;</span>({{appService.Data.wishList.length}})</a>
-                </span>
 
                 <a mat-button [matMenuTriggerFor]="accountMenu" #accountMenuTrigger="matMenuTrigger">
                     <mat-icon class="mat-icon-sm account-icon">person</mat-icon>
@@ -86,25 +54,11 @@
                         <div class="divider"></div>
                         <a mat-menu-item routerLink="/account">
                             <mat-icon class="mat-icon-sm">settings</mat-icon>
-                            <span>Account Settings</span>
-                        </a>
-                        <a mat-menu-item routerLink="/compare" fxHide="false" fxHide.gt-sm>
-                            <mat-icon class="mat-icon-sm">compare</mat-icon>
-                            <span>Compare <span
-                                    *ngIf="settings.rtl">&rlm;</span>({{appService.Data.compareList.length}})</span>
-                        </a>
-                        <a mat-menu-item routerLink="/wishlist" fxHide="false" fxHide.gt-sm>
-                            <mat-icon class="mat-icon-sm">favorite</mat-icon>
-                            <span>Wishlist <span
-                                    *ngIf="settings.rtl">&rlm;</span>({{appService.Data.wishList.length}})</span>
-                        </a>
-                        <a mat-menu-item routerLink="/">
-                            <mat-icon class="mat-icon-sm">lock</mat-icon>
-                            <span>Lock screen</span>
+                            <span>Ajustes</span>
                         </a>
                         <a mat-menu-item routerLink="/">
                             <mat-icon class="mat-icon-sm">help</mat-icon>
-                            <span>Help</span>
+                            <span>Ayuda</span>
                         </a>
                         <div class="divider"></div>
                         <a mat-menu-item routerLink="/sign-in">
@@ -120,14 +74,16 @@
         <mat-toolbar-row fxLayoutAlign="space-between center" class="logo-toolbar theme-container">
 
             <div fxFlex="20">
-                <a class="logo" routerLink="/" (click)="closeSubMenus()"><img src="" alt="logo"></a>
+                <a class="logo" routerLink="/" (click)="closeSubMenus()">
+                    GYM-Essentials
+                  </a>
             </div>
             <div fxFlex fxShow="false" fxShow.gt-sm>
                 <form method="get" class="search-form" fxLayout="row">
                     <button mat-raised-button [matMenuTriggerFor]="categoriesMenu"
                         #categoriesMenuTrigger="matMenuTrigger" type="button"
                         class="mat-elevation-z0 categories text-truncate text-muted">{{category?.name}}<mat-icon
-                            iconPositionEnd>arrow_drop_down</mat-icon></button>
+                            iconPositionEnd>arrow_drop_down</mat-icon>Categorias</button>
                     <mat-menu #categoriesMenu="matMenu" [overlapTrigger]="false" xPosition="before"
                         class="categories-dropdown">
                         <span (mouseleave)="categoriesMenuTrigger.closeMenu()">
@@ -248,7 +204,6 @@
     </mat-toolbar>
 
     <app-menu fxShow="false" fxShow.gt-sm></app-menu>
-    <app-options></app-options>
 
     <div *ngIf="showBackToTop" fxLayout="row" fxLayoutAlign="center center" class="back-to-top transition"
         (click)="scrollToTop()">
