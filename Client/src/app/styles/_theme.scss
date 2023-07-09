@@ -9,6 +9,11 @@ $custom-typography: mat.define-typography-config(
 
 @import 'theme-reset';
 .app{
+    &.red{
+        @import "skins/red";
+        @include mat.all-component-colors($red-theme);
+        @include theme-reset($red-theme);
+    }
     &.green{
         @import "skins/green";
         @include mat.all-component-colors($green-theme);
@@ -18,11 +23,6 @@ $custom-typography: mat.define-typography-config(
         @import "skins/blue";
         @include mat.all-component-colors($blue-theme);
         @include theme-reset($blue-theme);
-    }
-    &.red{
-        @import "skins/red";
-        @include mat.all-component-colors($red-theme);
-        @include theme-reset($red-theme);
     }
     &.pink{
         @import "skins/pink";
