@@ -14,6 +14,7 @@ export class RelatedProductsComponent implements OnInit {
 
   @Input('relatedProducts') relatedProducts: Array<any> = [];
   @Input('idProducto') idProducto: number;
+  
   public config: SwiperConfigInterface = {};
   public settings: Settings;
   public isRelatedProduct:boolean = true;
@@ -21,6 +22,7 @@ export class RelatedProductsComponent implements OnInit {
     this.settings = this.appSettings.settings;
   }
 
+  
   ngOnInit() { }
   
   ngAfterViewInit(){

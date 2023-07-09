@@ -51,9 +51,6 @@ export class TopMenuComponent implements OnInit {
     // PAGES
     this.getCategories();
     this.sidenavMenuItems = this.sidenavMenuService.getSidenavMenuItems();
-    setTimeout(() => {
-      this.settings.theme = 'green';
-    });
 
     // TOP MENU
     this.currency = this.currencies[0];
