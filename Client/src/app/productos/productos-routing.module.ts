@@ -5,7 +5,6 @@ import { ProductsAllComponent } from './products-all/products-all.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 
 const routes: Routes = [
-<<<<<<< HEAD
   {
     path: 'productos',
     component: ProductsAllComponent,
@@ -15,10 +14,8 @@ const routes: Routes = [
     path: 'productos/productodetalle/:idProducto',
     component: ProductDetailComponent,
   },
-=======
   { path: 'productos', component: ProductsAllComponent, data: { breadcrumb: 'Lista de productos' } },
   { path: 'productos/productodetalle/:idProducto', component: ProductDetailComponent },
->>>>>>> eb355145eaa39d7c3ae7e5d2c4902ce3e01765d0
   {
     path: 'productos/productoxvendedor/:idVendedor',
     component: ProductoXVendedorComponent,
