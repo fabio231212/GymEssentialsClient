@@ -15,3 +15,20 @@
         margin: 8px 0;
     }
 }
+.navbar-logo {
+  width: 250px; /* Ajusta el valor según el tamaño deseado */
+  height: auto;
+}
+
+/* Estilos para hacer la imagen responsive */
+@media (max-width: 1150px) {
+  .navbar-logo {
+    width: 200px; /* Ajusta el valor según el tamaño deseado para pantallas pequeñas */
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar-logo {
+    width: 150px; /* Ajusta el valor según el tamaño deseado para pantallas extra pequeñas */
+  }
+}

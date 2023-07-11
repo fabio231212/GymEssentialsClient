@@ -1,24 +1,33 @@
 <!-- Selector del encabezado Header definido en el modulo Core -->
 <!-- <app-header></app-header> -->
 <!-- <div class="body-container"> -->
-    <!-- router-outlet: marcador de posición que Angular se llena dinámicamente según
+<!-- router-outlet: marcador de posición que Angular se llena dinámicamente según
 el estado actual del enrutador -->
-    <!-- <router-outlet></router-outlet> -->
-    <!-- <ngx-spinner bdColor="rgba(51,51,51,0.7)" size="large" color="#fff" type="ball-clip-rotate"></ngx-spinner> -->
+<!-- <router-outlet></router-outlet> -->
+<!-- <ngx-spinner bdColor="rgba(51,51,51,0.7)" size="large" color="#fff" type="ball-clip-rotate"></ngx-spinner> -->
 <!-- </div> -->
 <!-- Selector Footer definido en el módulo Core -->
 <!-- <app-footer></app-footer> -->
 
-
-<div id="app" class="h-100 app" [ngClass]="settings.theme" [class.main-toolbar-fixed]="settings.mainToolbarFixed"
-    [dir]="settings.rtl ? 'rtl' : 'ltr'">
-    <app-top-menu></app-top-menu>
-    <!--Posición del enrutador-->
-    <div class="theme-container main"> 
-        <app-breadcrumb></app-breadcrumb>
+<div
+  id="app"
+  class="h-100 app"
+  [ngClass]="settings.theme"
+  [class.main-toolbar-fixed]="settings.mainToolbarFixed"
+  [dir]="settings.rtl ? 'rtl' : 'ltr'"
+>
+  <app-top-menu></app-top-menu>
+  <!--Posición del enrutador-->
+  <div class="theme-container main">
+    <app-breadcrumb></app-breadcrumb>
     <router-outlet></router-outlet>
-    <ngx-spinner bdColor="rgba(51,51,51,0.7)" size="large" color="#fff" type="ball-clip-rotate"></ngx-spinner>
-</div>
-    <!--Footer-->
-    <app-footer></app-footer>
+    <ngx-spinner
+      bdColor="rgba(51,51,51,0.7)"
+      size="large"
+      color="#fff"
+      type="ball-clip-rotate"
+    ></ngx-spinner>
+  </div>
+  <!--Footer-->
+  <app-footer></app-footer>
 </div>
