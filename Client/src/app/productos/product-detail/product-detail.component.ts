@@ -22,7 +22,7 @@ import { Subject, takeUntil, switchMap } from 'rxjs';
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.scss'],
 })
-export class ProductDetailComponent implements OnInit {
+export class ProductDetailComponent  {
   @ViewChild('zoomViewer', { static: true }) zoomViewer;
   @ViewChild(SwiperDirective, { static: true }) directiveRef: SwiperDirective;
   public config: SwiperConfigInterface = {};
@@ -45,13 +45,15 @@ export class ProductDetailComponent implements OnInit {
   ) {
     let id = this.route.snapshot.paramMap.get('idProducto');
     if (!isNaN(Number(id))) {
-      this.getProductById(Number(id));
+      this.getProductById((Number(id))).then(() => {
+        if (this.idProducto) {
+          this.getRelatedProducts(this.datos.categoriaProductoId);
+        }
+      });
       this.idProducto = Number(id);
     }
   }
-  ngOnInit(): void {
-    //this.getRelatedProducts(this.datos.categoriaProductoId);
-  }
+
 
   ngAfterViewInit() {
     this.config = {
@@ -73,20 +75,34 @@ export class ProductDetailComponent implements OnInit {
         },
       },
     };
-    this.getRelatedProducts(this.datos?.categoriaProductoId);
+    // this.getRelatedProducts(this.datos.categoriaProductoId);
   }
 
-  getProductById(idProducto: any) {
-    //localhost:3000/videojuego
-    this.gService
-      .get('productos/', idProducto)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data: any) => {
-        console.log(data);
-        this.datos = data;
-        this.image = this.datos.imagenes.URL;
-      });
+
+  // getProductById(idProducto: any) {
+  //   //localhost:3000/videojuego
+  //   this.gService
+  //     .get('productos/', idProducto)
+  //     .pipe(takeUntil(this.destroy$))
+  //     .subscribe((data: any) => {
+  //       console.log(data);
+  //       this.datos = data;
+  //       this.image = this.datos.imagenes.URL;
+  //     });
+  // }
+
+  async getProductById(idProducto: any) {
+    try {
+      const data = await this.gService.get('productos/', idProducto).pipe(takeUntil(this.destroy$)).toPromise();
+      console.log(data);
+      this.datos = data;
+      this.image = this.datos.imagenes.URL;
+    } catch (error) {
+      console.error(error);
+    }
   }
+
+  
   public getRelatedProducts(idCategoria: any) {
     this.gService
       .list('productos/categoria/' + idCategoria)

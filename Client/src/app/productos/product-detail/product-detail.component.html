@@ -1,24 +1,14 @@
 <div fxLayout="row wrap" *ngIf="datos">
   <div fxFlex="100" fxFlex.gt-md="35" fxFlex.md="45">
     <mat-card class="product-image">
-      <mat-chip-listbox *ngIf="datos?.descuento">
-        <mat-chip-option color="warn" highlighted selectable="false"
-          >Descuento</mat-chip-option
-        >
+      <mat-chip-listbox *ngIf="datos?.descuento > 0">
+        <mat-chip-option color="warn" highlighted selectable="false">{{datos.descuento}}% OFF</mat-chip-option>
       </mat-chip-listbox>
-      <button
-        mat-icon-button
-        (click)="openZoomViewer()"
-        fxHide="false"
-        fxHide.gt-md
-      >
+      <button mat-icon-button (click)="openZoomViewer()" fxHide="false" fxHide.gt-md>
         <mat-icon>fullscreen</mat-icon>
       </button>
-      <img
-        [src]="datos?.imagenes[0].URL"
-        (mousemove)="onMouseMove($event)"
-        (mouseleave)="onMouseLeave($event)"
-      />
+      <!-- (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave($event)" va dentro de la imagen -->
+      <img [src]="datos?.imagenes[0].URL" />
     </mat-card>
 
     <div class="small-carousel">
@@ -40,31 +30,23 @@
       </div>
     </div>
   </div>
-  <div
-    fxFlex="100"
-    fxFlex.gt-md="45"
-    fxFlex.md="55"
-    ngClass.gt-sm="px-4 m-0"
-    ngClass.sm="mt-2"
-    ngClass.xs="mt-2"
-  >
+  <div fxFlex="100" fxFlex.gt-md="45" fxFlex.md="55" ngClass.gt-sm="px-4 m-0" ngClass.sm="mt-2" ngClass.xs="mt-2">
     <div #zoomViewer fxShow="false" fxShow.gt-md>
-      <mat-card
-        *ngIf="zoomImage"
-        class="zoom-viewer mat-elevation-z18"
-        [ngStyle]="{ 'background-image': 'url(' + zoomImage + ')' }"
-      ></mat-card>
+      <mat-card *ngIf="zoomImage" class="zoom-viewer mat-elevation-z18"
+        [ngStyle]="{ 'background-image': 'url(' + zoomImage + ')' }"></mat-card>
     </div>
 
     <h2>{{ datos?.nombre }}</h2>
     <div class="py-1 lh">
       <p>
-        <span class="text-muted fw-500">Categoria: </span
-        ><span>{{ datos?.categoriaProducto.descripcion }}</span>
+        <span class="text-muted fw-500">Vendedor: </span><span>{{ datos?.usuario.nombre }} {{datos?.usuario.apellidos}}</span>
       </p>
       <p>
-        <span class="text-muted fw-500">Disponibilidad: </span
-        ><span [ngStyle]="{ color: datos?.stock > 0 ? 'green' : 'red' }">
+        <span class="text-muted fw-500">Categoria: </span><span>{{ datos?.categoriaProducto.descripcion }}</span>
+      </p>
+      <p>
+        <span class="text-muted fw-500">Disponibilidad: </span><span
+          [ngStyle]="{ color: datos?.stock > 0 ? 'green' : 'red' }">
           {{ datos?.stock > 0 ? "En Stock" : "No disponible" }}
         </span>
       </p>
@@ -77,19 +59,15 @@
     <div class="divider mt-1"></div>
     <div class="py-2">
       <h3 class="old-price text-muted">
-        <span *ngIf="datos?.precio"
-          >${{ datos?.precio | number : "1.2-2" }}</span
-        >
+        <span *ngIf="datos.precioOferta > 0 ">${{ datos?.precio | number : "1.2-2" }}</span>
       </h3>
-      <h2 class="new-price">${{ datos?.precio }}</h2>
+      <h2 *ngIf="datos.precioOferta != 0; else noOferta" class="new-price">${{ datos?.precioOferta | number : "1.2-2" }}</h2>
+      <ng-template #noOferta>
+        <h2 class="new-price">${{ datos?.precio | number : "1.2-2" }}</h2>
+      </ng-template>
     </div>
 
-    <div
-      fxLayout="row"
-      fxLayout.xs="column"
-      fxLayoutAlign="space-between center"
-      class="details text-muted py-2"
-    >
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" class="details text-muted py-2">
       <div class="color">
         <span class="fw-500">Select Color:</span>
         <button mat-raised-button>&nbsp;</button>
@@ -107,11 +85,7 @@
 
     <div class="divider"></div>
 
-    <div
-      fxLayout="row"
-      fxLayoutAlign="space-between center"
-      class="text-muted py-2"
-    ></div>
+    <div fxLayout="row" fxLayoutAlign="space-between center" class="text-muted py-2"></div>
   </div>
   <!-- <div fxFlex="100" fxFlex.gt-md="20" fxHide fxShow.gt-md>
 
@@ -160,115 +134,21 @@
 <div fxLayout="row wrap" class="mt-5">
   <div fxFlex="100" fxFlex.gt-md="78" fxFlex.md="74">
     <mat-card>
-      <mat-tab-group
-        [@.disabled]="true"
-        [selectedIndex]="0"
-        mat-stretch-tabs="false"
-        mat-align-tabs="start"
-      >
+      <mat-tab-group [@.disabled]="true" [selectedIndex]="0" mat-stretch-tabs="false" mat-align-tabs="start">
         <mat-tab label="Description">
           <div class="full-desc lh">
             <p>{{ datos?.descripcion }}</p>
-            <!-- <ul class="px-3 mt-2">
-              <li>
-                Phasellus eu justo dictum, varius eros ut, posuere sapien.
-              </li>
-              <li>Nulla eu erat sit amet enim lobortis rhoncus.</li>
-              <li>Etiam eu mauris in massa convallis ornare non id ex.</li>
-              <li>Nam sagittis augue at pretium pharetra.</li>
-              <li>Sed a sem id massa egestas porta a sit amet felis.</li>
-              <li>Duis aliquam urna in sapien cursus consequat.</li>
-            </ul>
-            <p class="mt-2">
-              Duis eu felis ultricies urna pharetra efficitur nec non elit.
-              Class aptent taciti sociosqu ad litora torquent per conubia
-              nostra, per inceptos himenaeos. Curabitur posuere eu justo eget
-              mollis. Sed semper accumsan urna vel rutrum. Nulla condimentum
-              quis lacus ut semper. Quisque at massa pretium, porta ligula ut,
-              rutrum elit. Pellentesque et orci sit amet dolor laoreet tempor
-              sed eu sem. Morbi lacinia pellentesque tellus euismod eleifend.
-            </p>
-            <p class="mt-2">
-              Quisque fringilla eros id ligula luctus, a gravida augue sodales.
-              Sed eget augue ut lectus condimentum volutpat. Morbi quis nunc
-              viverra, gravida arcu quis, varius metus. Praesent tincidunt ipsum
-              est, quis molestie ligula efficitur ut. Nunc interdum erat eu
-              tortor maximus suscipit. Vivamus nec laoreet dui. Nullam dignissim
-              laoreet metus quis pretium.
-            </p> -->
           </div>
-        </mat-tab>
-        <mat-tab label="Additional information">
-          <!-- <div class="full-desc lh">
-            <p>
-              Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-              cupidatat non proident, sunt in culpa qui officia deserunt mollit
-              anim id est laborum.
-            </p>
-            <ul class="px-3 mt-2">
-              <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-              <li>
-                Aenean vehicula, tortor gravida elementum tincidunt, justo lorem
-                vestibulum ex, eget egestas arcu tellus in magna. Vivamus
-                gravida, ipsum vel luctus luctus, nisi felis vestibulum est, nec
-                interdum tellus leo quis tellus. Sed sit amet convallis enim, in
-                laoreet orci.
-              </li>
-              <li>
-                Donec et elit at nulla congue interdum sit amet varius erat.
-              </li>
-              <li>
-                Nulla sit amet risus pellentesque, dignissim massa ut, dignissim
-                arcu.
-              </li>
-              <li>
-                Morbi dapibus ligula at faucibus tempus. Aenean vehicula, tortor
-                gravida elementum tincidunt, justo lorem vestibulum ex, eget
-                egestas arcu tellus in magna. Vivamus gravida, ipsum vel luctus
-                luctus, nisi felis vestibulum est, nec interdum tellus leo quis
-                tellus. Sed sit amet convallis enim, in laoreet orci.
-              </li>
-              <li>
-                Nunc sodales justo ut nisi euismod, quis condimentum leo varius.
-              </li>
-            </ul>
-            <ul class="px-3 mt-2">
-              <li>
-                Phasellus eu justo dictum, varius eros ut, posuere sapien.
-              </li>
-              <li>Nulla eu erat sit amet enim lobortis rhoncus.</li>
-              <li>Etiam eu mauris in massa convallis ornare non id ex.</li>
-              <li>Nam sagittis augue at pretium pharetra.</li>
-              <li>Sed a sem id massa egestas porta a sit amet felis.</li>
-              <li>
-                Duis aliquam urna in sapien cursus consequat. Aenean vehicula,
-                tortor gravida elementum tincidunt, justo lorem vestibulum ex,
-                eget egestas arcu tellus in magna. Vivamus gravida, ipsum vel
-                luctus luctus, nisi felis vestibulum est, nec interdum tellus
-                leo quis tellus. Sed sit amet convallis enim, in laoreet orci.
-              </li>
-            </ul>
-          </div> -->
         </mat-tab>
         <mat-tab label="Reviews">
           <div class="full-desc lh">
             <mat-list class="reviews">
               <mat-list-item class="h-100 py-1">
-                <img
-                  matListItemAvatar
-                  [src]="'assets/images/avatars/avatar-1.png'"
-                  alt="image"
-                  class="review-author"
-                />
+                <img matListItemAvatar [src]="'assets/images/avatars/avatar-1.png'" alt="image" class="review-author" />
                 <p fxLayoutAlign="start center">
                   <span class="fw-500">Bruno Vespa</span>
-                  <mat-icon
-                    class="text-muted px-1"
-                    matTooltip="Dissatisfied"
-                    matTooltipPosition="after"
-                    >sentiment_dissatisfied</mat-icon
-                  >
+                  <mat-icon class="text-muted px-1" matTooltip="Dissatisfied"
+                    matTooltipPosition="after">sentiment_dissatisfied</mat-icon>
                 </p>
                 <p class="text-muted">
                   <small>13 January, 2018 at 7:09</small>
@@ -283,20 +163,11 @@
                 </p>
               </mat-list-item>
               <mat-list-item class="h-100 py-1">
-                <img
-                  matListItemAvatar
-                  [src]="'assets/images/avatars/avatar-2.png'"
-                  alt="image"
-                  class="review-author"
-                />
+                <img matListItemAvatar [src]="'assets/images/avatars/avatar-2.png'" alt="image" class="review-author" />
                 <p fxLayoutAlign="start center">
                   <span class="fw-500">Julia Aniston</span>
-                  <mat-icon
-                    class="text-muted px-1"
-                    matTooltip="Very Satisfied"
-                    matTooltipPosition="after"
-                    >sentiment_very_satisfied</mat-icon
-                  >
+                  <mat-icon class="text-muted px-1" matTooltip="Very Satisfied"
+                    matTooltipPosition="after">sentiment_very_satisfied</mat-icon>
                 </p>
                 <p class="text-muted">
                   <small>04 February, 2018 at 10:22</small>
@@ -313,20 +184,11 @@
                 </p>
               </mat-list-item>
               <mat-list-item class="h-100 py-1">
-                <img
-                  matListItemAvatar
-                  [src]="'assets/images/avatars/avatar-3.png'"
-                  alt="image"
-                  class="review-author"
-                />
+                <img matListItemAvatar [src]="'assets/images/avatars/avatar-3.png'" alt="image" class="review-author" />
                 <p fxLayoutAlign="start center">
                   <span class="fw-500">Andy Warhol</span>
-                  <mat-icon
-                    class="text-muted px-1"
-                    matTooltip="Neutral"
-                    matTooltipPosition="after"
-                    >sentiment_neutral</mat-icon
-                  >
+                  <mat-icon class="text-muted px-1" matTooltip="Neutral"
+                    matTooltipPosition="after">sentiment_neutral</mat-icon>
                 </p>
                 <p class="text-muted">
                   <small>14 February, 2018 at 11:10</small>
@@ -350,49 +212,20 @@
             </p>
             <h3 fxLayoutAlign="start center" class="mt-3">
               <span>Your Rating:</span>
-              <button
-                mat-icon-button
-                matTooltip="Very Dissatisfied"
-                matTooltipPosition="above"
-                class="p-0"
-              >
-                <mat-icon class="mat-icon-lg"
-                  >sentiment_very_dissatisfied</mat-icon
-                >
+              <button mat-icon-button matTooltip="Very Dissatisfied" matTooltipPosition="above" class="p-0">
+                <mat-icon class="mat-icon-lg">sentiment_very_dissatisfied</mat-icon>
               </button>
-              <button
-                mat-icon-button
-                matTooltip="Dissatisfied"
-                matTooltipPosition="above"
-                class="p-0"
-              >
+              <button mat-icon-button matTooltip="Dissatisfied" matTooltipPosition="above" class="p-0">
                 <mat-icon class="mat-icon-lg">sentiment_dissatisfied</mat-icon>
               </button>
-              <button
-                mat-icon-button
-                matTooltip="Neutral"
-                matTooltipPosition="above"
-                class="p-0"
-              >
+              <button mat-icon-button matTooltip="Neutral" matTooltipPosition="above" class="p-0">
                 <mat-icon class="mat-icon-lg">sentiment_neutral</mat-icon>
               </button>
-              <button
-                mat-icon-button
-                matTooltip="Satisfied"
-                matTooltipPosition="above"
-                class="p-0"
-              >
+              <button mat-icon-button matTooltip="Satisfied" matTooltipPosition="above" class="p-0">
                 <mat-icon class="mat-icon-lg">sentiment_satisfied</mat-icon>
               </button>
-              <button
-                mat-icon-button
-                matTooltip="Very Satisfied"
-                matTooltipPosition="above"
-                class="p-0"
-              >
-                <mat-icon class="mat-icon-lg"
-                  >sentiment_very_satisfied</mat-icon
-                >
+              <button mat-icon-button matTooltip="Very Satisfied" matTooltipPosition="above" class="p-0">
+                <mat-icon class="mat-icon-lg">sentiment_very_satisfied</mat-icon>
               </button>
             </h3>
 
@@ -400,40 +233,22 @@
               <div fxFlex="100" class="px-2 mt-1">
                 <mat-form-field appearance="outline" class="w-100">
                   <mat-label>Your review</mat-label>
-                  <textarea
-                    matInput
-                    placeholder="Your review"
-                    formControlName="review"
-                    required
-                    rows="5"
-                  ></textarea>
+                  <textarea matInput placeholder="Your review" formControlName="review" required rows="5"></textarea>
                   <mat-error>Review is required</mat-error>
                 </mat-form-field>
               </div>
               <div fxFlex="100" fxFlex.gt-sm="50" class="px-2 mt-3">
                 <mat-form-field appearance="outline" class="w-100">
                   <mat-label>Your name</mat-label>
-                  <input
-                    matInput
-                    placeholder="Your name"
-                    formControlName="name"
-                    required
-                  />
+                  <input matInput placeholder="Your name" formControlName="name" required />
                   <mat-error>Name is required</mat-error>
-                  <mat-error
-                    >Name isn't long enough, minimum of 4 characters</mat-error
-                  >
+                  <mat-error>Name isn't long enough, minimum of 4 characters</mat-error>
                 </mat-form-field>
               </div>
               <div fxFlex="100" fxFlex.gt-sm="50" class="px-2 mt-3">
                 <mat-form-field appearance="outline" class="w-100">
                   <mat-label>Your email</mat-label>
-                  <input
-                    matInput
-                    placeholder="Your email"
-                    formControlName="email"
-                    required
-                  />
+                  <input matInput placeholder="Your email" formControlName="email" required />
                   <mat-error>Email is required</mat-error>
                   <mat-error>Invalid email address</mat-error>
                 </mat-form-field>
@@ -457,10 +272,7 @@
 </div>
 
 <div class="py-3 mt-3">
-  <h2>Related Products</h2>
+  <h2>Productos Relacionados</h2>
   <div class="divider"></div>
-  <app-products-carousel
-    [products]="relatedProducts"
-    [idProducto]="idProducto"
-  ></app-products-carousel>
+  <app-products-carousel [products]="relatedProducts" [idProducto]="idProducto"></app-products-carousel>
 </div>

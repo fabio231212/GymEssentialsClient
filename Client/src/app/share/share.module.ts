@@ -41,6 +41,7 @@ import { ProductsCarouselComponent } from './products-carousel/products-carousel
 import { MatIcon } from '@angular/material/icon';
 import { ProductDialogComponent } from './products-carousel/product-dialog/product-dialog.component';
 
+
 @NgModule({
   imports: [
     CommonModule,

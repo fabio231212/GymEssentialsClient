@@ -26,7 +26,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class TopMenuComponent implements OnInit {
   // PAGES
   public showBackToTop: boolean = false;
-  public categories: Category[];
+  // public categories: Category[];
   public category: Category;
   public sidenavMenuItems: Array<any>;
   @ViewChild('sidenav', { static: true }) sidenav: any;
@@ -49,7 +49,7 @@ export class TopMenuComponent implements OnInit {
 
   ngOnInit() {
     // PAGES
-    this.getCategories();
+    // this.getCategories();
     this.sidenavMenuItems = this.sidenavMenuService.getSidenavMenuItems();
 
     // TOP MENU
@@ -80,24 +80,24 @@ export class TopMenuComponent implements OnInit {
   }
 
   // PAGES
-  public getCategories() {
-    this.appService.getCategories().subscribe((data) => {
-      this.categories = data;
-      this.category = data[0];
-      this.appService.Data.categories = data;
-    });
-  }
+  // public getCategories() {
+  //   this.appService.getCategories().subscribe((data) => {
+  //     this.categories = data;
+  //     this.category = data[0];
+  //     this.appService.Data.categories = data;
+  //   });
+  // }
 
-  public changeCategory(event) {
-    if (event.target) {
-      this.category = this.categories.filter(
-        (category) => category.name == event.target.innerText
-      )[0];
-    }
-    if (window.innerWidth < 960) {
-      this.stopClickPropagate(event);
-    }
-  }
+  // public changeCategory(event) {
+  //   if (event.target) {
+  //     this.category = this.categories.filter(
+  //       (category) => category.name == event.target.innerText
+  //     )[0];
+  //   }
+  //   if (window.innerWidth < 960) {
+  //     this.stopClickPropagate(event);
+  //   }
+  // }
 
   public remove(product) {
     const index: number = this.appService.Data.cartList.indexOf(product);

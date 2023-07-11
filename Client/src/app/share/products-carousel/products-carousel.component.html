@@ -12,8 +12,9 @@
           >
         </mat-chip-listbox>
         <a
-          [routerLink]="['/products', item.id, item.nombre]"
+          [routerLink]="['/productos/productodetalle/', item.id]"
           class="image-link"
+
         >
           <img [src]="item.imagenes[0].URL" />
           <!-- <div class="swiper-lazy-preloader"></div> -->

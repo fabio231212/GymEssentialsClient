@@ -15,7 +15,7 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrls: ['./products-carousel.component.scss'],
 })
 export class ProductsCarouselComponent implements OnInit {
-  @Input('requireStockQuantity') requireStockQuantity: boolean;
+  @Input('requireStockQuantity') requireStockQuantity: boolean = false;
   @Input('idProducto') idProducto: number;
   @Input('products') products: Array<any> = [];
   @Input('product') product: any;
