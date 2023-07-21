@@ -8,14 +8,21 @@ const routes: Routes = [
   {
     path: 'productos',
     component: ProductsAllComponent,
+    data: { breadcrumb: 'Lista de Producto' },
+  },
+  {
+    path: 'productos/productodetalle/:idProducto',
+    component: ProductDetailComponent,
+  },
+  {
+    path: 'productos',
+    component: ProductsAllComponent,
     data: { breadcrumb: 'Lista de productos' },
   },
   {
     path: 'productos/productodetalle/:idProducto',
     component: ProductDetailComponent,
   },
-  { path: 'productos', component: ProductsAllComponent, data: { breadcrumb: 'Lista de productos' } },
-  { path: 'productos/productodetalle/:idProducto', component: ProductDetailComponent },
   {
     path: 'productos/productoxvendedor/:idVendedor',
     component: ProductoXVendedorComponent,

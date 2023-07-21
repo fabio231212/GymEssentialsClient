@@ -40,6 +40,7 @@ import { ControlsComponent } from './controls/controls.component';
 import { ProductsCarouselComponent } from './products-carousel/products-carousel.component';
 import { MatIcon } from '@angular/material/icon';
 import { ProductDialogComponent } from './products-carousel/product-dialog/product-dialog.component';
+import { ChatComponent } from './chat/chat.component';
 
 
 @NgModule({
@@ -126,11 +127,13 @@ import { ProductDialogComponent } from './products-carousel/product-dialog/produ
     ControlsComponent,
     ProductsCarouselComponent,
     ProductDialogComponent,
+    ChatComponent,
   ],
   declarations: [
     ControlsComponent,
     ProductsCarouselComponent,
     ProductDialogComponent,
+    ChatComponent,
   ],
 })
 export class ShareModule {}

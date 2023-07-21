@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppSettings } from './app.settings';
 import { AppService } from './app.service';
 import { SwiperModule } from './core/swiper/swiper.module';
+import { UsuariosModule } from './usuarios/usuarios.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,6 +35,7 @@ import { SwiperModule } from './core/swiper/swiper.module';
     // al final el gestor de las rutas principal
     AppRoutingModule,
     SwiperModule,
+    UsuariosModule,
   ],
   providers: [AppSettings, AppService],
   bootstrap: [AppComponent],
