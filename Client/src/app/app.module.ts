@@ -16,11 +16,13 @@ import { AppSettings } from './app.settings';
 import { AppService } from './app.service';
 import { SwiperModule } from './core/swiper/swiper.module';
 import { UsuariosModule } from './usuarios/usuarios.module';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    ToastrModule.forRoot(),
     BrowserAnimationsModule,
     GoogleMapsModule,
     NgxSpinnerModule, // importar HttpClientModule después BrowserModule.
@@ -32,6 +34,7 @@ import { UsuariosModule } from './usuarios/usuarios.module';
     HomeModule,
     FacturasModule,
     ProductosModule,
+    UsuariosModule,
     // al final el gestor de las rutas principal
     AppRoutingModule,
     SwiperModule,

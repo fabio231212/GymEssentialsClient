@@ -53,7 +53,7 @@
       </span>
       <span fxShow="false" fxShow.gt-sm>Bienvenido</span>
 
-      <div class="top-menu">
+      <div class="top-menu" *ngIf="userLogged">
         <a
           mat-button
           [matMenuTriggerFor]="accountMenu"
@@ -83,7 +83,7 @@
                 width="50"
               />
               <p>
-                Emilio Verdines <br />
+                Inicie sesión <br />
                 <small
                   >emilio_v <span *ngIf="settings.rtl">&rlm;</span>(152<mat-icon
                     class="mat-icon-xs"
@@ -102,12 +102,18 @@
               <span>Ayuda</span>
             </a>
             <div class="divider"></div>
-            <a mat-menu-item routerLink="/sign-in">
+            <button (click)="logout()" mat-menu-item>
               <mat-icon class="mat-icon-sm">power_settings_new</mat-icon>
               <span>Salir</span>
-            </a>
+            </button>
           </span>
         </mat-menu>
+      </div>
+      <div class="top-menu" *ngIf="!userLogged">
+        <a mat-button routerLink="/login">
+          <mat-icon class="mat-icon-sm account-icon">person</mat-icon>
+          <span fxShow="false" fxShow.gt-sm>Inicie Sesión</span>
+        </a>
       </div>
     </mat-toolbar-row>
     <mat-toolbar-row

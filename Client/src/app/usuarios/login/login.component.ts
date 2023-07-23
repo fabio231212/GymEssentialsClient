@@ -8,6 +8,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { GenericService } from 'src/app/share/generic.service';
+import {
+  NotificacionService,
+  TipoMessage,
+} from 'src/app/share/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -17,8 +21,12 @@ import { GenericService } from 'src/app/share/generic.service';
 export class LoginComponent {
   loginForm: FormGroup;
   registerForm: FormGroup;
+  destroy$: Subject<boolean> = new Subject<boolean>();
+  datos: any;
 
   constructor(
+    private gService: GenericService,
+    private noti: NotificacionService,
     public formBuilder: FormBuilder,
     public router: Router,
     public snackBar: MatSnackBar
@@ -46,10 +54,49 @@ export class LoginComponent {
     );
   }
 
-  public onLoginFormSubmit(values: Object): void {
-    if (this.loginForm.valid) {
-      this.router.navigate(['/']);
-    }
+  public onLoginFormSubmit(values: any): void {
+    let data = this.loginForm.value;
+    this.gService
+      .create('usuarios/login/', data)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+          this.datos = data;
+          if (this.datos && this.datos.token) {
+            // Autenticación exitosa, guardar el token en el LocalStorage
+            localStorage.setItem('token', this.datos.token);
+            localStorage.setItem('user', this.datos.usuario);
+
+            // Redireccionar al usuario después del inicio de sesión
+            this.router.navigate(['/']);
+          } else {
+            // Autenticación fallida, usuario no encontrado
+            this.noti.mensaje(
+              'Advertencia',
+              'Usuario no encontrado. Por favor, verifica tus credenciales.',
+              TipoMessage.warning
+            );
+          }
+        },
+        (error: any) => {
+          if (error.status === 500) {
+            // Error en el servidor
+            this.noti.mensaje(
+              'Error',
+              'Error en el servidor. Por favor, inténtalo de nuevo más tarde.',
+              TipoMessage.error
+            );
+          } else {
+            // Otro código de error, mostrar mensaje genérico
+            this.noti.mensaje(
+              'Advertencia',
+              'Error al iniciar sesión. Por favor, inténtalo de nuevo más tarde.',
+              TipoMessage.warning
+            );
+          }
+        }
+      );
   }
 
   public onRegisterFormSubmit(values: Object): void {

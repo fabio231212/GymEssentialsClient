@@ -54,19 +54,15 @@ export class ChatComponent {
   //   // });
   // }
   ngOnInit() {
-    this.socket = io('http://localhost:8000'); // Reemplaza con la URL de tu servidor Socket.IO
-    let paras = new URLSearchParams(window.location.search);
-
-    // this.socket.on('entrarChat', (data: string) => {
-    //   this.messages.push(data);
+    // this.socket = io('http://localhost:8000'); // Reemplaza con la URL de tu servidor Socket.IO
+    // let paras = new URLSearchParams(window.location.search);
+    // // this.socket.on('entrarChat', (data: string) => {
+    // //   this.messages.push(data);
+    // // });
+    // this.socket.on('connect', () => {
+    //   console.log('Conectado al servidor');
+    //   this.socket.emit('entrarChat', { usuario: 'fernando' });
     // });
-
-    this.socket.on('connect', () => {
-      console.log('Conectado al servidor');
-
-      this.socket.emit('entrarChat', { usuario: 'fernando' });
-    });
-
     // this.sendMessage();
   }
   // sendMessage() {

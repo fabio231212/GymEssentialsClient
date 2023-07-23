@@ -30,7 +30,7 @@ export class TopMenuComponent implements OnInit {
   public category: Category;
   public sidenavMenuItems: Array<any>;
   @ViewChild('sidenav', { static: true }) sidenav: any;
-
+  userLogged: any;
   // TOP MENU
   public currencies = ['USD', 'EUR'];
   public currency: any;
@@ -45,6 +45,7 @@ export class TopMenuComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.settings = this.appSettings.settings;
+    this.userLogged = localStorage.getItem('user');
   }
 
   ngOnInit() {
@@ -190,5 +191,10 @@ export class TopMenuComponent implements OnInit {
     if (window.innerWidth < 960) {
       this.sidenavMenuService.closeAllSubMenus();
     }
+  }
+
+  public logout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
   }
 }

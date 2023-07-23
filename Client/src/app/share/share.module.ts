@@ -41,9 +41,18 @@ import { ProductsCarouselComponent } from './products-carousel/products-carousel
 import { MatIcon } from '@angular/material/icon';
 import { ProductDialogComponent } from './products-carousel/product-dialog/product-dialog.component';
 import { ChatComponent } from './chat/chat.component';
-
+import { NotificacionService } from './notification.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './auth.interceptor';
 
 @NgModule({
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
   imports: [
     CommonModule,
     RouterModule,

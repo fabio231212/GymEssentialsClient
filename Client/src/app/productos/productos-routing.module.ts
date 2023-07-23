@@ -3,12 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProductoXVendedorComponent } from './Admin/producto-xvendedor/producto-xvendedor.component';
 import { ProductsAllComponent } from './products-all/products-all.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { AuthGuard } from '../share/auth.guard';
 
 const routes: Routes = [
   {
     path: 'productos',
     component: ProductsAllComponent,
-    data: { breadcrumb: 'Lista de Producto' },
+    canActivate: [AuthGuard],
+    data: {roles: ['Administrador','Vendedor','Comprador'], breadcrumb: 'Lista de Producto' },
   },
   {
     path: 'productos/productodetalle/:idProducto',
@@ -26,7 +28,8 @@ const routes: Routes = [
   {
     path: 'productos/productoxvendedor/:idVendedor',
     component: ProductoXVendedorComponent,
-    data: { breadcrumb: 'Lista de productos' },
+    canActivate: [AuthGuard],
+    data: { roles: ['Administrador'], breadcrumb: 'Lista de productos' },
   },
 ];
 
