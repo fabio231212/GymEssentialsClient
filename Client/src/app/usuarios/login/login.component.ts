@@ -12,6 +12,7 @@ import {
   NotificacionService,
   TipoMessage,
 } from 'src/app/share/notification.service';
+import { UserService } from 'src/app/share/user.service';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +30,8 @@ export class LoginComponent {
     private noti: NotificacionService,
     public formBuilder: FormBuilder,
     public router: Router,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    private userService: UserService
   ) {
     this.crearFormularioLogin();
   }
@@ -66,8 +68,7 @@ export class LoginComponent {
           if (this.datos && this.datos.token) {
             // Autenticación exitosa, guardar el token en el LocalStorage
             localStorage.setItem('token', this.datos.token);
-            localStorage.setItem('user', this.datos.usuario);
-
+            this.userService = new UserService();
             // Redireccionar al usuario después del inicio de sesión
             this.router.navigate(['/']);
           } else {
