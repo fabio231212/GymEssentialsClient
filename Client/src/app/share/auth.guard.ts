@@ -11,7 +11,10 @@ import {
 import { Observable } from 'rxjs';
 import jwt_decode from 'jwt-decode';
 
-interface DecodedToken {
+export interface DecodedToken {
+  userId: number;
+  nombre: string;
+  email: string;
   roles: string[];
   // Otras propiedades que se esperan en el token JWT, si las hay
 }
