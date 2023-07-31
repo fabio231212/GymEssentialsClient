@@ -79,24 +79,12 @@ export class ProductDetailComponent  {
   }
 
 
-  // getProductById(idProducto: any) {
-  //   //localhost:3000/videojuego
-  //   this.gService
-  //     .get('productos/', idProducto)
-  //     .pipe(takeUntil(this.destroy$))
-  //     .subscribe((data: any) => {
-  //       console.log(data);
-  //       this.datos = data;
-  //       this.image = this.datos.imagenes.URL;
-  //     });
-  // }
-
   async getProductById(idProducto: any) {
     try {
       const data = await this.gService.get('productos/', idProducto).pipe(takeUntil(this.destroy$)).toPromise();
       console.log(data);
       this.datos = data;
-      this.image = this.datos.imagenes.URL;
+      this.image = this.datos.imagenes[0].imgUrl;
     } catch (error) {
       console.error(error);
     }
@@ -114,8 +102,8 @@ export class ProductDetailComponent  {
   }
 
   public selectImage(image) {
-    this.image = image.medium;
-    this.zoomImage = image.big;
+    this.image = image.imgUrl;
+    this.zoomImage = image.imgUrl;
   }
 
   public onMouseMove(e) {

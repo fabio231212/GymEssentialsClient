@@ -1,0 +1,320 @@
+// // Estilos para la cuadrícula de imágenes
+// mat-grid-list {
+//     display: flex;
+//     flex-wrap: wrap;
+//     justify-content: space-between;
+//     padding-bottom: calc(1.2 * ((50% - 0.5px) * 1) + 0px + 0px) !important;
+//   }
+  
+//   mat-grid-tile {
+//     padding: 10px; /* Ajusta el valor según tus necesidades */
+//   }
+// // Estilos para cada elemento de la cuadrícula
+// .mat-grid-tile {
+//   flex-basis: calc(
+//     50% - 10px
+//   ); // Dos elementos por fila en pantallas grandes, con espacio de 10px entre ellos
+//   margin-bottom: 20px;
+// }
+
+// // Ajustar para pantallas medianas (768px a 959px)
+// @media screen and (max-width: 959px) and (min-width: 768px) {
+//   // Para tres elementos por fila
+//   .mat-grid-tile {
+//     flex-basis: calc(
+//       33.33% - 10px
+//     ); // Tres elementos por fila en pantallas medianas, con espacio de 10px entre ellos
+//   }
+// }
+
+// // Ajustar para pantallas pequeñas (hasta 767px)
+// @media screen and (max-width: 767px) {
+//   // Para un elemento por fila
+//   .mat-grid-tile {
+//     flex-basis: 100%;
+//   }
+// }
+
+// // Espaciado y ajuste para pantallas aún más pequeñas (hasta 599px)
+// @media screen and (max-width: 599px) {
+//   // Para un elemento por fila y reducir el margen
+//   .mat-grid-tile {
+//     margin-bottom: 10px;
+//     flex-basis: 100%;
+//   }
+// }
+
+// .product-image {
+//   width: 150px; // Asegurarse de que la imagen no desborde el contenedor
+//   height: 150px; // Ajustar automáticamente la altura para mantener la proporción
+//   object-fit: contain; // Ajustar la imagen dentro del contenedor sin deformarla
+// }
+
+// // Estilos para cada elemento de la cuadrícula
+// .mat-grid-tile {
+//   flex-basis: calc(
+//     50% - 10px
+//   ); // Dos elementos por fila en pantallas grandes, con espacio de 10px entre ellos
+//   margin-bottom: 20px;
+//   display: flex;
+//   justify-content: center; // Centrar horizontalmente las imágenes
+// }
+
+// // Estilos para el botón de carga y la imagen
+// .image-upload-label {
+//   position: relative;
+//   display: block;
+//   cursor: pointer;
+// }
+
+// .upload-icon {
+//   position: absolute;
+//   bottom: 5px;
+//   right: 5px;
+//   background-color: rgba(255, 255, 255, 0.8);
+//   border-radius: 50%;
+//   padding: 5px;
+// }
+
+// .hidden-input {
+//   display: none; // Ocultar el input de tipo file
+// }
+
+// /* Ajustes para mejorar la presentación en pantallas pequeñas */
+// @media screen and (max-width: 599px) {
+//   .mat-card {
+//     width: 100%; // Asegurarse de que la tarjeta ocupe todo el ancho en pantallas pequeñas
+//   }
+
+//   .mat-card-actions {
+//     display: flex;
+//     justify-content: flex-end;
+//   }
+
+//   .mat-card-title {
+//     font-size: 16px; // Reducir el tamaño del título para pantallas pequeñas
+//   }
+// }
+
+// .card-size {
+//   width: 150px; /* Ajusta el tamaño deseado para las tarjetas */
+//   height: 200px; /* Puedes ajustar la altura si lo deseas, si quieres que todas tengan una relación de aspecto cuadrada */
+// }
+// .addImage {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// }
+
+// .mat-card-actions {
+//   display: flex;
+//   justify-content: center; // Centrar horizontalmente
+//   position: absolute;
+//   bottom: 0;
+//   width: 100%;
+
+//   // Estilos para el botón de eliminar
+//   .btn-eliminar {
+//     background-color: transparent;
+//     border: none;
+//     cursor: pointer;
+//     width: 36px;
+//     height: 36px;
+//     border-radius: 50%;
+
+//     // Estilos para el ícono
+//     .mat-icon {
+//       font-size: 24px;
+//       color: #000000;
+//       transition: color 0.3s ease;
+
+//       // Cambiar el color del ícono al pasar el mouse
+//       &:hover {
+//         color: #c62828;
+//       }
+//     }
+
+//     // Estilos para eliminar el borde predeterminado alrededor del botón de ícono
+//     &.mat-button-base {
+//       box-shadow: none;
+//       border: none;
+//       outline: none;
+//     }
+//   }
+// }
+
+
+
+.p-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  
+  mat-card {
+    width: 100%;
+  }
+  
+  mat-card-header {
+    text-align: center;
+  }
+  
+  mat-card-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Estilos para el formulario y la cuadrícula de imágenes */
+  form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 10px;
+  }
+  
+  .image-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 10px;
+  
+    .card-size {
+      flex-basis: calc(50% - 20px); // Dos elementos por fila en pantallas grandes, con espacio de 20px entre ellos
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  
+      .product-image {
+        width: 100%; // La imagen ocupará el ancho completo de la tarjeta
+        height: 150px; // Ajustar la altura según tus necesidades
+        object-fit: contain; // Ajustar la imagen dentro del contenedor sin deformarla
+      }
+  
+      .mat-card-actions {
+        display: flex;
+        justify-content: center; // Centrar horizontalmente
+        width: 100%;
+  
+        // Estilos para el botón de eliminar
+        .btn-eliminar {
+          background-color: transparent;
+          border: none;
+          cursor: pointer;
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+  
+          // Estilos para el ícono
+          .mat-icon {
+            font-size: 24px;
+            color: #000000;
+            transition: color 0.3s ease;
+  
+            // Cambiar el color del ícono al pasar el mouse
+            &:hover {
+              color: #c62828;
+            }
+          }
+  
+          // Estilos para eliminar el borde predeterminado alrededor del botón de ícono
+          &.mat-button-base {
+            box-shadow: none;
+            border: none;
+            outline: none;
+          }
+        }
+      }
+    }
+  
+    // Ajustar para pantallas medianas (768px a 959px)
+    @media screen and (max-width: 959px) and (min-width: 768px) {
+      // Para tres elementos por fila
+      .card-size {
+        flex-basis: calc(33.33% - 20px); // Tres elementos por fila en pantallas medianas, con espacio de 20px entre ellos
+      }
+    }
+  
+    // Ajustar para pantallas pequeñas (hasta 767px)
+    @media screen and (max-width: 767px) {
+      // Para un elemento por fila
+      .card-size {
+        flex-basis: 100%;
+      }
+    }
+  
+    // Espaciado y ajuste para pantallas aún más pequeñas (hasta 599px)
+    @media screen and (max-width: 599px) {
+      // Para un elemento por fila y reducir el margen
+      .card-size {
+        margin-bottom: 10px;
+      }
+    }
+  
+    .addImage {
+        flex-basis: calc(50% - 20px); // Ajustar el tamaño del botón de agregar imágenes
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+  
+    .image-upload-label {
+      position: relative;
+      display: block;
+      cursor: pointer;
+    }
+  
+    .upload-icon {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      padding: 5px;
+    }
+  
+    .hidden-input {
+      display: none; // Ocultar el input de tipo file
+    }
+  }
+  
+  /* Estilos para los campos del formulario */
+  mat-form-field {
+    width: 100%;
+    margin: 5px 0;
+  
+    @media screen and (min-width: 768px) {
+      &.w-100 {
+        width: 100%; // Ancho completo en pantallas medianas y mayores
+      }
+    }
+  
+    textarea.mat-input-element {
+      resize: vertical; // Permitir redimensionar el campo de texto verticalmente
+    }
+  }
+  
+  /* Ajustes para el tamaño de los elementos en pantallas pequeñas */
+  @media screen and (max-width: 599px) {
+    mat-form-field {
+      &.w-100 {
+        width: 100%; // Ancho completo en pantallas pequeñas
+      }
+    }
+  
+    .text-center {
+      text-align: center; // Centrar texto en pantallas pequeñas
+    }
+  }
+  
+  /* Ajustes para el botón de guardar */
+  mat-raised-button {
+    @media screen and (max-width: 599px) {
+      width: 100%; // Ancho completo en pantallas pequeñas
+    }
+  }
+  

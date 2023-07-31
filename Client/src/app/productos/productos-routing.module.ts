@@ -4,6 +4,7 @@ import { ProductoXVendedorComponent } from './Admin/producto-xvendedor/producto-
 import { ProductsAllComponent } from './products-all/products-all.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { AuthGuard } from '../share/auth.guard';
+import { ProductosFormComponent } from './productos-form/productos-form.component';
 
 const routes: Routes = [
   {
@@ -22,14 +23,22 @@ const routes: Routes = [
     data: { breadcrumb: 'Lista de productos' },
   },
   {
-    path: 'productos/productodetalle/:idProducto',
-    component: ProductDetailComponent,
-  },
-  {
     path: 'productos/productoxvendedor/:idVendedor',
     component: ProductoXVendedorComponent,
     canActivate: [AuthGuard],
     data: { roles: ['Administrador'], breadcrumb: 'Lista de productos' },
+  },
+  {
+    path: 'productos/crear',
+    component: ProductosFormComponent,
+    // canActivate: [AuthGuard],
+    data: {breadcrumb: 'Crear Productos' },
+  },
+  {
+    path: 'productos/editar/:id',
+    component: ProductosFormComponent,
+    // canActivate: [AuthGuard],
+    data: {breadcrumb: 'Lista de productos' },
   },
 ];
 
