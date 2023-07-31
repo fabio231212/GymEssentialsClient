@@ -14,8 +14,8 @@
       >
         <mat-icon>fullscreen</mat-icon>
       </button>
-      <!-- (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave($event)" va dentro de la imagen -->
-      <img [src]="datos?.imagenes[0].URL" class="product-image" />
+            <button mat-icon-button (click)="openZoomViewer()" fxHide="false" fxHide.gt-md><mat-icon>fullscreen</mat-icon></button>
+            <img *ngIf="image" [src]="image" (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave($event)" class="product-image"/>
     </mat-card>
 
     <div class="small-carousel">
@@ -23,7 +23,7 @@
         <div class="swiper-wrapper">
           <div *ngFor="let image of datos?.imagenes" class="swiper-slide">
             <mat-card (click)="selectImage(image)" class="p-2">
-              <img [attr.data-src]="image.URL" class="swiper-lazy" />
+              <img [attr.data-src]="image.imgUrl" class="swiper-lazy" />
               <div class="swiper-lazy-preloader"></div>
             </mat-card>
           </div>
@@ -322,7 +322,7 @@
               </button>
             </h3>
 
-            <form fxLayout="row wrap">
+            <form fxLayout="row wrap" [formGroup]>
               <div fxFlex="100" class="px-2 mt-1">
                 <mat-form-field appearance="outline" class="w-100">
                   <mat-label>Your review</mat-label>

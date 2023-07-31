@@ -15,7 +15,7 @@
           [routerLink]="['/productos/productodetalle/', item.id]"
           class="image-link"
         >
-          <img [src]="item.imagenes[0].URL" class="product-image" />
+          <img [src]="item.imagenes[0].imgUrl" class="product-image" />
           <!-- <div class="swiper-lazy-preloader"></div> -->
         </a>
 
@@ -24,7 +24,7 @@
         </h4>
 
         <a
-          [routerLink]="['/products', item.id, item.nombre]"
+        [routerLink]="['/productos/productodetalle/', item.id]"
           class="title text-truncate"
         >
           {{ item.nombre }}
