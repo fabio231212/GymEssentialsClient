@@ -56,10 +56,14 @@ export class LoginComponent {
     );
   }
 
+
+  onReset() {
+    this.loginForm.reset();
+  }
+
   public onLoginFormSubmit(values: any): void {
-    let data = this.loginForm.value;
     this.gService
-      .create('usuarios/login/', data)
+      .create('usuarios/login/', this.loginForm.value)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         (data: any) => {

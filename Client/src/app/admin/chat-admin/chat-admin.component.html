@@ -1,0 +1,17 @@
+<div *ngFor="let item of messages">
+  <div *ngIf="item.idUser != user.id">
+    <div class="MENSAJE" #messageDiv [attr.idSocket]="item.id">
+      <div class="text-main">
+        <div class="text-group me">
+          <div class="text me">
+            <p>{{ item.mensaje }}</p>
+          </div>
+        </div>
+        <span>{{ item.fecha | date : "dd/MM/yyyy HH:mm" }}</span>
+      </div>
+      <input type="text" [(ngModel)]="message" />
+      <button (click)="sendMessage()">Enviar</button>
+    </div>
+  </div>
+  <li>{{ item.mensaje }}</li>
+</div>

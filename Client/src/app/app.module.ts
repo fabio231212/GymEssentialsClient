@@ -17,6 +17,7 @@ import { AppService } from './app.service';
 import { SwiperModule } from './core/swiper/swiper.module';
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { ToastrModule } from 'ngx-toastr';
+import { AdminModule } from './admin/admin.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -39,6 +40,7 @@ import { ToastrModule } from 'ngx-toastr';
     AppRoutingModule,
     SwiperModule,
     UsuariosModule,
+    AdminModule,
   ],
   providers: [AppSettings, AppService],
   bootstrap: [AppComponent],
