@@ -44,6 +44,7 @@ import { ChatComponent } from './chat/chat.component';
 import { NotificacionService } from './notification.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
+import { ChatAdminComponent } from '../admin/chat-admin/chat-admin.component';
 
 @NgModule({
   providers: [

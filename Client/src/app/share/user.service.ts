@@ -23,7 +23,6 @@ export class UserService {
     let decodedToken = this.getDecodedToken(localStorage.getItem('token'));
     this.user = new BehaviorSubject<User>(decodedToken);
     this.currentUser$ = this.user.asObservable();
-    console.log('setUser', this.user.value);
   }
 
   // setUser(token: string) {
