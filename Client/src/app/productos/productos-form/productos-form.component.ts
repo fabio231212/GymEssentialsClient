@@ -67,6 +67,15 @@ export class ProductosFormComponent implements OnInit {
     //Subscripción al boolean que indica si esta autenticado
     this.authService.isAuthenticated.subscribe((valor) => (this.isAutenticated = valor));
 
+    this.productoForm.get('descuento').valueChanges.subscribe(descuento => {
+      const precioOriginal = this.productoForm.get('precio').value;
+      if (descuento !== null && descuento >= 0 && descuento < 100) {
+        const precioOferta = precioOriginal - (precioOriginal * descuento / 100);
+        this.productoForm.get('precioOferta').setValue(precioOferta);
+      } else {
+        this.productoForm.get('precioOferta').setValue(null);
+      }
+    });
 
     //Verificar si se envio un id por parametro para crear formulario para actualizar
     this.activeRouter.params.subscribe((params: Params) => {
@@ -104,17 +113,6 @@ export class ProductosFormComponent implements OnInit {
             };
 
             convertImageUrlsToFiles();
-
-            this.productoForm.get('descuento').valueChanges.subscribe(descuento => {
-              const precioOriginal = this.productoForm.get('precio').value;
-              if (descuento !== null && descuento >= 0 && descuento < 100) {
-                const precioOferta = precioOriginal - (precioOriginal * descuento / 100);
-                this.productoForm.get('precioOferta').setValue(precioOferta);
-              } else {
-                this.productoForm.get('precioOferta').setValue(null);
-              }
-            });
-
 
             //Establecer los valores en cada una de las entradas del formulario
             this.productoForm.setValue({
@@ -164,7 +162,6 @@ export class ProductosFormComponent implements OnInit {
       .list('marcas')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
-        // console.log(data);
         this.marcasList = data;
       });
   }
@@ -175,7 +172,6 @@ export class ProductosFormComponent implements OnInit {
       .list('tamannos')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
-        // console.log(data);
         this.tamannosList = data;
       });
   }
@@ -186,7 +182,6 @@ export class ProductosFormComponent implements OnInit {
       .list('categorias')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
-        // console.log(data);
         this.categoriasList = data;
       });
   }
@@ -197,7 +192,6 @@ export class ProductosFormComponent implements OnInit {
       .list('estadoproducto')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
-        // console.log(data);
         this.estadosList = data;
       });
   }
@@ -305,7 +299,6 @@ export class ProductosFormComponent implements OnInit {
       formData.append('imagenes', this.imagenes[i]);
     }
 
-    console.log(formData.get('imagenes'));
     //Accion API create enviando toda la informacion del formulario
     this.gService
       .update('productos', formData)
@@ -331,14 +324,17 @@ export class ProductosFormComponent implements OnInit {
     this.destroy$.unsubscribe();
   }
 
-  capturarImg(event): any {
-    const imagenCapturada = event.target.files[0];
-    this.extraerBase64(imagenCapturada).then((imagen: any) => {
-      this.previsualizacion.push(imagen.base);
-    });
-    this.imagenes.push(imagenCapturada);
+  capturarImg(event: any): any {
+    const imagenesSeleccionadas = event.target.files;
+  
+    for (let i = 0; i < imagenesSeleccionadas.length; i++) {
+      const imagenCapturada = imagenesSeleccionadas[i];
+      this.extraerBase64(imagenCapturada).then((imagen: any) => {
+        this.previsualizacion.push(imagen.base);
+      });
+      this.imagenes.push(imagenCapturada);
+    }
   }
-
   extraerBase64 = async ($event: any) =>
     new Promise((resolve, reject) => {
       try {

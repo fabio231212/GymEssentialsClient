@@ -1,4 +1,4 @@
-<mat-card class="shipping-card" routerLink="no">
+<mat-card class="shipping-card">
     <div fxFlex="100" fxFlex.gt-sm="50" class="p-3" ngClass.sm="mt-3" ngClass.xs="mt-3">
         <h2 class="text-muted text-center mb-3">¿No tienes una cuenta? ¡Regístrate ahora!</h2>
         <form [formGroup]="registerForm" (ngSubmit)="onRegisterFormSubmit()">
@@ -24,20 +24,20 @@
                 <input matInput placeholder="Número Telefónico" formControlName="numCelular" required />
                 <mat-error *ngIf="errorHandling('numCelular', 'required')">El Número Telefónico es requerido</mat-error>
             </mat-form-field>
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Roles</mat-label>
-                    <mat-select formControlName="roles" required>
-                        <mat-option *ngFor="let rol of listRoles" [value]="rol.id">
-                            <span>{{ rol.descripcion }}</span>
-                        </mat-option>
-                        <mat-option [value]="0">
-                            <span>Ambos</span>
-                        </mat-option>
-                    </mat-select>
-                    <mat-error>
-                        El rol es <strong>requerido</strong>
-                    </mat-error>
-                </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Roles</mat-label>
+                <mat-select formControlName="roles" required>
+                    <mat-option *ngFor="let rol of listRoles" [value]="rol.id">
+                        <span>{{ rol.descripcion }}</span>
+                    </mat-option>
+                    <mat-option [value]="0">
+                        <span>Ambos</span>
+                    </mat-option>
+                </mat-select>
+                <mat-error>
+                    El rol es <strong>requerido</strong>
+                </mat-error>
+            </mat-form-field>
             <mat-form-field appearance="outline" class="w-100 mt-1">
                 <mat-label>Clave</mat-label>
                 <input matInput [type]="hide ? 'password' : 'text'" placeholder="Clave usuario"
@@ -63,10 +63,12 @@
                     caracteres</mat-error>
             </mat-form-field>
             <div class="text-center mt-2">
-                <button mat-fab color="primary" class="mat-elevation-z6" (click)="onRegisterFormSubmit()">
+                <button mat-raised-button color="primary" class="mat-elevation-z6" (click)="onRegisterFormSubmit()">
+                    Crear Cuenta
                     <mat-icon>person_add</mat-icon>
                 </button>
-                <button mat-raised-button color="accent" type="reset" (click)="onReset()">Cancelar</button>
+                <button mat-raised-button color="primary" class="mat-elevation-z6" (click)="onReset()"> Cancelar
+                    <mat-icon>cancel</mat-icon></button>
             </div>
         </form>
     </div>

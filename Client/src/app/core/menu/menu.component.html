@@ -123,13 +123,13 @@
   </mat-menu>
 
   <mat-menu #pedidos="matMenu" class="app-dropdown" >
-    <a *ngIf="currentUser.roles.includes('Comprador')"
+    <a *ngIf="currentUser && currentUser.roles.includes('Comprador')"
       mat-menu-item
       [routerLink]="'/facturas/facturasxusuario/' + currentUser.userId"
       [routerLinkActive]="'horizontal-active-link'"
       >Listar pedidos para cliente</a
     >
-    <a *ngIf="currentUser.roles.includes('Vendedor')"
+    <a *ngIf="currentUser && currentUser.roles.includes('Vendedor')"
       mat-menu-item
       [routerLink]="'/facturas/facturasxvendedor/'+ currentUser.userId"
       [routerLinkActive]="'horizontal-active-link'"
