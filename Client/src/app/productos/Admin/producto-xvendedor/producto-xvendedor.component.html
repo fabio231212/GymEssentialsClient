@@ -7,6 +7,7 @@
         matTooltip="Crear Videojuego"
         aria-label="Crear Videojuego"
         color="primary"
+        (click)="crearProducto()"
       >
         <mat-icon>add</mat-icon>
       </a>
@@ -46,6 +47,7 @@
               matTooltip="Actualizar Videjuego"
               aria-label="Actualizar Videjuego"
               color="primary"
+              (click)="actualizarProducto(row.id)"
               >
                 <mat-icon class="mat-18">edit</mat-icon>
               </button>

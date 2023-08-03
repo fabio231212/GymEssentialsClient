@@ -1,0 +1,12 @@
+<mat-card class="p-4" routerLink="no">
+    <div fxLayout="column">
+        <nav mat-tab-nav-bar backgroundColor="primary" [tabPanel]="tabPanel">
+            <a mat-tab-link [routerLink]="['/usuario/login']" routerLinkActive="active-link">Login</a>
+            <a mat-tab-link [routerLink]="['/usuario/registrar']" routerLinkActive="active-link">Registrarse</a>
+        </nav>
+        <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+        <div class="mat-tab-body-content">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</mat-card>
