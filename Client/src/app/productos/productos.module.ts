@@ -8,9 +8,7 @@ import { ProductsAllComponent } from './products-all/products-all.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductosFormComponent } from './productos-form/productos-form.component';
 import { ProductZoomComponent } from './product-detail/product-zoom/product-zoom.component';
-import { ReactiveFormsModule } from '@angular/forms';
-
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,10 +24,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     NgxPaginationModule,
     ShareModule,
     ReactiveFormsModule,
-  ], 
-
-  
+  ],
 })
-export class ProductosModule {
-
-}
+export class ProductosModule {}

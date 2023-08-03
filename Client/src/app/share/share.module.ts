@@ -45,6 +45,7 @@ import { NotificacionService } from './notification.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
 import { ChatAdminComponent } from '../admin/chat-admin/chat-admin.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   providers: [
@@ -56,6 +57,7 @@ import { ChatAdminComponent } from '../admin/chat-admin/chat-admin.component';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule,
     SwiperModule,
     TranslateModule,

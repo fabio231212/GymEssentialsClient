@@ -18,11 +18,13 @@ import { SwiperModule } from './core/swiper/swiper.module';
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { ToastrModule } from 'ngx-toastr';
 import { AdminModule } from './admin/admin.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
     GoogleMapsModule,

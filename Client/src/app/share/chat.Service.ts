@@ -32,8 +32,12 @@ export class UserChatService {
       console.log('Conectado al servidor');
       this.socket.emit('entrarChat', this.user, (resp: any) => {
         console.log('Usuarios conectados', resp);
+        this.addToChat(resp);
       });
     });
+
+
+
   }
   saveCart(): void {
     localStorage.setItem(
@@ -103,23 +107,30 @@ export class UserChatService {
   }
 
   sendMessage(idVendedor: number | null, message: string) {
-    if (this.getItems != null) {
-      this.socket.emit(
-        'mensajePrivado',
-        { para: this.socketId, mensaje: message },
-        (resp: any) => {
-          // console.log('respuesta server:', resp);
-        }
-      );
-    } else {
-      this.socket.emit(
-        'mensajePrivado',
-        { para: idVendedor, mensaje: message },
-        (resp: any) => {
-          // console.log('respuesta server:', resp);
-        }
-      );
-    }
+    // if (this.getItems != null) {
+    //   this.socket.emit(
+    //     'mensajePrivado',
+    //     { para: this.socketId, mensaje: message },
+    //     (resp: any) => {
+    //       // console.log('respuesta server:', resp);
+    //     }
+    //   );
+    // } else {
+    //   this.socket.emit(
+    //     'mensajePrivado',
+    //     { para: idVendedor, mensaje: message },
+    //     (resp: any) => {
+    //       // console.log('respuesta server:', resp);
+    //     }
+    //   );
+    // }
+    this.socket.emit(
+      'mensajePrivado',
+      { para: idVendedor, mensaje: message },
+      (resp: any) => {
+        // console.log('respuesta server:', resp);
+      }
+    );
   }
 
   getMessage(): Observable<any> {
@@ -127,7 +138,22 @@ export class UserChatService {
       // Escuchar eventos de 'mensajePrivado' del servidor
       this.socket.on('mensajePrivado', (data: any) => {
         console.log('Mensaje recibido:', data);
-        this.addToChat(data);
+        //  this.addToChat(data);
+        this.socketId = data.id;
+        observer.next(data);
+      });
+    });
+  }
+
+  getListaPersonas(): Observable<any> {
+    return new Observable<{ user: any }>((observer) => {
+      this.socket.on('listaPersona', (data: any) => {
+        this.deleteCart();
+        console.log('Usuarios conectados: ', data);
+        data.forEach(element => {
+          this.addToChat(element);
+        });
+
         this.socketId = data.id;
         observer.next(data);
       });
@@ -144,13 +170,13 @@ export class UserChatService {
     });
   }
 
-  getNoti(): Observable<any> {
-    return new Observable<{ user: string; message: string }>((observer) => {
-      // Escuchar eventos de 'mensajePrivado' del servidor
-      this.socket.on('noti', (data: any) => {
-        this.addToChat(data);
-        observer.next(data);
-      });
-    });
-  }
+  // getNoti(): Observable<any> {
+  //   return new Observable<{ user: string; message: string }>((observer) => {
+  //     // Escuchar eventos de 'mensajePrivado' del servidor
+  //     this.socket.on('noti', (data: any) => {
+  //       this.addToChat(data);
+  //       observer.next(data);
+  //     });
+  //   });
+  // }
 }
