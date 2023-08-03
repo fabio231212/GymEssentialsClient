@@ -26,7 +26,7 @@ const routes: Routes = [
     path: 'productos/productoxvendedor/:idVendedor',
     component: ProductoXVendedorComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['Administrador'], breadcrumb: 'Lista de productos' },
+    data: { roles: ['Administrador', 'Vendedor'], breadcrumb: 'Lista de productos' },
   },
   {
     path: 'productos/crear',

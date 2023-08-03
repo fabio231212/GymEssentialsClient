@@ -5,6 +5,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import * as e from 'express';
 import { Subject, takeUntil } from 'rxjs';
 import { GenericService } from 'src/app/share/generic.service';
+import { UserService } from 'src/app/share/user.service';
 
 @Component({
   selector: 'app-productos-form',
@@ -14,6 +15,7 @@ import { GenericService } from 'src/app/share/generic.service';
 export class ProductosFormComponent implements OnInit {
   public previsualizacion: any[] = [];
   public imagenes: any[] = [];
+
   destroy$: Subject<boolean> = new Subject<boolean>();
   //Titulo
   titleForm: string = 'Crear';
@@ -42,13 +44,16 @@ export class ProductosFormComponent implements OnInit {
   //errores de las imagenes
   errorImagenes: boolean = false;
   mensajeErrorImagenes: string = '';
+  isAutenticated: boolean;
+  currentUser: any;
 
   constructor(
     private sanitizer: DomSanitizer,
     private fb: FormBuilder,
     private gService: GenericService,
     private router: Router,
-    private activeRouter: ActivatedRoute
+    private activeRouter: ActivatedRoute,
+    private authService: UserService
   ) {
     this.formularioReactive();
     this.listaMarcas();
@@ -57,6 +62,12 @@ export class ProductosFormComponent implements OnInit {
     this.listaEstadosProductos();
   }
   ngOnInit(): void {
+
+    this.authService.currentUser.subscribe((x)=>(this.currentUser=x));
+    //Subscripción al boolean que indica si esta autenticado
+    this.authService.isAuthenticated.subscribe((valor)=>(this.isAutenticated=valor));
+
+
     //Verificar si se envio un id por parametro para crear formulario para actualizar
     this.activeRouter.params.subscribe((params: Params) => {
       this.idProducto = params['id'];
@@ -71,6 +82,7 @@ export class ProductosFormComponent implements OnInit {
             this.productoInfo = data;
             this.previsualizacion = data.imagenes.map(({ imgUrl }) => imgUrl);
             this.mostrarDescuento = (this.productoInfo.descuento > 0 ? true : false);
+
             const fetchImageAsBlob = async (imageUrl) => {
               const response = await fetch(imageUrl);
               const blobData = await response.blob();
@@ -95,7 +107,7 @@ export class ProductosFormComponent implements OnInit {
 
             this.productoForm.get('descuento').valueChanges.subscribe(descuento => {
               const precioOriginal = this.productoForm.get('precio').value;
-              if (descuento !== null && descuento >= 0 && descuento <= 100) {
+              if (descuento !== null && descuento >= 0 && descuento < 100) {
                 const precioOferta = precioOriginal - (precioOriginal * descuento / 100);
                 this.productoForm.get('precioOferta').setValue(precioOferta);
               } else {
@@ -134,9 +146,9 @@ export class ProductosFormComponent implements OnInit {
       ],
       descripcion: [null, Validators.compose([Validators.required, Validators.minLength(50)])],
       stock: [null, Validators.required],
-      descuento: [null, Validators.required],
+      // descuento: [null, Validators.required],
       precio: [null, Validators.required],
-      precioOferta: [null, Validators.required],
+      // precioOferta: [null, Validators.required],
       estadoProductoId: [null, Validators.required],
       categoriaProductoId: [null, Validators.required],
       marcas: [null, [Validators.required]],
@@ -200,7 +212,7 @@ export class ProductosFormComponent implements OnInit {
     if (this.productoForm.invalid) {
       return;
     }
-    console.log(this.imagenes);
+    
     if(this.imagenes.length <= 0 || this.imagenes == null){
       this.errorImagenes = true;
       this.mensajeErrorImagenes = 'Debe agregar al menos una imagen';
@@ -216,7 +228,6 @@ export class ProductosFormComponent implements OnInit {
 
     // Asegurar que marcas y tamannos sean matrices de objetos
     formValue.marcas = formValue.marcas.map((id: number) => ({ id: id }));
-    console.log(formValue.marcas);
     formValue.tamannos = formValue.tamannos.map((id: number) => ({ id: id }));
 
     // Agregar los datos al FormData
@@ -232,6 +243,7 @@ export class ProductosFormComponent implements OnInit {
       }
     });
 
+    formData.append('usuarioId', this.currentUser.userId);
     for (let i = 0; i < this.imagenes.length; i++) {
       formData.append('imagenes', this.imagenes[i]);
     }
@@ -287,6 +299,8 @@ export class ProductosFormComponent implements OnInit {
       }
     });
 
+    formData.append('usuarioId', this.currentUser.userId);
+
     for (let i = 0; i < this.imagenes.length; i++) {
       formData.append('imagenes', this.imagenes[i]);
     }
@@ -323,7 +337,6 @@ export class ProductosFormComponent implements OnInit {
       this.previsualizacion.push(imagen.base);
     });
     this.imagenes.push(imagenCapturada);
-    console.log(this.imagenes);
   }
 
   extraerBase64 = async ($event: any) =>
@@ -352,7 +365,6 @@ export class ProductosFormComponent implements OnInit {
     if (index >= 0 && index < this.previsualizacion.length) {
       this.previsualizacion.splice(index, 1); // Elimina la imagen de la lista de previsualización
       this.imagenes.splice(index, 1); // Elimina la imagen de la lista de imágenes capturadas
-      console.log(this.imagenes);
     }
   }
 

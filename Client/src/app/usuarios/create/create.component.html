@@ -1,0 +1,73 @@
+<mat-card class="shipping-card" routerLink="no">
+    <div fxFlex="100" fxFlex.gt-sm="50" class="p-3" ngClass.sm="mt-3" ngClass.xs="mt-3">
+        <h2 class="text-muted text-center mb-3">¿No tienes una cuenta? ¡Regístrate ahora!</h2>
+        <form [formGroup]="registerForm" (ngSubmit)="onRegisterFormSubmit()">
+            <mat-form-field appearance="outline" class="w-100 mt-2">
+                <mat-label>Nombre</mat-label>
+                <input matInput placeholder="Nombre Completo" formControlName="nombre" required>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100 mt-2">
+                <mat-label>Apellidos</mat-label>
+                <input matInput placeholder="Apellidos" formControlName="apellidos" required>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100 mt-2">
+                <mat-label>Identificación</mat-label>
+                <input matInput placeholder="id" formControlName="cedula" required>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100 mt-2">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Email" formControlName="email" required />
+                <mat-error *ngIf="errorHandling('email', 'required')">El email es requerido</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100 mt-2">
+                <mat-label>Número Telefónico</mat-label>
+                <input matInput placeholder="Número Telefónico" formControlName="numCelular" required />
+                <mat-error *ngIf="errorHandling('numCelular', 'required')">El Número Telefónico es requerido</mat-error>
+            </mat-form-field>
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Roles</mat-label>
+                    <mat-select formControlName="roles" required>
+                        <mat-option *ngFor="let rol of listRoles" [value]="rol.id">
+                            <span>{{ rol.descripcion }}</span>
+                        </mat-option>
+                        <mat-option [value]="0">
+                            <span>Ambos</span>
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>
+                        El rol es <strong>requerido</strong>
+                    </mat-error>
+                </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100 mt-1">
+                <mat-label>Clave</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" placeholder="Clave usuario"
+                    formControlName="clave" />
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="errorHandling('clave', 'required')">La clave es requerida</mat-error>
+                <mat-error *ngIf="errorHandling('clave', 'minlength')">La clave debe de tener al menos 6
+                    caracteres</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100 mt-1">
+                <mat-label>Confirmar clave</mat-label>
+                <input matInput [type]="hide2 ? 'password' : 'text'" placeholder=" Confirmar Clave"
+                    formControlName="confirmpassword" />
+                <button mat-icon-button matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="errorHandling('confirmpassword', 'required')">La clave es requerida</mat-error>
+                <mat-error *ngIf="errorHandling('confirmpassword', 'minlength')">La clave debe de tener al menos 6
+                    caracteres</mat-error>
+            </mat-form-field>
+            <div class="text-center mt-2">
+                <button mat-fab color="primary" class="mat-elevation-z6" (click)="onRegisterFormSubmit()">
+                    <mat-icon>person_add</mat-icon>
+                </button>
+                <button mat-raised-button color="accent" type="reset" (click)="onReset()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</mat-card>

@@ -1,0 +1,36 @@
+/* Estilos para las pestañas */
+.mat-tab-link {
+    padding: 10px 20px;
+    // border: 1px solid transparent black;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    margin: 0 2px;
+    text-decoration: none;
+    color: #333;
+    background-color: #f1f1f1;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .mat-tab-link.active-link {
+    background-color: #fff;
+    border-color: #ccc;
+  }
+  
+  .mat-tab-nav-bar {
+    display: flex;
+    justify-content: space-between;
+    background-color: #f1f1f1;
+    border-bottom: 1px solid #ccc;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+  
+  /* Estilos para el contenido de las pestañas */
+  .mat-tab-body-content {
+    padding: 20px;
+    border-top: none;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    margin-top: 15px; /* Agregamos un margen para separar el contenido del tab */
+  }
+  

@@ -13,6 +13,7 @@ import { AppService } from '../../app.service';
 import { Category } from '../../app.models';
 import { SidenavMenuService } from '../sidenav-menu/sidenav-menu.service';
 import { isPlatformBrowser } from '@angular/common';
+import { UserService } from 'src/app/share/user.service';
 
 // TOP MENU
 import { TranslateService } from '@ngx-translate/core';
@@ -30,7 +31,8 @@ export class TopMenuComponent implements OnInit {
   public category: Category;
   public sidenavMenuItems: Array<any>;
   @ViewChild('sidenav', { static: true }) sidenav: any;
-  userLogged: any;
+  isAutenticated: boolean;
+  currentUser: any;
   // TOP MENU
   public currencies = ['USD', 'EUR'];
   public currency: any;
@@ -42,13 +44,18 @@ export class TopMenuComponent implements OnInit {
     // public translateService: TranslateService,
     public sidenavMenuService: SidenavMenuService,
     public router: Router,
+    private authService: UserService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.settings = this.appSettings.settings;
-    this.userLogged = localStorage.getItem('user');
   }
 
   ngOnInit() {
+     //Subscripción a la información del usuario actual
+     this.authService.currentUser.subscribe((x)=>(this.currentUser=x));
+     //Subscripción al boolean que indica si esta autenticado
+     this.authService.isAuthenticated.subscribe((valor)=>(this.isAutenticated=valor));
+
     // PAGES
     // this.getCategories();
     this.sidenavMenuItems = this.sidenavMenuService.getSidenavMenuItems();
@@ -195,6 +202,8 @@ export class TopMenuComponent implements OnInit {
 
   public logout() {
     localStorage.removeItem('token');
-    this.router.navigate(['/login']);
+    this.authService.logout();
+    this.router.navigate(['/inicio']);
+    // this.router.navigate(['/login']);
   }
 }

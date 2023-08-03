@@ -1,21 +1,23 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import {MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GenericService } from 'src/app/share/generic.service';
-import { id } from '@swimlane/ngx-charts';
+import { UserService } from 'src/app/share/user.service';
 
 @Component({
   selector: 'app-producto-xvendedor',
   templateUrl: './producto-xvendedor.component.html',
   styleUrls: ['./producto-xvendedor.component.scss']
 })
-export class ProductoXVendedorComponent   {
+export class ProductoXVendedorComponent implements OnInit  {
   datos:any;
   destroy$:Subject<boolean>=new Subject<boolean>();
-  
+  isAutenticated: boolean;
+  currentUser: any;
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   //@ViewChild(MatTable) table!: MatTable<VideojuegoAllItem>;
@@ -26,13 +28,23 @@ export class ProductoXVendedorComponent   {
 
   constructor(private router:Router,
     private route:ActivatedRoute,
-    private gService:GenericService) {
+    private gService:GenericService,
+    private authService: UserService,) {
     
       let id=this.route.snapshot.paramMap.get('idVendedor');
       if(!isNaN(Number(id))){
         this.listaProductoXvendedor(Number(id));
       }
   }
+
+  
+  ngOnInit() {
+    //Subscripción a la información del usuario actual
+    this.authService.currentUser.subscribe((x)=>(this.currentUser=x));
+    //Subscripción al boolean que indica si esta autenticado
+    this.authService.isAuthenticated.subscribe((valor)=>(this.isAutenticated=valor));
+
+ }
 
   listaProductoXvendedor(idVendedor:any){
     //localhost:3000/videojuego
@@ -52,17 +64,17 @@ export class ProductoXVendedorComponent   {
   //     relativeTo:this.route
   //   })
   // }
-  // actualizarVideojuego(id: number) {
-  //   this.router.navigate(['/videojuego/update', id], {
-  //     relativeTo: this.route,
-  //   });
-  // }
+  actualizarProducto(id: number) {
+    this.router.navigate(['/productos/editar', id], {
+      relativeTo: this.route,
+    });
+  }
 
-  // crearVideojuego() {
-  //   this.router.navigate(['/videojuego/create'], {
-  //     relativeTo: this.route,
-  //   });
-  // }
+  crearProducto() {
+    this.router.navigate(['/productos/crear'], {
+      relativeTo: this.route,
+    });
+  }
 
   ngOnDestroy(){
     this.destroy$.next(true);

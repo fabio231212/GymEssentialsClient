@@ -6,9 +6,11 @@ import { LoginComponent } from './login/login.component';
 import { ShareModule } from '../share/share.module';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotificacionService } from '../share/notification.service';
+import { CreateComponent } from './create/create.component';
+import { IndexComponent } from './index/index.component';
 
 @NgModule({
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, CreateComponent, IndexComponent],
   imports: [
     CommonModule,
     UsuariosRoutingModule,
