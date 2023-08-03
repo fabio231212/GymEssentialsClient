@@ -13,60 +13,47 @@ export class ChatComponent {
   @Input('idVendedor') idVendedor: number;
   // socket: Socket;
   // socketId: string;
+  showChatBox: boolean = true;
+  mensaje: string;
+  messages: { timestamp: string; sender: string; content: string, isSended: boolean }[] = [];
+
 
   constructor(
     private userService: UserService,
     private chatService: UserChatService
   ) {
-    this.chatService.currentDataUserChat$.subscribe((data) => {});
-    this.userService.currentUser$.subscribe((data) => {});
+    this.chatService.currentDataUserChat$.subscribe((data) => { });
+    this.userService.currentUser$.subscribe((data) => { });
   }
 
   ngOnInit() {
     this.chatService.getMessage().subscribe((data) => {
-      console.log(data);
+      const dateParsed = new Date(data.fecha);
+      this.createMessage(data.mensaje, data.nombre, dateParsed.toLocaleTimeString(), false)
+      console.log('Mensaje Recibido' + data);
     });
-    this.chatService.getNoti().subscribe((data) => {
-      console.log('Mensaje Enviado' + data);
+    this.chatService.getListaPersonas().subscribe((data) => {
+      console.log('Usuarios conectados' + data);
     });
 
-    //let user = this.userService.currentUserValue;
+  }
 
-    // this.socket = io('http://localhost:8000');
-    // this.socket.on('connect', () => {
-    //   console.log('Conectado al servidor');
-    //   // Separar el objeto de datos del callback y pasarlos como argumentos separados
-    //   this.socket.emit('entrarChat', user, (resp: any) => {
-    //     console.log('Usuarios conectados', resp);
-    //   });
-    //   // Escuchar eventos de 'mensajePrivado' del servidor
-    //   this.socket.on('mensajePrivado', (data: any) => {
-    //     console.log('Mensaje recibido:', data);
-    //     this.chatService.addToChat(data);
-    //     this.socketId = data.id;
-    //   });
-    // });
+  toggleChat() {
+    this.showChatBox = !this.showChatBox; // Cambia el valor de la variable (mostrar/ocultar)
   }
 
   sendMessage() {
-    // if (this.chatService.getItems != null) {
-    //   this.socket.emit(
-    //     'mensajePrivado',
-    //     { para: this.socketId, mensaje: 'hola' },
-    //     (resp: any) => {
-    //       // console.log('respuesta server:', resp);
-    //     }
-    //   );
-    // } else {
-    //   this.socket.emit(
-    //     'mensajePrivado',
-    //     { para: this.idVendedor, mensaje: 'hola' },
-    //     (resp: any) => {
-    //       // console.log('respuesta server:', resp);
-    //     }
-    //   );
-    // }
-    this.chatService.sendMessage(this.idVendedor, 'hola');
+
+    if (this.mensaje.trim() !== '') {
+    }
+    this.chatService.sendMessage(this.idVendedor, this.mensaje);
+    this.createMessage(this.mensaje, 'Usted', new Date().toLocaleTimeString(), true);
+  }
+
+  createMessage(content: string, sender: string, timestamp: string, isSended: boolean) {
+
+    this.messages.push({ timestamp, sender, content, isSended });
+    this.mensaje = '';
   }
 
   ngonDestroy() {
@@ -74,36 +61,5 @@ export class ChatComponent {
       console.log(data);
     });
   }
-  // this.socket.on('mensajePrivado', function () {
-  //   // console.log('Conectado al servidor');
 
-  //   this.socket.emit(
-  //     'mensajePrivado',
-  //     { usuario: 'fernando' },
-  //     function (resp) {
-  //       console.log('Usuarios conectados', resp);
-  //     }
-  //   );
-  // });
-
-  // this.socket.on('disconnect', function () {
-  //   console.log('Perdimos conexión con el servidor');
-  // });
-
-  // ngOnInit() {
-  //   // this.socket = io('http://localhost:8000'); // Reemplaza con la URL de tu servidor Socket.IO
-  //   // let paras = new URLSearchParams(window.location.search);
-  //   // // this.socket.on('entrarChat', (data: string) => {
-  //   // //   this.messages.push(data);
-  //   // // });
-  //   // this.socket.on('connect', () => {
-  //   //   console.log('Conectado al servidor');
-  //   //   this.socket.emit('entrarChat', { usuario: 'fernando' });
-  //   // });
-  //   // this.sendMessage();
-  // }
-  // sendMessage() {
-  //   this.socket.emit('entrarChat', this.message);
-  //   this.message = '';
-  // }
 }

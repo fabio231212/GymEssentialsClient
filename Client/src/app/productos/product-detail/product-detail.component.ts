@@ -5,6 +5,8 @@ import {
   UntypedFormGroup,
   FormControl,
   Validators,
+  FormGroup,
+  FormBuilder,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -16,13 +18,16 @@ import { Product } from '../../app.models';
 import { ProductZoomComponent } from './product-zoom/product-zoom.component';
 import { GenericService } from 'src/app/share/generic.service';
 import { Subject, takeUntil, switchMap } from 'rxjs';
+import { UserService } from 'src/app/share/user.service';
+import { NotificacionService, TipoMessage } from 'src/app/share/notification.service';
+import { Comentario, ComentarioService } from 'src/app/share/comentarios.service';
 
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.scss'],
 })
-export class ProductDetailComponent  {
+export class ProductDetailComponent {
   @ViewChild('zoomViewer', { static: true }) zoomViewer;
   @ViewChild(SwiperDirective, { static: true }) directiveRef: SwiperDirective;
   public config: SwiperConfigInterface = {};
@@ -31,17 +36,23 @@ export class ProductDetailComponent  {
   public zoomImage: any;
   datos: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
-  public form: UntypedFormGroup;
+  public form: FormGroup;
   public relatedProducts: Array<any>;
   public idProducto: number;
+  calificacionSeleccionada: number = 0;
+  comentarios: Comentario[] = [];
+  user: any;
 
   constructor(
     public appService: AppService,
+    private userService: UserService,
+    private notiService: NotificacionService,
     private activatedRoute: ActivatedRoute,
     public dialog: MatDialog,
-    public formBuilder: UntypedFormBuilder,
+    public formBuilder: FormBuilder,
     private gService: GenericService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private commentService: ComentarioService
   ) {
     let id = this.route.snapshot.paramMap.get('idProducto');
     if (!isNaN(Number(id))) {
@@ -51,7 +62,63 @@ export class ProductDetailComponent  {
         }
       });
       this.idProducto = Number(id);
+      this.reactiveForm();
+
     }
+
+  }
+  reactiveForm() {
+    this.form = this.formBuilder.group({
+      review: [null, [Validators.required, Validators.minLength(10)]],
+      anonimo: [false],
+    });
+
+  }
+
+  public errorHandling = (control: string, error: string) => {
+    return this.form.controls[control].hasError(error);
+  };
+
+  ngOnInit() {
+    this.commentService.comentarios$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((comentarios) => (this.comentarios = comentarios));
+    this.userService.currentUser$.subscribe((data) => {
+      this.user = data;
+    });
+  }
+
+  sendReview() {
+
+    if (this.form.invalid) {
+      return;
+    }
+    if (this.calificacionSeleccionada == 0) {
+      this.notiService.mensaje('Comentario', 'Seleccione una calificación', TipoMessage.warning);
+      return;
+    }
+    const data = {
+      comentario: this.form.value.review,
+      calificacion: this.calificacionSeleccionada,
+      productoId: this.idProducto,
+      usuarioId: this.form.get('anonimo').value ? null : this.userService.currentUserValue.userId,
+      fecha: new Date()
+    }
+    this.gService.create('comentario', data)
+      .pipe(takeUntil(this.destroy$)).subscribe((resp: any) => {
+        if (resp) {
+          this.commentService.agregarComentario(resp);
+          this.form.reset();
+          this.calificacionSeleccionada = 0;
+          this.notiService.mensaje('Comentario', 'Comentario enviado con éxito', TipoMessage.success);
+        }
+      });
+
+  }
+
+
+  onReset() {
+    this.form.reset();
   }
 
 
@@ -85,12 +152,19 @@ export class ProductDetailComponent  {
       console.log(data);
       this.datos = data;
       this.image = this.datos.imagenes[0].imgUrl;
+
+      if (Array.isArray(data.comentariosProducto)) {
+        for (const comentario of data.comentariosProducto) {
+          this.commentService.agregarComentario(comentario);
+        }
+      }
     } catch (error) {
       console.error(error);
     }
+
   }
 
-  
+
   public getRelatedProducts(idCategoria: any) {
     this.gService
       .list('productos/categoria/' + idCategoria)
@@ -138,5 +212,12 @@ export class ProductDetailComponent  {
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
+  }
+  getStars(cantidad: number): number[] {
+    return Array.from({ length: cantidad });
+  }
+
+  seleccionarCalificacion(calificacion: number) {
+    this.calificacionSeleccionada = calificacion;
   }
 }

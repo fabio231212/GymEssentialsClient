@@ -9,40 +9,7 @@
                 <input type="hidden" formControlName="id" />
 
                 <!-- PREVIEW IMAGEN -->
-                <!-- <div fxFlex="100" fxFlex.gt-sm="40" class="px-2">
-                    <input (change)="capturarImg($event)" type="file" multiple accept="image/*"
-                        formControlName="imagenes" />
-                    <div *ngIf="previsualizacion">
-                        <div *ngFor="let imagen of previsualizacion; let i = index">
-                            <img [src]="imagen" alt="Imagen {{ i }}" />
-                            <button type="button" (click)="eliminarImagen(i)">Eliminar</button>
-                        </div>
-                    </div>
-                    <mat-error *ngIf="errorImagenes">
-                        <strong>{{mensajeErrorImagenes}}</strong></mat-error>
-                </div> -->
 
-                <!-- <mat-grid-list cols="2" rowHeight="1:1" fxFlex="100" fxFlex.gt-sm="40" class="px-2" >
-                    <mat-grid-tile>
-                        <mat-card class="card-size addImage">
-                            <input (change)="capturarImg($event)" type="file" multiple accept="image/*" id="fileInput"
-                                class="hidden-input" />
-                            <label for="fileInput" class="image-upload-label">
-                                <img src="http://localhost:8000/public/AddImage.png" class="product-image" mat-card-image>
-                            </label>
-                        </mat-card>
-                    </mat-grid-tile>
-                    <div *ngIf="previsualizacion">
-                        <mat-grid-tile *ngFor="let imagen of previsualizacion; let i = index">
-                            <mat-card class="card-size">
-                                <img [src]="imagen" alt="Imagen {{ i }}" class="product-image" mat-card-image>
-                                <div class="mat-card-actions">
-                                    <button (click)="eliminarImagen(i)" class="btn-eliminar"> <mat-icon>delete</mat-icon></button>
-                                </div>
-                            </mat-card>
-                        </mat-grid-tile>
-                    </div>
-                </mat-grid-list>  -->
 
                 <div fxFlex="100" fxFlex.gt-sm="40" class="px-2">
                     <div class="image-grid">

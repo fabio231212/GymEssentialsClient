@@ -15,17 +15,23 @@ export class ChatAdminComponent {
     private userService: UserService,
     private chatService: UserChatService
   ) {
-    this.chatService.currentDataUserChat$.subscribe((data) => {});
+    this.chatService.currentDataUserChat$.subscribe((data) => { });
     this.userService.currentUser$.subscribe((data) => {
       this.user = data;
     });
   }
 
   ngOnInit(): void {
-    this.chatService.getMessage().subscribe((data) => {
-      console.log(data);
-      this.messages.push(data);
-    });
+    if (this.user) {
+      this.chatService.getMessage().subscribe((data) => {
+        console.log(data);
+        this.messages.push(data);
+      });
+      this.chatService.getListaPersonas().subscribe((data) => {
+        console.log(data);
+      });
+
+    }
   }
   sendMessage() {
     const idSocket = this.messageDiv.nativeElement.getAttribute('idSocket');

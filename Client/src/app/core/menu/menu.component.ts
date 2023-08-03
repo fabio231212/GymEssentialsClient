@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/share/user.service';
 
 @Component({
   selector: 'app-menu',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit {
-  
-  constructor() { }
+  isAutenticated: boolean;
+  currentUser: any;
+  constructor(    private authService: UserService,) { }
 
-  ngOnInit() { }
+  ngOnInit() {      
+    this.authService.currentUser.subscribe((x)=>(this.currentUser=x));
+    //Subscripción al boolean que indica si esta autenticado
+    this.authService.isAuthenticated.subscribe((valor)=>(this.isAutenticated=valor));}
 
   openMegaMenu(){
     let pane = document.getElementsByClassName('cdk-overlay-pane');

@@ -3,22 +3,26 @@ import { RouterModule, Routes } from '@angular/router';
 import { FacturasxclienteComponent } from './facturasxcliente/facturasxcliente.component';
 import { FacturaDetailComponent } from './factura-detail/factura-detail.component';
 import { ProdfactxvendedorComponent } from './prodfactxvendedor/prodfactxvendedor.component';
+import { AuthGuard } from '../share/auth.guard';
 
 const routes: Routes = [
   {
     path: 'facturas/:idFactura',
     component: FacturaDetailComponent,
-    data: { breadcrumb: 'Detalle Factura' },
+    canActivate: [AuthGuard],
+    data: { roles: ['Administrador', 'Vendedor', 'Comprador'], breadcrumb: 'Detalle Factura' },
   },
   {
     path: 'facturas/facturasxusuario/:idUsuario',
     component: FacturasxclienteComponent,
-    data: { breadcrumb: 'Listado de facturas' },
+    canActivate: [AuthGuard],
+    data: { roles: ['Administrador', 'Vendedor', 'Comprador'], breadcrumb: 'Facturas por Usuario' },
   },
   {
     path: 'facturas/facturasxvendedor/:idVendedor',
     component: ProdfactxvendedorComponent,
-    data: { breadcrumb: 'Listado de Productos por Vendedor' },
+    canActivate: [AuthGuard],
+    data: { roles: ['Administrador', 'Vendedor'], breadcrumb: 'Listado de Facturas por Vendedor' },
   },
 ];
 
@@ -26,4 +30,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class FacturasRoutingModule {}
+export class FacturasRoutingModule { }

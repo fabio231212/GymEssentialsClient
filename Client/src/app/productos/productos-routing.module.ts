@@ -10,35 +10,31 @@ const routes: Routes = [
   {
     path: 'productos',
     component: ProductsAllComponent,
-    canActivate: [AuthGuard],
-    data: {roles: ['Administrador','Vendedor','Comprador'], breadcrumb: 'Lista de Producto' },
+    data: { breadcrumb: 'Lista de Producto'},
   },
   {
     path: 'productos/productodetalle/:idProducto',
     component: ProductDetailComponent,
   },
   {
-    path: 'productos',
-    component: ProductsAllComponent,
-    data: { breadcrumb: 'Lista de productos' },
-  },
-  {
     path: 'productos/productoxvendedor/:idVendedor',
     component: ProductoXVendedorComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['Administrador'], breadcrumb: 'Lista de productos' },
+    data: { roles: ['Administrador', 'Vendedor'], breadcrumb: 'Producto por Vendedor' },
   },
   {
     path: 'productos/crear',
     component: ProductosFormComponent,
     // canActivate: [AuthGuard],
-    data: {breadcrumb: 'Crear Productos' },
+    canActivate: [AuthGuard],
+    data: { roles: ['Administrador', 'Vendedor'], breadcrumb: 'Crear Producto' },
   },
   {
     path: 'productos/editar/:id',
     component: ProductosFormComponent,
     // canActivate: [AuthGuard],
-    data: {breadcrumb: 'Lista de productos' },
+    canActivate: [AuthGuard],
+    data: { roles: ['Administrador', 'Vendedor'], breadcrumb: 'Editar Producto' },
   },
 ];
 
@@ -46,4 +42,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ProductosRoutingModule {}
+export class ProductosRoutingModule { }
