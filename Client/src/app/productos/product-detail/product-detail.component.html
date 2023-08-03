@@ -4,13 +4,11 @@
       <mat-chip-listbox *ngIf="datos?.descuento > 0">
         <mat-chip-option color="warn" highlighted selectable="false">{{ datos.descuento }}% OFF</mat-chip-option>
       </mat-chip-listbox>
-      <button mat-icon-button (click)="openZoomViewer()" fxHide="false" fxHide.gt-md>
+      <button mat-icon-button fxHide="false" fxHide.gt-md>
         <mat-icon>fullscreen</mat-icon>
       </button>
-      <button mat-icon-button (click)="openZoomViewer()" fxHide="false"
-        fxHide.gt-md><mat-icon>fullscreen</mat-icon></button>
-      <img *ngIf="image" [src]="image" (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave($event)"
-        class="product-image" />
+      <button mat-icon-button fxHide="false" fxHide.gt-md><mat-icon>fullscreen</mat-icon></button>
+      <img *ngIf="image" [src]="image" class="product-image" />
     </mat-card>
 
     <div class="small-carousel">

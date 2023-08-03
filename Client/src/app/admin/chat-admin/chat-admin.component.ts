@@ -16,7 +16,7 @@ export class ChatAdminComponent {
     private chatService: UserChatService
   ) {
     this.chatService.currentDataUserChat$.subscribe((data) => { });
-    this.userService.currentUser$.subscribe((data) => {
+    this.userService.currentUser.subscribe((data) => {
       this.user = data;
     });
   }

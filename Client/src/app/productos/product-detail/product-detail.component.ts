@@ -83,7 +83,7 @@ export class ProductDetailComponent {
     this.commentService.comentarios$
       .pipe(takeUntil(this.destroy$))
       .subscribe((comentarios) => (this.comentarios = comentarios));
-    this.userService.currentUser$.subscribe((data) => {
+    this.userService.currentUser.subscribe((data) => {
       this.user = data;
     });
   }
@@ -180,34 +180,34 @@ export class ProductDetailComponent {
     this.zoomImage = image.imgUrl;
   }
 
-  public onMouseMove(e) {
-    if (window.innerWidth >= 1280) {
-      var image, offsetX, offsetY, x, y, zoomer;
-      image = e.currentTarget;
-      offsetX = e.offsetX;
-      offsetY = e.offsetY;
-      x = (offsetX / image.offsetWidth) * 100;
-      y = (offsetY / image.offsetHeight) * 100;
-      zoomer = this.zoomViewer.nativeElement.children[0];
-      if (zoomer) {
-        zoomer.style.backgroundPosition = x + '% ' + y + '%';
-        zoomer.style.display = 'block';
-        zoomer.style.height = image.height + 'px';
-        zoomer.style.width = image.width + 'px';
-      }
-    }
-  }
+  // public onMouseMove(e) {
+  //   if (window.innerWidth >= 1280) {
+  //     var image, offsetX, offsetY, x, y, zoomer;
+  //     image = e.currentTarget;
+  //     offsetX = e.offsetX;
+  //     offsetY = e.offsetY;
+  //     x = (offsetX / image.offsetWidth) * 100;
+  //     y = (offsetY / image.offsetHeight) * 100;
+  //     zoomer = this.zoomViewer.nativeElement.children[0];
+  //     if (zoomer) {
+  //       zoomer.style.backgroundPosition = x + '% ' + y + '%';
+  //       zoomer.style.display = 'block';
+  //       zoomer.style.height = image.height + 'px';
+  //       zoomer.style.width = image.width + 'px';
+  //     }
+  //   }
+  // }
 
-  public onMouseLeave(event) {
-    this.zoomViewer.nativeElement.children[0].style.display = 'none';
-  }
+  // public onMouseLeave(event) {
+  //   this.zoomViewer.nativeElement.children[0].style.display = 'none';
+  // }
 
-  public openZoomViewer() {
-    this.dialog.open(ProductZoomComponent, {
-      data: this.zoomImage,
-      panelClass: 'zoom-dialog',
-    });
-  }
+  // public openZoomViewer() {
+  //   this.dialog.open(ProductZoomComponent, {
+  //     data: this.zoomImage,
+  //     panelClass: 'zoom-dialog',
+  //   });
+  // }
 
   ngOnDestroy() {
     this.destroy$.next(true);

@@ -63,9 +63,9 @@ export class ProductosFormComponent implements OnInit {
   }
   ngOnInit(): void {
 
-    this.authService.currentUser.subscribe((x)=>(this.currentUser=x));
+    this.authService.currentUser.subscribe((x) => (this.currentUser = x));
     //Subscripción al boolean que indica si esta autenticado
-    this.authService.isAuthenticated.subscribe((valor)=>(this.isAutenticated=valor));
+    this.authService.isAuthenticated.subscribe((valor) => (this.isAutenticated = valor));
 
 
     //Verificar si se envio un id por parametro para crear formulario para actualizar
@@ -114,7 +114,7 @@ export class ProductosFormComponent implements OnInit {
                 this.productoForm.get('precioOferta').setValue(null);
               }
             });
-          
+
 
             //Establecer los valores en cada una de las entradas del formulario
             this.productoForm.setValue({
@@ -146,9 +146,9 @@ export class ProductosFormComponent implements OnInit {
       ],
       descripcion: [null, Validators.compose([Validators.required, Validators.minLength(50)])],
       stock: [null, Validators.required],
-      // descuento: [null, Validators.required],
+      descuento: [null],
       precio: [null, Validators.required],
-      // precioOferta: [null, Validators.required],
+      precioOferta: [null],
       estadoProductoId: [null, Validators.required],
       categoriaProductoId: [null, Validators.required],
       marcas: [null, [Validators.required]],
@@ -212,12 +212,12 @@ export class ProductosFormComponent implements OnInit {
     if (this.productoForm.invalid) {
       return;
     }
-    
-    if(this.imagenes.length <= 0 || this.imagenes == null){
+
+    if (this.imagenes.length <= 0 || this.imagenes == null) {
       this.errorImagenes = true;
       this.mensajeErrorImagenes = 'Debe agregar al menos una imagen';
       return;
-    }else if(this.imagenes.length > 5){
+    } else if (this.imagenes.length > 5) {
       this.errorImagenes = true;
       this.mensajeErrorImagenes = 'Solo se permiten 5 imágenes';
       return;
@@ -269,11 +269,11 @@ export class ProductosFormComponent implements OnInit {
       return;
     }
 
-    if(this.imagenes.length <= 0 || this.imagenes == null){
+    if (this.imagenes.length <= 0 || this.imagenes == null) {
       this.errorImagenes = true;
       this.mensajeErrorImagenes = 'Debe agregar al menos una imagen';
       return;
-    }else if(this.imagenes.length > 5){
+    } else if (this.imagenes.length > 5) {
       this.errorImagenes = true;
       this.mensajeErrorImagenes = 'Solo se permiten 5 imágenes';
       return;
@@ -375,7 +375,7 @@ export class ProductosFormComponent implements OnInit {
       this.productoForm.get('descuento').setValue(0);
       this.productoForm.get('precioOferta').clearValidators();
       this.productoForm.get('precioOferta').setValue(0);
-    }else{
+    } else {
       this.productoForm.get('descuento').setValidators([Validators.required]);
       this.productoForm.get('precioOferta').setValidators([Validators.required]);
     }
