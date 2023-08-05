@@ -15,7 +15,7 @@ const routes: Routes = [
     // { path: 'cart', loadChildren: () => import('./pages/cart/cart.module').then(m => m.CartModule), data: { breadcrumb: 'Cart' } },
     // { path: 'checkout', loadChildren: () => import('./pages/checkout/checkout.module').then(m => m.CheckoutModule), data: { breadcrumb: 'Checkout' } },
     // { path: 'contact', loadChildren: () => import('./pages/contact/contact.module').then(m => m.ContactModule), data: { breadcrumb: 'Contact' } },
-    { path: 'log-in', loadChildren: () => import('./usuarios/usuarios-routing.module').then(m => m.UsuariosRoutingModule), data: { breadcrumb: 'Sign In ' } },
+    { path: 'usuario', loadChildren: () => import('./usuarios/usuarios-routing.module').then(m => m.UsuariosRoutingModule), data: { breadcrumb: 'Sign In ' } },
     // { path: 'brands', loadChildren: () => import('./pages/brands/brands.module').then(m => m.BrandsModule), data: { breadcrumb: 'Brands' } },
     { path: 'cliente', loadChildren: () => import('./cliente/cliente-routing.module').then(m => m.ClienteRoutingModule), data: { breadcrumb: 'All Products' }}
   ]},
