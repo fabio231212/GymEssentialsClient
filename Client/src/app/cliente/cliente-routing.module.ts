@@ -15,7 +15,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'productos/:id',
+    path: 'productos/:idProducto',
     component: ProductDetailComponent,
     data: {
       breadcrumb: 'Detalle de Producto',
