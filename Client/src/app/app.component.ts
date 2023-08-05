@@ -11,24 +11,24 @@ import { Settings, AppSettings } from './app.settings';
 export class AppComponent {
   loading: boolean = false;
   public settings: Settings;
-  constructor(public appSettings: AppSettings, 
-              public router: Router,
-              @Inject(PLATFORM_ID) private platformId: Object){
+  constructor(public appSettings: AppSettings,
+    public router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object) {
     this.settings = this.appSettings.settings;
 
   }
 
   ngOnInit() {
-   // this.router.navigate(['']);  //redirect other pages to homepage on browser refresh    
+    // this.router.navigate(['']);  //redirect other pages to homepage on browser refresh
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (isPlatformBrowser(this.platformId)) {
-          window.scrollTo(0,0);
-        } 
+          window.scrollTo(0, 0);
+        }
       }
-    })  
+    })
   }
 }

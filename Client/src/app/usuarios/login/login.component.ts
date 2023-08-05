@@ -83,7 +83,13 @@ export class LoginComponent implements OnInit {
     this.userService
       .loginUser(this.loginForm.value)
       .subscribe((respuesta: any) => {
-        this.router.navigate(['/']);
+        let user = this.userService.currentUserValue;
+        if (user.roles.includes('Administrador')) {
+          this.router.navigate(['/admin/inicio']);
+        } else {
+          this.router.navigate(['/']);
+        }
+
       });
   }
 

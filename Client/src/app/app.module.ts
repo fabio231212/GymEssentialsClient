@@ -9,8 +9,7 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { ShareModule } from './share/share.module';
 import { HomeModule } from './home/home.module';
-import { FacturasModule } from './facturas/facturas.module';
-import { ProductosModule } from './productos/productos.module';
+
 import { HttpClientModule } from '@angular/common/http';
 import { AppSettings } from './app.settings';
 import { AppService } from './app.service';
@@ -19,6 +18,8 @@ import { UsuariosModule } from './usuarios/usuarios.module';
 import { ToastrModule } from 'ngx-toastr';
 import { AdminModule } from './admin/admin.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ClienteModule } from './cliente/cliente.module';
+import { VendedorModule } from './vendedor/vendedor.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,20 +32,19 @@ import { ReactiveFormsModule } from '@angular/forms';
     NgxSpinnerModule, // importar HttpClientModule después BrowserModule.
     // comunicarse con un servidor a través del protocolo HTTP
     HttpClientModule,
+    UsuariosModule,
+    AdminModule,
+    ClienteModule,
+    VendedorModule,
     // importar los módulos creados propios en orden
     CoreModule,
     ShareModule,
     HomeModule,
-    FacturasModule,
-    ProductosModule,
     UsuariosModule,
-    // al final el gestor de las rutas principal
-    AppRoutingModule,
     SwiperModule,
-    UsuariosModule,
-    AdminModule,
+    AppRoutingModule,
   ],
   providers: [AppSettings, AppService],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
