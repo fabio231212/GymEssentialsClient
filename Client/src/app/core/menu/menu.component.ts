@@ -9,21 +9,22 @@ import { UserService } from 'src/app/share/user.service';
 export class MenuComponent implements OnInit {
   isAutenticated: boolean;
   currentUser: any;
-  constructor(    private authService: UserService,) { }
+  constructor(private authService: UserService,) { }
 
-  ngOnInit() {      
-    this.authService.currentUser.subscribe((x)=>(this.currentUser=x));
+  ngOnInit() {
+    this.authService.currentUser.subscribe((x) => (this.currentUser = x));
     //Subscripción al boolean que indica si esta autenticado
-    this.authService.isAuthenticated.subscribe((valor)=>(this.isAutenticated=valor));}
+    this.authService.isAuthenticated.subscribe((valor) => (this.isAutenticated = valor));
+  }
 
-  openMegaMenu(){
+  openMegaMenu() {
     let pane = document.getElementsByClassName('cdk-overlay-pane');
     [].forEach.call(pane, function (el: any) {
-        if(el.children.length > 0){
-          if(el.children[0].classList.contains('mega-menu')){
-            el.classList.add('mega-menu-pane');
-          }
-        }        
+      if (el.children.length > 0) {
+        if (el.children[0].classList.contains('mega-menu')) {
+          el.classList.add('mega-menu-pane');
+        }
+      }
     });
   }
 

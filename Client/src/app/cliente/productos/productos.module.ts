@@ -1,7 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { ProductosRoutingModule } from './productos-routing.module';
 import { ShareModule } from '../../share/share.module'
 
 import { ProductsAllComponent } from './products-all/products-all.component';
@@ -13,7 +12,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     ProductsAllComponent,
-    ProductDetailComponent,
     ProductZoomComponent,
 
   ],
