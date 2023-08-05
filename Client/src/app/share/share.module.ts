@@ -140,6 +140,8 @@ import { FormsModule } from '@angular/forms';
     ProductsCarouselComponent,
     ProductDialogComponent,
     ChatComponent,
+
+    
   ],
   declarations: [
     ControlsComponent,

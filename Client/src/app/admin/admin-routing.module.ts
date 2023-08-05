@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ChatAdminComponent } from './chat-admin/chat-admin.component';
 import { AuthGuard } from '../share/auth.guard';
+import { UsuariosComponent } from './usuarios/usuarios.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,11 @@ const routes: Routes = [
       roles: ['Administrador', 'Vendedor', 'Comprador'],
       breadcrumb: 'Lista de Producto',
     },
+  },
+  {
+    path: 'admin/usuarios',
+    component: UsuariosComponent,
+    data: { roles: ['Administrador'], breadcrumb: 'Lista de Usuarios'},
   },
 ];
 

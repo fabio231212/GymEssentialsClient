@@ -54,23 +54,6 @@ export class FacturasxclienteComponent {
         this.dataSource.paginator = this.paginator;
       });
   }
-  // detalle(id:number){
-  //   this.router.navigate(['/videojuego',id],
-  //   {
-  //     relativeTo:this.route
-  //   })
-  // }
-  // actualizarVideojuego(id: number) {
-  //   this.router.navigate(['/videojuego/update', id], {
-  //     relativeTo: this.route,
-  //   });
-  // }
-
-  // crearVideojuego() {
-  //   this.router.navigate(['/videojuego/create'], {
-  //     relativeTo: this.route,
-  //   });
-  // }
 
   ngOnDestroy() {
     this.destroy$.next(true);
