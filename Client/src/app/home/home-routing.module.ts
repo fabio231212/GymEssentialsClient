@@ -1,9 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { InicioComponent } from './inicio/inicio.component';
 
-const routes: Routes = [];
+export const routes: Routes = [
+  { path: '', component: InicioComponent, pathMatch: 'full'  }
+];
 
 @NgModule({
+  declarations: [],
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })

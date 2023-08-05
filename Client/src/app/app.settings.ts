@@ -13,7 +13,7 @@ export class Settings {
 @Injectable()
 export class AppSettings {
     public settings = new Settings(
-        'Gym-Essentials',  // theme name
+        'Emporium',  // theme name
         'red',     // green, blue, red, pink, purple, grey
         false,       // true = rtl, false = ltr
         true,        // adminSidenavIsOpened

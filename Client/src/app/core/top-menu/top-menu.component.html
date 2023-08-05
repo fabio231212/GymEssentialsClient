@@ -55,11 +55,13 @@
               <mat-icon class="mat-icon-sm">settings</mat-icon>
               <span>Ajustes</span>
             </a>
-            <a *ngIf="currentUser.roles.includes('Administrador')" mat-menu-item [routerLink]="'admin/usuarios/'" [routerLinkActive]>
+            <a *ngIf="currentUser.roles.includes('Administrador')" mat-menu-item [routerLink]="'admin/usuarios/'"
+              [routerLinkActive]>
               <mat-icon class="mat-icon-sm">people</mat-icon>
               <span>Ver Usuarios</span>
             </a>
-            <a *ngIf="currentUser.roles.includes('Vendedor')" mat-menu-item [routerLink]="'productos/productoxvendedor/' + currentUser.userId" [routerLinkActive]>
+            <a *ngIf="currentUser.roles.includes('Vendedor')" mat-menu-item
+              [routerLink]="'productos/productoxvendedor/' + currentUser.userId" [routerLinkActive]>
               <mat-icon class="mat-icon-sm">category</mat-icon>
               <span>Mis Productos</span>
             </a>
@@ -209,7 +211,11 @@
   </mat-toolbar>
 
   <app-menu fxShow="false" fxShow.gt-sm></app-menu>
-
+  <div class="theme-container main">
+    <app-breadcrumb></app-breadcrumb>
+    <router-outlet></router-outlet>
+  </div>
+  <app-footer></app-footer>
   <div *ngIf="showBackToTop" fxLayout="row" fxLayoutAlign="center center" class="back-to-top transition"
     (click)="scrollToTop()">
     <mat-icon>arrow_upward</mat-icon>

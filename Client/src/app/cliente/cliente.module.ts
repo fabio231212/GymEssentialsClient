@@ -11,6 +11,14 @@ import { FacturaDetailComponent } from './facturas/factura-detail/factura-detail
 import { FacturasxclienteComponent } from './facturas/facturasxcliente/facturasxcliente.component';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { ProductZoomComponent } from './productos/product-detail/product-zoom/product-zoom.component';
+import { RouterModule, Routes } from '@angular/router';
+
+// export const routes: Routes = [
+//   { path: '', component: ProductsAllComponent, pathMatch: 'full' },
+//   // { path: ':id', component: ProductDetailComponent },
+// ];
+
+
 
 
 @NgModule({
@@ -24,6 +32,7 @@ import { ProductZoomComponent } from './productos/product-detail/product-zoom/pr
   ],
   imports: [
     CommonModule,
+    // RouterModule.forChild(routes),
     ClienteRoutingModule,
     NgxPaginationModule,
     ShareModule,

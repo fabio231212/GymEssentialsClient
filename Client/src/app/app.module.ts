@@ -48,3 +48,72 @@ import { VendedorModule } from './vendedor/vendedor.module';
   bootstrap: [AppComponent],
 })
 export class AppModule { }
+
+
+// import { BrowserModule } from '@angular/platform-browser';
+// import { NgModule } from '@angular/core';
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+// import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+// import { NgxSpinnerModule } from 'ngx-spinner';
+// import { GoogleMapsModule } from '@angular/google-maps';
+
+// import { OverlayContainer, Overlay } from '@angular/cdk/overlay';
+// import { MAT_MENU_SCROLL_STRATEGY } from '@angular/material/menu';
+// import { CustomOverlayContainer } from './utils/custom-overlay-container';
+// import { menuScrollStrategy } from './utils/scroll-strategy';
+
+// import { environment } from 'src/environments/environment';
+// import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+// import { TranslateHttpLoader } from '@ngx-translate/http-loader'; 
+// export function HttpLoaderFactory(httpClient: HttpClient) { 
+//   return new TranslateHttpLoader(httpClient, environment.apiURL +'/assets/i18n/', '.json');
+// }
+
+// import { ShareModule } from './share/share.module';
+// import { AppRoutingModule } from './app-routing.module';
+// import { AppComponent } from './app.component';
+// import { CoreModule } from './core/core.module';
+// import { ClienteModule } from './cliente/cliente.module';
+// import { VendedorModule } from './vendedor/vendedor.module';
+// import { UsuariosModule } from './usuarios/usuarios.module';
+// import { AdminModule } from './admin/admin.module';
+// import { AppSettings } from './app.settings';
+// import { AppService } from './app.service';
+// import { AppInterceptor } from './utils/app-interceptor';
+
+
+// @NgModule({
+//    imports: [
+//     BrowserModule.withServerTransition({ appId: 'serverApp' }),
+//     BrowserAnimationsModule,
+//     HttpClientModule,
+//     NgxSpinnerModule,
+//     GoogleMapsModule,
+//         ClienteModule,
+//     VendedorModule,
+//     CoreModule,
+//     UsuariosModule,
+//     AdminModule,
+//     TranslateModule.forRoot({
+//       loader: {
+//         provide: TranslateLoader,
+//         useFactory: HttpLoaderFactory,
+//         deps: [HttpClient]
+//       }
+//     }),
+//     ShareModule,
+//     AppRoutingModule
+//   ],
+//   declarations: [
+//     AppComponent,
+//   ], 
+//   providers: [
+//     AppSettings,
+//     AppService,   
+//     { provide: OverlayContainer, useClass: CustomOverlayContainer },
+//     { provide: MAT_MENU_SCROLL_STRATEGY, useFactory: menuScrollStrategy, deps: [Overlay] },
+//     { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true }
+//   ],
+//   bootstrap: [AppComponent]
+// })
+// export class AppModule { }
