@@ -80,12 +80,14 @@ import { AdminModule } from './admin/admin.module';
 import { AppSettings } from './app.settings';
 import { AppService } from './app.service';
 import { AppInterceptor } from './utils/app-interceptor';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
    imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     HttpClientModule,
     NgxSpinnerModule,
     GoogleMapsModule,
@@ -112,7 +114,7 @@ import { AppInterceptor } from './utils/app-interceptor';
     AppService,   
     { provide: OverlayContainer, useClass: CustomOverlayContainer },
     { provide: MAT_MENU_SCROLL_STRATEGY, useFactory: menuScrollStrategy, deps: [Overlay] },
-    { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true }
+    
   ],
   bootstrap: [AppComponent]
 })

@@ -12,6 +12,7 @@ import { FacturasxclienteComponent } from './facturas/facturasxcliente/facturasx
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { ProductZoomComponent } from './productos/product-detail/product-zoom/product-zoom.component';
 import { RouterModule, Routes } from '@angular/router';
+import { NotificacionService } from '../share/notification.service';
 
 // export const routes: Routes = [
 //   { path: '', component: ProductsAllComponent, pathMatch: 'full' },
@@ -37,6 +38,6 @@ import { RouterModule, Routes } from '@angular/router';
     NgxPaginationModule,
     ShareModule,
     ReactiveFormsModule,
-  ]
+  ],
 })
 export class ClienteModule { }

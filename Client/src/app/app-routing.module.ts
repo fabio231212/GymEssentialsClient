@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { InicioComponent } from './home/inicio/inicio.component';
 import { TopMenuComponent } from './core/top-menu/top-menu.component';
+import { NotificacionService } from './share/notification.service';
 
 const routes: Routes = [
   // { path:'inicio',component: InicioComponent},
@@ -14,14 +15,21 @@ const routes: Routes = [
     // { path: 'cart', loadChildren: () => import('./pages/cart/cart.module').then(m => m.CartModule), data: { breadcrumb: 'Cart' } },
     // { path: 'checkout', loadChildren: () => import('./pages/checkout/checkout.module').then(m => m.CheckoutModule), data: { breadcrumb: 'Checkout' } },
     // { path: 'contact', loadChildren: () => import('./pages/contact/contact.module').then(m => m.ContactModule), data: { breadcrumb: 'Contact' } },
-    { path: 'Login', loadChildren: () => import('./usuarios/usuarios.module').then(m => m.UsuariosModule), data: { breadcrumb: 'Sign In ' } },
+    { path: 'log-in', loadChildren: () => import('./usuarios/usuarios-routing.module').then(m => m.UsuariosRoutingModule), data: { breadcrumb: 'Sign In ' } },
     // { path: 'brands', loadChildren: () => import('./pages/brands/brands.module').then(m => m.BrandsModule), data: { breadcrumb: 'Brands' } },
     { path: 'cliente', loadChildren: () => import('./cliente/cliente-routing.module').then(m => m.ClienteRoutingModule), data: { breadcrumb: 'All Products' }}
   ]},
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [
+      RouterModule.forRoot(routes, {
+  preloadingStrategy: PreloadAllModules,
+  initialNavigation: 'enabledBlocking'
+})
+  ],
+  exports: [
+      RouterModule
+  ],
 })
 export class AppRoutingModule { }

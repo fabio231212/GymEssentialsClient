@@ -13,7 +13,7 @@ export const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    ShareModule   
+    ShareModule 
   ],
   declarations: [
     InicioComponent
