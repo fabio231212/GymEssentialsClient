@@ -12,9 +12,9 @@ import { MatDialog } from '@angular/material/dialog';
 import {
   SwiperConfigInterface,
   SwiperDirective,
-} from '../../core/swiper/swiper.module';
-import { Data, AppService } from '../../app.service';
-import { Product } from '../../app.models';
+} from '../../../core/swiper/swiper.module';
+import { Data, AppService } from '../../../app.service';
+import { Product } from '../../../app.models';
 import { ProductZoomComponent } from './product-zoom/product-zoom.component';
 import { GenericService } from 'src/app/share/generic.service';
 import { Subject, takeUntil, switchMap } from 'rxjs';

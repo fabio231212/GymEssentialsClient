@@ -8,11 +8,11 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   encapsulation: ViewEncapsulation.None
 })
 export class ProductZoomComponent implements OnInit {
-  
+
   @ViewChild('zoomImage', { static: true }) zoomImage;
 
   constructor(public dialogRef: MatDialogRef<ProductZoomComponent>,
-              @Inject(MAT_DIALOG_DATA) public image:any) { }
+    @Inject(MAT_DIALOG_DATA) public image: any) { }
 
   ngOnInit() { }
 
@@ -20,21 +20,21 @@ export class ProductZoomComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  public count:number = 10;
-  public maxWidth:number = 60;
-  public zoomIn(){
-    if(this.count < 60){
+  public count: number = 10;
+  public maxWidth: number = 60;
+  public zoomIn() {
+    if (this.count < 60) {
       this.maxWidth = this.maxWidth + this.count;
-      this.zoomImage.nativeElement.style.maxWidth = this.maxWidth + '%';      
+      this.zoomImage.nativeElement.style.maxWidth = this.maxWidth + '%';
       this.count = this.count + 10;
     }
-  }  
- 
-  public zoomOut(){
-    if(this.count > 10){
+  }
+
+  public zoomOut() {
+    if (this.count > 10) {
       this.count = this.count - 10;
       this.maxWidth = this.maxWidth - this.count;
-      this.zoomImage.nativeElement.style.maxWidth = this.maxWidth + '%';      
+      this.zoomImage.nativeElement.style.maxWidth = this.maxWidth + '%';
     }
   }
 

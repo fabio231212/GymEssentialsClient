@@ -3,7 +3,6 @@ import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { UntypedFormBuilder } from '@angular/forms';
 
 import { filter, map, Subject, Subscription, takeUntil } from 'rxjs';
-import { AppService } from '../../app.service';
 import { GenericService } from 'src/app/share/generic.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -17,7 +16,6 @@ export class FacturaDetailComponent {
   destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
-    public appService: AppService,
     private activatedRoute: ActivatedRoute,
     public formBuilder: UntypedFormBuilder,
     private gService: GenericService,
