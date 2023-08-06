@@ -51,10 +51,10 @@ export class TopMenuComponent implements OnInit {
   }
 
   ngOnInit() {
-     //Subscripción a la información del usuario actual
-     this.authService.currentUser.subscribe((x)=>(this.currentUser=x));
-     //Subscripción al boolean que indica si esta autenticado
-     this.authService.isAuthenticated.subscribe((valor)=>(this.isAutenticated=valor));
+    //Subscripción a la información del usuario actual
+    this.authService.currentUser.subscribe((x) => (this.currentUser = x));
+    //Subscripción al boolean que indica si esta autenticado
+    this.authService.isAuthenticated.subscribe((valor) => (this.isAutenticated = valor));
 
     // PAGES
     // this.getCategories();
@@ -137,7 +137,7 @@ export class TopMenuComponent implements OnInit {
     event.preventDefault();
   }
 
-  public search() {}
+  public search() { }
 
   public scrollToTop() {
     var scrollDuration = 200;
@@ -203,7 +203,7 @@ export class TopMenuComponent implements OnInit {
   public logout() {
     localStorage.removeItem('token');
     this.authService.logout();
-    this.router.navigate(['/inicio']);
+    this.router.navigate(['/']);
     // this.router.navigate(['/login']);
   }
 }

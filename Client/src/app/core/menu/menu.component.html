@@ -1,11 +1,5 @@
-<mat-toolbar
-  id="menu-toolbar"
-  class="top-navbar mat-elevation-z2"
-  fxLayoutAlign="center center"
->
-  <a mat-button routerLink="/" routerLinkActive="horizontal-active-link"
-    >HOME</a
-  >
+<mat-toolbar id="menu-toolbar" class="top-navbar mat-elevation-z2" fxLayoutAlign="center center">
+  <a mat-button routerLink="/" routerLinkActive="horizontal-active-link">HOME</a>
   <!-- <a mat-button [matMenuTriggerFor]="menu" (click)="openMegaMenu()">Fashion<mat-icon class="caret" iconPositionEnd>arrow_drop_down</mat-icon></a>
     <mat-menu #menu="matMenu" [overlapTrigger]="false" class="mega-menu app-dropdown">
         <div fxLayout="row wrap">
@@ -56,38 +50,15 @@
 
     </mat-menu> -->
 
-  <a
-    mat-button
-    [routerLink]="'/productos'"
-    [routerLinkActive]="'horizontal-active-link'"
-    >Productos</a
-  >
-  <a
-    mat-button
-    [matMenuTriggerFor]="pedidos"
-    routerLinkActive="horizontal-active-link"
-    ><mat-icon class="caret" iconPositionEnd>arrow_drop_down</mat-icon
-    >Pedidos</a
-  >
-  <a
-    mat-button
-    [routerLink]="['/products', 'sports']"
-    routerLinkActive="horizontal-active-link"
-    >Sports</a
-  >
+  <a mat-button [routerLink]="'/cliente/productos'" [routerLinkActive]="'horizontal-active-link'">Productos</a>
+  <a mat-button [matMenuTriggerFor]="pedidos" routerLinkActive="horizontal-active-link"><mat-icon class="caret"
+      iconPositionEnd>arrow_drop_down</mat-icon>Pedidos</a>
+  <a mat-button [routerLink]="['/products', 'sports']" routerLinkActive="horizontal-active-link">Sports</a>
 
-  <a mat-button [matMenuTriggerFor]="pages"
-    >Páginas<mat-icon class="caret" iconPositionEnd
-      >arrow_drop_down</mat-icon
-    ></a
-  >
+  <a mat-button [matMenuTriggerFor]="pages">Páginas<mat-icon class="caret"
+      iconPositionEnd>arrow_drop_down</mat-icon></a>
   <mat-menu #pages="matMenu" [overlapTrigger]="false" class="app-dropdown">
-    <a
-      mat-menu-item
-      routerLink="/contact"
-      routerLinkActive="horizontal-active-link"
-      >Contacto</a
-    >
+    <a mat-menu-item routerLink="/contact" routerLinkActive="horizontal-active-link">Contacto</a>
     <a mat-menu-item [matMenuTriggerFor]="shop">Tienda</a>
     <a mat-menu-item routerLink="/sign-in">LogIn</a>
     <a mat-menu-item routerLink="/404">404</a>
@@ -96,53 +67,24 @@
   </mat-menu>
 
   <mat-menu #shop="matMenu" class="app-dropdown">
-    <a
-      mat-menu-item
-      routerLink="/products"
-      routerLinkActive="horizontal-active-link"
-      >Todos los productos</a
-    >
-    <a
-      mat-menu-item
-      [routerLink]="['/products', '2', 'PC All-in-One']"
-      routerLinkActive="horizontal-active-link"
-      >Detalle Producto</a
-    >
-    <a
-      mat-menu-item
-      routerLink="/cart"
-      routerLinkActive="horizontal-active-link"
-      >Carrito</a
-    >
-    <a
-      mat-menu-item
-      routerLink="/checkout"
-      routerLinkActive="horizontal-active-link"
-      >Checkout</a
-    >
+    <a mat-menu-item routerLink="/products" routerLinkActive="horizontal-active-link">Todos los productos</a>
+    <a mat-menu-item [routerLink]="['/products', '2', 'PC All-in-One']"
+      routerLinkActive="horizontal-active-link">Detalle Producto</a>
+    <a mat-menu-item routerLink="/cart" routerLinkActive="horizontal-active-link">Carrito</a>
+    <a mat-menu-item routerLink="/checkout" routerLinkActive="horizontal-active-link">Checkout</a>
   </mat-menu>
 
-  <mat-menu #pedidos="matMenu" class="app-dropdown" >
-    <a *ngIf="currentUser && currentUser.roles.includes('Comprador')"
-      mat-menu-item
-      [routerLink]="'/facturas/facturasxusuario/' + currentUser.userId"
-      [routerLinkActive]="'horizontal-active-link'"
-      >Listar pedidos para cliente</a
-    >
-    <a *ngIf="currentUser && currentUser.roles.includes('Vendedor')"
-      mat-menu-item
-      [routerLink]="'/facturas/facturasxvendedor/'+ currentUser.userId"
-      [routerLinkActive]="'horizontal-active-link'"
-      >Listado de pedidos para vendedor</a
-    >
+  <mat-menu #pedidos="matMenu" class="app-dropdown">
+    <a *ngIf="currentUser && currentUser.roles.includes('Comprador')" mat-menu-item
+      [routerLink]="'/cliente/facturas/facturasxusuario/' + currentUser.userId"
+      [routerLinkActive]="'horizontal-active-link'">Listar pedidos para cliente</a>
+    <a *ngIf="currentUser && currentUser.roles.includes('Vendedor')" mat-menu-item
+      [routerLink]="'/cliente/facturas/facturasxvendedor/'+ currentUser.userId"
+      [routerLinkActive]="'horizontal-active-link'">Listado de pedidos para vendedor</a>
     <a mat-menu-item>Menu item</a>
     <a mat-menu-item>Menu item</a>
   </mat-menu>
 
-  <a mat-button routerLink="/contact" routerLinkActive="horizontal-active-link"
-    >Contacto</a
-  >
-  <a mat-button routerLink="/admin" routerLinkActive="horizontal-active-link"
-    >Admin</a
-  >
+  <a mat-button routerLink="/contact" routerLinkActive="horizontal-active-link">Contacto</a>
+  <a mat-button routerLink="/admin" routerLinkActive="horizontal-active-link">Admin</a>
 </mat-toolbar>

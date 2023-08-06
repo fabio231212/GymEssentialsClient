@@ -5,15 +5,12 @@ import { ShareModule } from '../share/share.module';
 // import { HomeComponent } from './home.component';
 import { InicioComponent } from './inicio/inicio.component';
 
-export const routes: Routes = [
-  { path: '', component: InicioComponent, pathMatch: 'full'  }
-];
+
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(routes),
-    ShareModule 
+    ShareModule
   ],
   declarations: [
     InicioComponent
