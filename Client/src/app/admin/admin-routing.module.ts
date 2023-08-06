@@ -6,15 +6,17 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { AdminComponent } from './admin.component';
 
 const routes: Routes = [
+
   {
-    path: 'admin/inicio',
+    path: 'inicio',
     component: AdminComponent,
     data: {
       roles: ['Administrador', 'Vendedor',],
     },
+    pathMatch: 'full',
   },
   {
-    path: 'admin/adminChat',
+    path: 'adminChat',
     component: ChatAdminComponent,
     //canActivate: [AuthGuard],
     data: {
@@ -23,11 +25,12 @@ const routes: Routes = [
     },
   },
   {
-    path: 'admin/usuarios',
+    path: 'usuarios',
     component: UsuariosComponent,
     data: { roles: ['Administrador'], breadcrumb: 'Lista de Usuarios' },
   },
 ];
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

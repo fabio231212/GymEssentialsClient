@@ -143,12 +143,12 @@
           <mat-chip-listbox *ngIf="product.descuento > 0">
             <mat-chip-option color="warn" highlighted selectable="false">{{product.descuento}}% OFF</mat-chip-option>
           </mat-chip-listbox>
-          <a class="image-link">
+          <a class="image-link" [routerLink]="['/cliente/productos', product.id]">
             <img [src]="product.imagenes[0].imgUrl" alt="" class="product-image">
           </a>
           <h4 class="category text-muted">{{ product.categoria}}
           </h4>
-          <a class="title text-truncate">
+          <a class="title text-truncate" [routerLink]="['/cliente/productos', product.id]">
             {{product.nombre}}
           </a>
           <div fxLayout="row" fxLayoutAlign="space-between center" class="prices">
@@ -191,7 +191,7 @@
             </div>
             <div fxFlex="100" fxFlex.gt-xs="60" class="p-2">
               <h4 class="category text-muted">{{ product.nombre}}</h4>
-              <a class="title" [routerLink]="['/cliente/productos' + product.id]" routerLinkActive="router-link-active">
+              <a class="title" [routerLink]="['/cliente/productos', product.id]" routerLinkActive="router-link-active">
                 {{product.nombre}}
               </a>
               <p class="py-1 text-muted lh">{{product.descripcion}}</p>
@@ -230,7 +230,7 @@
         </mat-card>
       </div>
     </div>
-
+    <!--
     <div *ngIf="datos.length > 0" fxLayout="row wrap">
       <div fxFlex="100">
         <mat-card class="p-0 text-center">
@@ -238,7 +238,7 @@
             (pageChange)="onPageChanged($event)"></pagination-controls>
         </mat-card>
       </div>
-    </div>
+    </div> -->
 
   </mat-sidenav-content>
 </mat-sidenav-container>

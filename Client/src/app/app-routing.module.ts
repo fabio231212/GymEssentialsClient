@@ -3,6 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { InicioComponent } from './home/inicio/inicio.component';
 import { TopMenuComponent } from './core/top-menu/top-menu.component';
 import { NotificacionService } from './share/notification.service';
+import { AdminComponent } from './admin/admin.component';
 
 const routes: Routes = [
   // { path:'inicio',component: InicioComponent},
@@ -19,6 +20,16 @@ const routes: Routes = [
       { path: 'log-in', loadChildren: () => import('./usuarios/usuarios-routing.module').then(m => m.UsuariosRoutingModule), data: { breadcrumb: 'Sign In ' } },
       // { path: 'brands', loadChildren: () => import('./pages/brands/brands.module').then(m => m.BrandsModule), data: { breadcrumb: 'Brands' } },
       { path: 'cliente', loadChildren: () => import('./cliente/cliente-routing.module').then(m => m.ClienteRoutingModule), data: { breadcrumb: 'All Products' } }
+    ]
+  },
+  {
+    path: 'admin', component: AdminComponent, children: [
+      { path: '', loadChildren: () => import('./admin/admin-routing.module').then(m => m.AdminRoutingModule) },
+    ]
+  },
+  {
+    path: 'vendedor', component: AdminComponent, children: [
+      { path: '', loadChildren: () => import('./vendedor/vendedor-routing.module').then(m => m.VendedorRoutingModule) },
     ]
   },
 ];

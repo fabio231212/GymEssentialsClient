@@ -85,6 +85,6 @@
     <a mat-menu-item>Menu item</a>
   </mat-menu>
 
-  <a mat-button routerLink="/contact" routerLinkActive="horizontal-active-link">Contacto</a>
-  <a mat-button routerLink="/admin" routerLinkActive="horizontal-active-link">Admin</a>
+  <a mat-button   routerLink="/contact" routerLinkActive="horizontal-active-link">Contacto</a>
+  <a mat-button *ngIf="currentUser && currentUser.roles.includes('Vendedor') || currentUser && currentUser.roles.includes('Administrador')" routerLink="/admin" routerLinkActive="horizontal-active-link">Admin</a>
 </mat-toolbar>
