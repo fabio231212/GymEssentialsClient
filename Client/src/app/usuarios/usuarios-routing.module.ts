@@ -7,21 +7,21 @@ import * as path from 'path';
 
 const routes: Routes = [
 
-    {
-      path: '',
-      component: IndexComponent,
-    },
+  {
+    path: 'index',
+    component: IndexComponent,
+  },
 
-    {
-      path: 'registrar',
-      component: CreateComponent,
-    },
-    {
-      path: 'login',
-      component: LoginComponent,
-    }
-  
-  
+  {
+    path: 'registrar',
+    component: CreateComponent,
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+  }
+
+
 ];
 
 @NgModule({

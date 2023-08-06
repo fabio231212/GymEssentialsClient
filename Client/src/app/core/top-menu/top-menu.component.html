@@ -55,16 +55,16 @@
               <mat-icon class="mat-icon-sm">settings</mat-icon>
               <span>Ajustes</span>
             </a>
-            <a *ngIf="currentUser.roles.includes('Administrador')" mat-menu-item [routerLink]="'admin/usuarios/'"
+            <!-- <a *ngIf="currentUser.roles.includes('Administrador')" mat-menu-item [routerLink]="'admin/usuarios/'"
               [routerLinkActive]>
               <mat-icon class="mat-icon-sm">people</mat-icon>
               <span>Ver Usuarios</span>
-            </a>
-            <a *ngIf="currentUser.roles.includes('Vendedor')" mat-menu-item
+            </a> -->
+            <!-- <a *ngIf="currentUser.roles.includes('Vendedor')" mat-menu-item
               [routerLink]="'productos/productoxvendedor/' + currentUser.userId" [routerLinkActive]>
               <mat-icon class="mat-icon-sm">category</mat-icon>
               <span>Mis Productos</span>
-            </a>
+            </a> -->
             <a mat-menu-item routerLink="/">
               <mat-icon class="mat-icon-sm">help</mat-icon>
               <span>Ayuda</span>
@@ -78,7 +78,7 @@
         </mat-menu>
       </div>
       <div class="top-menu" *ngIf="!currentUser">
-        <a mat-button routerLink="usuario/login">
+        <a mat-button routerLink="log-in/login">
           <mat-icon class="mat-icon-sm account-icon">person</mat-icon>
           <span fxShow="false" fxShow.gt-sm>Inicie Sesión</span>
         </a>
