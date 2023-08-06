@@ -202,6 +202,8 @@ export class TopMenuComponent implements OnInit {
 
   public logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('messages');
+    localStorage.removeItem('chatUsers');
     this.authService.logout();
     this.router.navigate(['/']);
     // this.router.navigate(['/login']);

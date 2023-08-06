@@ -85,7 +85,7 @@ export class LoginComponent implements OnInit {
       .subscribe((respuesta: any) => {
         let user = this.userService.currentUserValue;
         if (user.roles.includes('Administrador') && !user.roles.includes('Vendedor')) {
-          this.router.navigate(['/admin/inicio']);
+          this.router.navigate(['/admin']);
         } else {
           this.router.navigate(['/']);
         }

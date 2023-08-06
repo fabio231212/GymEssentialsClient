@@ -22,19 +22,27 @@ export class ChatComponent {
     private userService: UserService,
     private chatService: UserChatService
   ) {
-    this.chatService.currentDataUserChat$.subscribe((data) => { });
     this.userService.currentUser.subscribe((data) => { });
+
+    if (userService.currentUserValue != null) {
+      this.chatService.currentDataUserChat$.subscribe((data) => { });
+    }
+
+
   }
 
   ngOnInit() {
-    this.chatService.getMessage().subscribe((data) => {
-      const dateParsed = new Date(data.fecha);
-      this.createMessage(data.mensaje, data.nombre, dateParsed.toLocaleTimeString(), false)
-      console.log('Mensaje Recibido' + data);
-    });
-    this.chatService.getListaPersonas().subscribe((data) => {
-      console.log('Usuarios conectados' + data);
-    });
+    if (this.userService.currentUserValue != null) {
+      this.chatService.getMessage().subscribe((data) => {
+        const dateParsed = new Date(data.fecha);
+        this.createMessage(data.mensaje, data.nombre, dateParsed.toLocaleTimeString(), false)
+        console.log('Mensaje Recibido' + data);
+      });
+      this.chatService.getListaPersonas().subscribe((data) => {
+        console.log('Usuarios conectados' + data);
+      });
+
+    }
 
   }
 
