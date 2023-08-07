@@ -7,25 +7,25 @@ import { ProductoXVendedorComponent } from './productos/producto-xvendedor/produ
 
 const routes: Routes = [
   {
-    path: 'vendedor/facturas',
+    path: 'facturas',
     component: ProdfactxvendedorComponent,
     data: { breadcrumb: 'Lista de Producto' },
   },
   {
-    path: 'vendedor/productos/productoxvendedor/:idVendedor',
+    path: 'productos/productoxvendedor/:idVendedor',
     component: ProductoXVendedorComponent,
     canActivate: [AuthGuard],
     data: { roles: ['Administrador', 'Vendedor'], breadcrumb: 'Producto por Vendedor' },
   },
   {
-    path: 'vendedor/productos/crear',
+    path: 'productos/crear',
     component: ProductosFormComponent,
     // canActivate: [AuthGuard],
     canActivate: [AuthGuard],
     data: { roles: ['Administrador', 'Vendedor'], breadcrumb: 'Crear Producto' },
   },
   {
-    path: 'vendedor/productos/editar/:id',
+    path: 'productos/editar/:id',
     component: ProductosFormComponent,
     // canActivate: [AuthGuard],
     canActivate: [AuthGuard],

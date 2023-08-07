@@ -9,6 +9,7 @@ import { SidenavMenuComponent } from './sidenav-menu/sidenav-menu.component';
 import { SwiperComponent } from './swiper/swiper.component';
 import { TopMenuComponent } from './top-menu/top-menu.component';
 import { ShareModule } from '../share/share.module';
+import { NotificacionService } from '../share/notification.service';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,6 @@ import { ShareModule } from '../share/share.module';
     SidenavMenuComponent,
     // SwiperComponent,
     TopMenuComponent,
-  ],
+  ]
 })
 export class CoreModule {}

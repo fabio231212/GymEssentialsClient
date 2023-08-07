@@ -32,3 +32,22 @@
     width: 150px; /* Ajusta el valor según el tamaño deseado para pantallas extra pequeñas */
   }
 }
+
+.main{
+  min-height: 400px;
+  min-height: calc(100vh - 288px);
+  padding: 16px;
+  box-sizing: border-box;
+}
+.sidenav{
+  width: 250px;
+  padding: 8px 16px;
+  position: fixed;
+  .close{
+      margin-left: 178px;
+  }
+  .divider{
+      margin: 8px 0;
+  }
+}
+
