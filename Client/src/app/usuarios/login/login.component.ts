@@ -13,6 +13,7 @@ import {
   TipoMessage,
 } from 'src/app/share/notification.service';
 import { UserService } from 'src/app/share/user.service';
+import { UserChatService } from 'src/app/share/chat.Service';
 
 @Component({
   selector: 'app-login',
@@ -34,7 +35,7 @@ export class LoginComponent implements OnInit {
     public router: Router,
     private route: ActivatedRoute,
     public snackBar: MatSnackBar,
-    private userService: UserService
+    private userService: UserService, private chatService: UserChatService
   ) {
     this.crearFormularioLogin();
   }
@@ -84,9 +85,14 @@ export class LoginComponent implements OnInit {
       .loginUser(this.loginForm.value)
       .subscribe((respuesta: any) => {
         let user = this.userService.currentUserValue;
+
         if (user.roles.includes('Administrador') && !user.roles.includes('Vendedor')) {
           this.router.navigate(['/admin']);
         } else {
+          if (user.roles.includes('Vendedor')) {
+            this.chatService.initializeSocket();
+
+          }
           this.router.navigate(['/']);
         }
 

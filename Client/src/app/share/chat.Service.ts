@@ -31,31 +31,36 @@ export class UserChatService {
 
     //Establecer un observable para los datos del carrito
     this.user = this.userService.currentUserValue;
-    if (this.user != null) {
-      this.socket = io('http://localhost:8000');
-      //Obtener los datos de la variable orden guardada en el localStorage
-      this.onlineUsers = new BehaviorSubject<any>(
-        JSON.parse(localStorage.getItem('chatUsers'))
-      );
-      this.messagesSubject = new BehaviorSubject<any>(
-        JSON.parse(localStorage.getItem('messages'))
-      );
 
-      //Establecer un observable para los datos del carrito
-      this.currentDataUserChat$ = this.onlineUsers.asObservable();
+    //Obtener los datos de la variable orden guardada en el localStorage
+    this.onlineUsers = new BehaviorSubject<any>(
+      JSON.parse(localStorage.getItem('chatUsers'))
+    );
+    this.messagesSubject = new BehaviorSubject<any>(
+      JSON.parse(localStorage.getItem('messages'))
+    );
 
-      this.socket.on('connect', () => {
-        console.log('Conectado al servidor');
-        this.socket.emit('entrarChat', this.user, (resp: any) => {
-          console.log('Usuarios conectados', resp);
-          this.addToChat(resp);
-        });
+    //Establecer un observable para los datos del carrito
+    this.currentDataUserChat$ = this.onlineUsers.asObservable();
+
+
+
+
+  }
+  initializeSocket() {
+    this.user = this.userService.currentUserValue;
+    this.socket = io('http://localhost:8000');
+    this.socket.connect();
+
+    this.socket.on('connect', () => {
+      console.log('Conectado al servidor');
+      this.socket.emit('entrarChat', this.user, (resp: any) => {
+        console.log('Usuarios conectados', resp);
+        this.addToChat(resp);
       });
+    });
 
-
-    }
-
-
+    // Otras configuraciones y lógica del socket
   }
   saveCart(): void {
     localStorage.setItem(
@@ -198,14 +203,14 @@ export class UserChatService {
     });
   }
 
-  getDisconnected(): Observable<any> {
-    return new Observable<{ user: string; message: string }>((observer) => {
-      // Escuchar eventos de 'mensajePrivado' del servidor
-      this.socket.on('disconnect', (resp: any) => {
-        this.removeFromCart(resp);
-        observer.next(resp);
-      });
-    });
+  getDisconnected() {
+    // Escuchar eventos de 'mensajePrivado' del servidor
+    this.socket.disconnect();
+
+  }
+
+  connect() {
+    this.socket.connect();
   }
 
   // getNoti(): Observable<any> {

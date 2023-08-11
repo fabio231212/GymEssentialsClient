@@ -22,10 +22,12 @@ export class ChatComponent {
     private userService: UserService,
     private chatService: UserChatService
   ) {
+
     this.userService.currentUser.subscribe((data) => { });
 
     if (userService.currentUserValue != null) {
       this.chatService.currentDataUserChat$.subscribe((data) => { });
+
     }
 
 
@@ -33,6 +35,7 @@ export class ChatComponent {
 
   ngOnInit() {
     if (this.userService.currentUserValue != null) {
+     this.chatService.initializeSocket();
       this.chatService.getMessage().subscribe((data) => {
         const dateParsed = new Date(data.fecha);
         this.createMessage(data.mensaje, data.nombre, dateParsed.toLocaleTimeString(), false)
@@ -64,10 +67,9 @@ export class ChatComponent {
     this.mensaje = '';
   }
 
-  ngonDestroy() {
-    this.chatService.getDisconnected().subscribe((data) => {
-      console.log(data);
-    });
+  ngOnDestroy() {
+
+    this.chatService.getDisconnected();
   }
 
 }
