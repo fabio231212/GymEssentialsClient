@@ -1,6 +1,5 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {
-  emailValidator,
   matchingPasswords,
 } from '../../share/utils/app-validators';
 import { Component, OnInit } from '@angular/core';

@@ -1,36 +1,55 @@
-/* Estilos para las pestañas */
+.tab-container {
+  width: 100%;
+  max-width: 700px; /* Ajusta el ancho según tus necesidades */
+  margin: 0 auto;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.centered-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0; /* Ajusta el margen según sea necesario */
+}
+
+.centered-image img {
+  max-width: 100%; /* La imagen se ajustará al ancho del contenedor */
+  max-height: 200px; /* Ajusta la altura máxima según tus necesidades */
+}
+
+.mat-tab-nav-bar {
+  color: #ffffff; /* Color del texto de las pestañas */
+}
+
 .mat-tab-link {
-    padding: 10px 20px;
-    // border: 1px solid transparent black;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    margin: 0 2px;
-    text-decoration: none;
-    color: #333;
-    background-color: #f1f1f1;
-    transition: background-color 0.2s ease-in-out;
-  }
-  
-  .mat-tab-link.active-link {
-    background-color: #fff;
-    border-color: #ccc;
-  }
-  
-  .mat-tab-nav-bar {
-    display: flex;
-    justify-content: space-between;
-    background-color: #f1f1f1;
-    border-bottom: 1px solid #ccc;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-  }
-  
-  /* Estilos para el contenido de las pestañas */
-  .mat-tab-body-content {
-    padding: 20px;
-    border-top: none;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    margin-top: 15px; /* Agregamos un margen para separar el contenido del tab */
-  }
-  
+  padding: 12px 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+
+.footer {
+  margin-top: 20px;
+  text-align: center;
+  color: #555;
+}
+
+.footer p {
+  margin: 0;
+}
+
+
+
+// .page-container {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   min-height: 100vh;
+//   border: none;
+// }

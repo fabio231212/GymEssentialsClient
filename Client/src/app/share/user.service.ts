@@ -62,7 +62,7 @@ export class UserService {
 
   //Crear usuario
   createUser(user: any): Observable<any> {
-    return this.http.post<any>(this.ServerUrl + 'usuarios/', user);
+    return this.http.post<any>(this.ServerUrl + 'usuarios', user);
   }
 
   //Login
