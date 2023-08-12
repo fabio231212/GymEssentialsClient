@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { AppSettings, Settings } from '../../../app.settings'; 
 import { MenuService } from './menu.service';
+import { UserService } from 'src/app/share/user.service';
 
 @Component({
   selector: 'app-admin-menu',
@@ -10,21 +11,35 @@ import { MenuService } from './menu.service';
   providers: [ MenuService ]
 })
 export class MenuComponent implements OnInit {
-  @Input('menuItems') menuItems;
-  @Input('menuParentId') menuParentId;
-  parentMenu:Array<any>;
+  isAutenticated: boolean;
+  currentUser: any;
   public settings: Settings;
-  constructor(public appSettings:AppSettings, public menuService:MenuService) { 
+  showSubMenu: string | null = null;
+  constructor(public appSettings:AppSettings, private authService: UserService) { 
     this.settings = this.appSettings.settings;
   }
 
-  ngOnInit() {     
-    this.parentMenu = this.menuItems.filter(item => item.parentId == this.menuParentId);  
+  ngOnInit() { 
+            //Subscripción a la información del usuario actual
+            this.authService.currentUser.subscribe((x) => (this.currentUser = x));
+            //Subscripción al boolean que indica si esta autenticado
+            this.authService.isAuthenticated.subscribe((valor) => (this.isAutenticated = valor));    
   }
 
-  onClick(menuId){
-    this.menuService.toggleMenuItem(menuId);
-    this.menuService.closeOtherSubMenus(this.menuItems, menuId);    
+
+  public toggleSubMenu(menuName: string, subMenuName: string){
+    let menuItem = document.getElementById(menuName);
+    let subMenu = document.getElementById(subMenuName);
+    if(subMenu){
+      if(subMenu.classList.contains('show')){
+        subMenu.classList.remove('show');
+        menuItem.classList.remove('expanded');
+      }
+      else{
+        subMenu.classList.add('show');
+        menuItem.classList.add('expanded');
+      }      
+    }
   }
 
 }

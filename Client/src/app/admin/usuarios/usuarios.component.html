@@ -27,11 +27,11 @@
   <div *ngFor="let user of usuarios | UserSearchPipe : searchText | paginate: { itemsPerPage: 6, currentPage: page }"
     fxFlex="100" fxFlex.gt-md="33.3" fxFlex.md="50" class="p-2">
     <mat-card>
-      <div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center">
+      <div class="bg-primaryy" fxLayout="row" fxLayoutAlign="space-between center">
         <h3 *ngIf="user.habilitado" class="user-name">{{user.nombre}} {{user.apellidos}}</h3>
-        <h3 *ngIf="!user.habilitado" class="user-name">User blocked</h3>
+        <h3 *ngIf="!user.habilitado" class="user-name">Usuario Bloqueado</h3>
         <!-- <button mat-icon-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger"> -->
-          <!-- <mat-icon>more_vert</mat-icon>
+        <!-- <mat-icon>more_vert</mat-icon>
         </button> -->
       </div>
       <!-- <mat-menu #menu="matMenu" xPosition="before" overlapTrigger="true">
@@ -49,14 +49,13 @@
       <div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
         <div fxFlex="30" fxLayout="column" fxLayoutAlign="center center">
           <div class="user-img">
-            <!-- <img *ngIf="user.profile.image" [src]="user.profile.image" class="transition-2" [class.blocked]="user.settings.isDeleted"> -->
-            <img  src="assets/images/others/user.jpg" class="transition-2"
-              [class.blocked]="user.habilitado">
+            <img *ngIf="user.fotoPerfil" [src]="user.fotoPerfil" class="transition-2" [class.blocked]="!user.habilitado">
+            <img *ngIf="!user.fotoPerfil" src="assets/images/others/user.jpg" class="transition-2" [class.blocked]="user.habilitado">
             <mat-icon *ngIf="!user.habilitado" color="warn">block</mat-icon>
           </div>
           <div class="user-social">
             <mat-slide-toggle color="primary" [checked]="!user.habilitado"
-              (change)="user.habilitado = !user.habilitado"></mat-slide-toggle>
+            (change)="updateHabilitado(user.id, !user.habilitado)"></mat-slide-toggle>
           </div>
         </div>
         <div fxFlex="70" fxLayout="column" class="user-details transition-2" [class.blocked]="!user.habilitado">
@@ -69,12 +68,8 @@
             <span>{{user.email}}</span>
           </p>
           <p fxLayout="row" fxLayoutAlign="start center">
-            <mat-icon class="text-muted">call</mat-icon>
-            <span>{{user.nombre}}</span>
-          </p>
-          <p fxLayout="row" fxLayoutAlign="start center">
-            <mat-icon class="text-muted">call</mat-icon>
-            <span>{{user.apellidos}}</span>
+            <mat-icon class="text-muted">perm_identity</mat-icon>
+            <span>{{user.nombre}} {{user.apellidos}}</span>
           </p>
           <p fxLayout="row" fxLayoutAlign="start center">
             <mat-icon class="text-muted">call</mat-icon>
@@ -90,9 +85,9 @@
   <div *ngFor="let user of usuarios | UserSearchPipe : searchText | paginate: { itemsPerPage: 6, currentPage: page }"
     fxFlex="100" class="p-2">
     <mat-card>
-      <div class="bg-primary" fxLayout="row" fxLayoutAlign="space-between center">
+      <div class="bg-primaryy" fxLayout="row" fxLayoutAlign="space-between center">
         <h3 *ngIf="user.habilitado" class="user-name">{{user.nombre}} {{user.apellidos}}</h3>
-        <h3 *ngIf="!user.habilitado" class="user-name">User blocked</h3>
+        <h3 *ngIf="!user.habilitado" class="user-name">Usuario Bloqueado</h3>
         <!-- <button mat-icon-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">
           <mat-icon>more_vert</mat-icon>
         </button> -->
@@ -112,54 +107,35 @@
       <div class="user-content" fxLayout="row" fxLayoutAlign="space-around center">
         <div fxFlex="20" fxFlex.xs="30" fxLayout="column" fxLayoutAlign="center center">
           <div class="user-img">
-            <!-- <img *ngIf="user.profile.image" [src]="user.profile.image" class="transition-2"
-              [class.blocked]="user.habilitado"> -->
-            <img  src="assets/img/users/default-user.jpg" class="transition-2"
-              [class.blocked]="user.habilitado">
+            <img *ngIf="user.fotoPerfil" [src]="user.fotoPerfil" class="transition-2" [class.blocked]="!user.habilitado">
+            <img *ngIf="!user.fotoPerfil" src="assets/img/users/default-user.jpg" class="transition-2" [class.blocked]="user.habilitado">
             <mat-icon *ngIf="!user.habilitado" color="warn">block</mat-icon>
           </div>
           <div class="user-social">
             <mat-slide-toggle color="primary" [checked]="!user.habilitado"
-              (change)="user.habilitado = !user.habilitado"></mat-slide-toggle>
+              (change)="updateHabilitado(user.id, !user.habilitado)"></mat-slide-toggle>
           </div>
         </div>
         <div fxFlex="80" fxFlex.xs="70" fxLayout="row" fxLayout.xs="column" class="user-details transition-2"
           [class.blocked]="!user.habilitado">
           <div fxFlex="30" fxFlex.xs="100" fxLayout="column">
             <p fxLayout="row" fxLayoutAlign="start center">
-              <mat-icon class="text-muted">Cédula</mat-icon>
+              <mat-icon class="text-muted">card_membership</mat-icon>
               <span>{{user.cedula}}</span>
             </p>
             <p fxLayout="row" fxLayoutAlign="start center">
-              <mat-icon class="text-muted">Email</mat-icon>
+              <mat-icon class="text-muted">perm_identity</mat-icon>
+              <span>{{user.nombre}} {{user.apellidos}}</span>
+            </p>
+            <p fxLayout="row" fxLayoutAlign="start center">
+              <mat-icon class="text-muted">mail_outline</mat-icon>
               <span>{{user.email}}</span>
-            </p>
-            <p fxLayout="row" fxLayoutAlign="start center">
-              <mat-icon class="text-muted">call</mat-icon>
-              <span>{{user.nombre}}</span>
-            </p>
-            <p fxLayout="row" fxLayoutAlign="start center">
-              <mat-icon class="text-muted">call</mat-icon>
-              <span>{{user.apellidos}}</span>
-            </p>
-            <p fxLayout="row" fxLayoutAlign="start center">
-              <mat-icon class="text-muted">call</mat-icon>
-              <span>{{user.numCelular}}</span>
             </p>
           </div>
           <div fxFlex="40" fxFlex.xs="100" fxLayout="column">
-            <!-- <p fxLayout="row" fxLayoutAlign="start center">
-              <mat-icon class="text-muted">event_available</mat-icon>
-              <span>Registration {{user.settings.registrationDate | date:"dd MMMM, yyyy 'at' HH:mm"}}</span>
-            </p>
             <p fxLayout="row" fxLayoutAlign="start center">
-              <mat-icon class="text-muted">date_range</mat-icon>
-              <span>Joined {{user.settings.joinedDate | date:"dd MMMM, yyyy 'at' HH:mm"}}</span>
-            </p> -->
-            <p fxLayout="row" fxLayoutAlign="start center">
-              <mat-icon *ngIf="user.habilitado" class="text-muted">person_outline</mat-icon>
-              <mat-icon *ngIf="!user.habilitado" class="text-muted">person</mat-icon>
-              <span>{{ (user.habilitado) ? 'Blocked' : 'Active' }}</span>
+              <mat-icon class="text-muted">call</mat-icon>
+              <span>{{user.numCelular}}</span>
             </p>
           </div>
         </div>

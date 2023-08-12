@@ -31,7 +31,7 @@ export class UsuariosComponent implements OnInit {
     this.listaUsuarios();
   }
 
-  listaUsuarios() {
+ async listaUsuarios() {
     this.gService
       .list('usuarios/')
       .pipe(takeUntil(this.destroy$))
@@ -45,7 +45,7 @@ export class UsuariosComponent implements OnInit {
     this.destroy$.unsubscribe();
   }
 
-  updateHabilitado(idUsuario: number, habilitado: boolean) {
+  async updateHabilitado(idUsuario: number, habilitado: boolean) {
     const data = { id: idUsuario, habilitado: habilitado };
     this.gService
       .update('usuarios/', data)
