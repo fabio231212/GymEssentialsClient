@@ -8,18 +8,20 @@ import * as path from 'path';
 const routes: Routes = [
 
   {
-    path: 'index',
+    path: 'login',
     component: IndexComponent,
+    children: [
+      {
+        path: 'registrar',
+        component: CreateComponent,
+      },
+      {
+        path: '',
+        component: LoginComponent,
+      }
+    ]
   },
 
-  {
-    path: 'registrar',
-    component: CreateComponent,
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
-  }
 
 
 ];

@@ -5,6 +5,7 @@ import jwt_decode from 'jwt-decode';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { GenericService } from './generic.service';
+import { UserChatService } from './chat.Service';
 
 export class User {
   constructor(
@@ -12,7 +13,7 @@ export class User {
     public nombre: string,
     public email: string,
     public roles: string[] // public token: string
-  ) {}
+  ) { }
 }
 @Injectable({
   providedIn: 'root',
@@ -62,7 +63,7 @@ export class UserService {
 
   //Crear usuario
   createUser(user: any): Observable<any> {
-    return this.http.post<any>(this.ServerUrl + 'usuarios/', user);
+    return this.http.post<any>(this.ServerUrl + 'usuarios', user);
   }
 
   //Login

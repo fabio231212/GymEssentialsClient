@@ -1,0 +1,53 @@
+.imagen-previa {
+    max-width: 50%;
+    max-height: 50%;
+    margin-top: 10px;
+}
+
+.example-card {
+    max-width: 55%;
+}
+
+.example-card img {
+    max-width: 100%;
+    height: auto; /* Asegura que la altura se ajuste proporcionalmente */
+}
+
+/* Cambios para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .imagen-previa {
+        max-width: 80%; /* Porcentaje menor para pantallas pequeñas */
+    }
+}
+  .ocultar-input {
+    display: none;
+  }
+
+  .button-input{
+    font-weight: bold;
+    color: black;
+  }
+
+  .div-input:hover{
+    background-color: rgb(244, 244, 244);
+    padding: 3px;
+    border-radius: 3px; /* Agrega el radio de borde deseado */
+  }
+
+  /* Clase para centrar contenido horizontalmente y verticalmente */
+.center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Clase para ocultar el input file */
+.ocultar-input {
+    display: none;
+}
+
+.error-message {
+  font-size: 12px;
+  color: red;
+  padding-bottom: 50px;
+}

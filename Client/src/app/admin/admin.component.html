@@ -3,7 +3,7 @@
     <div fxLayout="row" fxLayoutAlign="center center">
       <div class="logo-section" fxShow="false" fxShow.gt-xs>
         <a routerLink="/admin" fxLayout="row" fxLayoutAlign="start center" class="logo">
-          <span>Emporium</span>
+          <span>GymEssentials</span>
         </a>
       </div>
       <button mat-icon-button (click)="toggleSidenav()">
@@ -50,10 +50,11 @@
       <div fxLayout="column" fxLayoutAlign="center center" class="user-block transition-2"
         [class.show]="settings.adminSidenavUserBlock">
         <div fxLayout="row" fxLayoutAlign="space-around center" class="user-info-wrapper">
-          <img [src]="userImage" alt="user-image">
+          <img [src]="currentUser.fotoPerfil" alt="Foto de Perfil">
           <div class="user-info">
-            <p class="name">Emilio Verdines</p>
-            <p class="position">General Manager <br> <small class="muted-text">Member since May. 2016</small></p>
+            <p class="name">{{currentUser.nombre}} {{currentUser.apellidos}}</p>
+            <p class="position">{{currentUser.mail}}<br> <small class="muted-text">{{currentUser.roles}}</small></p>
+            <!-- <p class="position">General Manager <br> <small class="muted-text">Member since May. 2016</small></p> -->
           </div>
         </div>
         <div fxLayout="row" fxLayoutAlign="space-around center" class="w-100 muted-text">
@@ -64,7 +65,7 @@
           </a>
         </div>
       </div>
-      <app-admin-menu [menuItems]="menuItems" [menuParentId]="0"></app-admin-menu>
+      <app-admin-menu></app-admin-menu>
     </ng-scrollbar>
   </mat-drawer>
   <mat-drawer-content>

@@ -17,6 +17,7 @@ import { UserService } from 'src/app/share/user.service';
 
 // TOP MENU
 import { TranslateService } from '@ngx-translate/core';
+import { UserChatService } from 'src/app/share/chat.Service';
 
 @Component({
   selector: 'app-top-menu',
@@ -45,6 +46,8 @@ export class TopMenuComponent implements OnInit {
     public sidenavMenuService: SidenavMenuService,
     public router: Router,
     private authService: UserService,
+    private chatService: UserChatService,
+    private userService: UserService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.settings = this.appSettings.settings;
@@ -201,7 +204,13 @@ export class TopMenuComponent implements OnInit {
   }
 
   public logout() {
+
+    if (this.userService.currentUserValue.roles.includes('Vendedor')) {
+      this.chatService.getDisconnected();
+      this.chatService.deleteData();
+    }
     localStorage.removeItem('token');
+
     localStorage.removeItem('messages');
     localStorage.removeItem('chatUsers');
     this.authService.logout();

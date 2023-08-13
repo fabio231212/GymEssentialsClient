@@ -1,12 +1,22 @@
-<mat-card class="p-4">
-    <div fxLayout="column">
+<div class="page-container">
+    <mat-card class="p-4">
+        <div class="centered-image">
+            <img mat-card-image src="../../../assets/images/logo-login.png" alt="Logo">
+          </div>
+      <div fxLayout="column" class="tab-container">
         <nav mat-tab-nav-bar backgroundColor="primary" [tabPanel]="tabPanel">
-            <a mat-tab-link [routerLink]="['/usuario/login']" routerLinkActive="active-link">Login</a>
-            <a mat-tab-link [routerLink]="['/usuario/registrar']" routerLinkActive="active-link">Registrarse</a>
+          <a mat-tab-link [routerLink]="['/login/']" routerLinkActive="active-link">Iniciar sesión</a>
+          <a mat-tab-link [routerLink]="['/login/registrar']" routerLinkActive="active-link">Registrarse</a>
         </nav>
-        <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+        <mat-tab-nav-panel #tabPanel mat-stretch-tabs="false" mat-align-tabs="start"></mat-tab-nav-panel>
         <div class="mat-tab-body-content">
-            <router-outlet></router-outlet>
+          <router-outlet></router-outlet>
         </div>
-    </div>
-</mat-card>
+      </div>
+
+      <div class="footer">
+        <p>&copy; 2023 <a [routerLink]="['/']">GymEssentials.</a> Todos los derechos reservados.</p>
+      </div>
+    </mat-card>
+  </div>
+  

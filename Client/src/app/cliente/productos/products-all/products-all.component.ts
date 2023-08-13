@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { AppSettings, Settings } from 'src/app/app.settings';
+import { UserChatService } from 'src/app/share/chat.Service';
 import { GenericService } from 'src/app/share/generic.service';
 
 @Component({
@@ -50,6 +51,7 @@ export class ProductsAllComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     public dialog: MatDialog,
     private router: Router,
+    private chatService: UserChatService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.settings = this.appSettings.settings;

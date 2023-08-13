@@ -4,32 +4,21 @@ import { ChatAdminComponent } from './chat-admin/chat-admin.component';
 import { AuthGuard } from '../share/auth.guard';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { AdminComponent } from './admin.component';
+import { VendedorRoutingModule } from '../vendedor/vendedor-routing.module';
 
 const routes: Routes = [
 
-  {
-    path: 'inicio',
-    component: AdminComponent,
-    data: {
-      roles: ['Administrador', 'Vendedor',],
-    },
-    pathMatch: 'full',
-  },
-  {
-    path: 'adminChat',
-    component: ChatAdminComponent,
-    //canActivate: [AuthGuard],
-    data: {
-      roles: ['Administrador', 'Vendedor', 'Comprador'],
-      breadcrumb: 'Lista de Producto',
-    },
-  },
-  {
-    path: 'usuarios',
-    component: UsuariosComponent,
-    data: { roles: ['Administrador'], breadcrumb: 'Lista de Usuarios' },
-  },
+  { 
+    path: 'admin', 
+    component: AdminComponent, children: [
+      { path: 'admin', loadChildren: () => import('./admin.component').then(m => m.AdminComponent), data: { roles: ['Administrador', 'Vendedor'], breadcrumb: 'DashBoard' } }, 
+      { path: 'vendedor', loadChildren: () => import('../vendedor/vendedor-routing.module').then(m => m.VendedorRoutingModule) },
+      {path: 'usuarios',component: UsuariosComponent,data: { roles: ['Administrador'], breadcrumb: 'Lista de Usuarios' }},
+      {path: 'adminChat',component: ChatAdminComponent,data: { roles: ['Administrador', 'Vendedor'], breadcrumb: 'Chat' }},  
+    ]
+  } 
 ];
+
 
 
 @NgModule({

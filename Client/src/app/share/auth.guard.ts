@@ -15,6 +15,8 @@ import { UserService } from './user.service';
 export interface DecodedToken {
   userId: number;
   nombre: string;
+  apellidos: string;
+  fotoPerfil: string;
   email: string;
   roles: string[];
   // Otras propiedades que se esperan en el token JWT, si las hay
@@ -40,6 +42,7 @@ export class AuthGuard implements CanActivate {
       // Verificar si el token es válido y decodificarlo
       try {
         const decodedToken = jwt_decode(token) as DecodedToken;
+        console.log(decodedToken);
 
         // Verificar si el usuario tiene al menos uno de los roles necesarios para acceder a la ruta protegida
         const requiredRoles = route.data['roles'] as string[];

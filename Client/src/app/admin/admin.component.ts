@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { AppSettings, Settings } from '../app.settings';
 import { Router, NavigationEnd } from '@angular/router';
 import { MenuService } from './components/menu/menu.service';
+import { UserService } from 'src/app/share/user.service';
 
 @Component({
   selector: 'app-admin',
@@ -14,9 +15,12 @@ export class AdminComponent implements OnInit {
   public settings: Settings;
   public menuItems: Array<any>;
   public toggleSearchBar: boolean = false;
+  isAutenticated: boolean;
+  currentUser: any;
   constructor(public appSettings: AppSettings,
     public router: Router,
-    private menuService: MenuService) {
+    private menuService: MenuService,
+    private authService: UserService,) {
     this.settings = this.appSettings.settings;
   }
 
@@ -29,6 +33,11 @@ export class AdminComponent implements OnInit {
       this.settings.theme = 'red';
     });
     this.menuItems = this.menuService.getMenuItems();
+
+        //Subscripción a la información del usuario actual
+        this.authService.currentUser.subscribe((x) => (this.currentUser = x));
+        //Subscripción al boolean que indica si esta autenticado
+        this.authService.isAuthenticated.subscribe((valor) => (this.isAutenticated = valor));
   }
 
   ngAfterViewInit() {

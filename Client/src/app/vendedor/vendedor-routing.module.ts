@@ -12,17 +12,17 @@ const routes: Routes = [
     data: { breadcrumb: 'Lista de Producto' },
   },
   {
-    path: 'productos/productoxvendedor/:idVendedor',
-    component: ProductoXVendedorComponent,
-    canActivate: [AuthGuard],
-    data: { roles: ['Administrador', 'Vendedor'], breadcrumb: 'Producto por Vendedor' },
-  },
-  {
     path: 'productos/crear',
     component: ProductosFormComponent,
     // canActivate: [AuthGuard],
     canActivate: [AuthGuard],
     data: { roles: ['Administrador', 'Vendedor'], breadcrumb: 'Crear Producto' },
+  },
+  {
+    path: 'productos/:idVendedor',
+    component: ProductoXVendedorComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['Administrador', 'Vendedor'], breadcrumb: 'Producto por Vendedor' },
   },
   {
     path: 'productos/editar/:id',
