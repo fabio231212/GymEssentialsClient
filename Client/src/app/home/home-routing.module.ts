@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { InicioComponent } from './inicio/inicio.component';
+import { Socket } from 'socket.io-client';
+import { SocketGuard } from '../share/Socket.guard';
 
 export const routes: Routes = [
-  { path: '', component: InicioComponent, pathMatch: 'full' }
+  { path: '', component: InicioComponent, pathMatch: 'full', canActivate: [SocketGuard] }
 ];
 
 @NgModule({

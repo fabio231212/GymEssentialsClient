@@ -207,6 +207,7 @@ export class TopMenuComponent implements OnInit {
 
     if (this.userService.currentUserValue.roles.includes('Vendedor')) {
       this.chatService.getDisconnected();
+      this.chatService.deleteData();
     }
     localStorage.removeItem('token');
 

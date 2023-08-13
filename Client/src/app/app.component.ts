@@ -7,6 +7,7 @@ import { ProductDialogComponent } from './share/products-carousel/product-dialog
 import { ChatAdminComponent } from './admin/chat-admin/chat-admin.component';
 import { UserService } from './share/user.service';
 import { Message, UserChatService } from './share/chat.Service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -16,7 +17,9 @@ export class AppComponent {
   loading: boolean = false;
   public settings: Settings;
   user: any;
-  showButtonMessage: boolean = true;
+  showButtonMessage: boolean = false;
+  private messageSubscription: Subscription;
+  private socketInitializedSubscription: Subscription;
   constructor(public appSettings: AppSettings,
     public router: Router, public dialog: MatDialog, private userService: UserService,
     private chatService: UserChatService,
@@ -33,29 +36,51 @@ export class AppComponent {
 
 
   ngOnInit() {
-    // if (this.userService.currentUserValue != null && this.user.roles.includes('Vendedor')) {
-    //this.chatService.connect();
-    this.chatService.currentDataUserChat$.subscribe((data) => { });
-    // this.router.navigate(['']);  //redirect other pages to homepage on browser refresh
 
-    this.chatService.getMessage().subscribe((data) => {
-      const dateParsed = new Date(data.fecha);
-      const message = {
-        id: data.idUser,
-        idSocket: data.id,
-        from: data.nombre,
-        message: data.mensaje,
-        date: dateParsed,
-        isSended: false,
+    // if (this.userService.currentUserValue != null && this.user.roles.includes('Vendedor')) {
+    // this.chatService.initializeSocket();
+    this.socketInitializedSubscription = this.chatService.socketInitialized$.subscribe(
+      (socketInitialized) => {
+        if (socketInitialized) {
+          if (this.userService.currentUserValue != null && this.user.roles.includes('Vendedor')) {
+          this.showButtonMessage = true;
+          this.chatService.currentDataUserChat$.subscribe((data) => { });
+          // this.router.navigate(['']);  //redirect other pages to homepage on browser refresh
+
+          this.chatService.getMessage().subscribe((data) => {
+            const dateParsed = new Date(data.fecha);
+            const message = {
+              id: data.idUser,
+              idSocket: data.id,
+              from: data.nombre,
+              message: data.mensaje,
+              date: dateParsed,
+              isSended: false,
+            }
+            this.chatService.addMessage(message);
+          });
+          this.chatService.getListaPersonas().subscribe((data) => {
+            console.log(data);
+          });
+        }
       }
-      this.chatService.addMessage(message);
-    });
-    this.chatService.getListaPersonas().subscribe((data) => {
-      console.log(data);
-    });
-    // } else {
-    //   this.showButtonMessage = false;
-    // }
+        else {
+          this.showButtonMessage = false;
+        }
+      });
+
+
+
+  }
+
+  ngOnDestroy() {
+    // Asegúrate de cancelar las suscripciones al salir del componente
+    if (this.messageSubscription) {
+      this.messageSubscription.unsubscribe();
+    }
+    if (this.socketInitializedSubscription) {
+      this.socketInitializedSubscription.unsubscribe();
+    }
   }
   openChatDialog() {
     this.showButtonMessage = false;

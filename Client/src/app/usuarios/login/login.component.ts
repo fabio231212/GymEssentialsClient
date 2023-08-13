@@ -90,7 +90,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/admin']);
         } else {
           if (user.roles.includes('Vendedor')) {
-            this.chatService.initializeSocket();
+            //   this.chatService.initializeSocket();
 
           }
           this.router.navigate(['/']);

@@ -42,7 +42,7 @@
 
                       <li *ngFor="let item of usuarios" class="p-2 border-bottom" (click)="showMessages(item.id)">
                         <div href="" class="d-flex justify-content-between">
-                          <div class="d-flex fldivex-row">
+                          <div class="d-flex flex-row">
                             <div class="pt-1">
                               <p class="fw-bold mb-0">{{item.name}}</p>
                               <!-- <p class="small text-muted">Lorem ipsum dolor sit.</p> -->
@@ -50,8 +50,10 @@
                           </div>
                           <div class="pt-1">
                             <p class="small text-muted mb-1">{{item.lastMessageTime}}</p>
-                            <span class="badge bg-primaryy rounded-pill float-end">{{item.messageCount}}</span>
+                            <span *ngIf="item.messageCount > 0"
+                              class="badge bg-primaryy rounded-pill float-end">{{item.messageCount}}</span>
                           </div>
+
                         </div>
                       </li>
 
@@ -64,51 +66,30 @@
 
               <div class="col-md-6 col-lg-7 col-xl-8">
 
+
                 <div class="pt-3 pe-3"
-                  style="position: relative;max-height: 400px; overflow-y: auto; height: 400px !important;">
-
-                  <!-- <div class="d-flex flex-row justify-content-start">
+                  style="position: relative; max-height: 400px; overflow-y: auto; height: 400px !important;">
+                  <div *ngFor="let message of combinedMessages"
+                    [ngClass]="{'justify-content-start': !message.isSended, 'justify-content-end': message.isSended}"
+                    class="d-flex flex-row">
                     <div>
-                      <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #f5f6f7;">Lorem ipsum
-                        dolor
-                        sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                        dolore
-                        magna aliqua.</p>
-                      <p class="small ms-3 mb-3 rounded-3 text-muted float-end">12:00 PM | Aug 13</p>
+                      <p class="small p-2 ms-3 mb-1 rounded-3 text-white"
+                        [ngClass]="{'bg-primaryy': message.isSended, 'bg-secondary': !message.isSended}">
+                        {{ message.message }}
+                      </p>
+                      <p class="small ms-3 mb-3 rounded-3" [ngClass]="{'float-end': !message.isSended}">{{
+                        message.date | date: 'hh:mm a' }}</p>
                     </div>
                   </div>
-
-                  <div class="d-flex flex-row justify-content-end">
-                    <div>
-                      <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">Ut enim ad minim veniam,
-                        quis
-                        nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                      <p class="small me-3 mb-3 rounded-3 text-muted">12:00 PM | Aug 13</p>
-                    </div>
-                  </div> -->
-                  <div class="pt-3 pe-3"
-                    style="position: relative; max-height: 400px; overflow-y: auto; height: 400px !important;">
-                    <div *ngFor="let message of combinedMessages"
-                      [ngClass]="{'justify-content-start': !message.isSended, 'justify-content-end': message.isSended}"
-                      class="d-flex flex-row">
-                      <div>
-                        <p class="small p-2 ms-3 mb-1 rounded-3 text-white"
-                          [ngClass]="{'bg-primaryy': message.isSended, 'bg-secondary': !message.isSended}">
-                          {{ message.message }}
-                        </p>
-                        <p class="small ms-3 mb-3 rounded-3" [ngClass]="{'float-end': !message.isSended}">{{
-                          message.date | date: 'hh:mm a' }}</p>
-                      </div>
-                    </div>
-                  </div>
-
-
                 </div>
+
+
 
                 <div class="text-muted d-flex justify-content-start align-items-center pe-3 pt-3 mt-2">
                   <input [(ngModel)]="message" type="text" class="form-control form-control-lg"
                     id="exampleFormControlInput2" placeholder="Mensaje">
-                  <button class="ms-3" (click)="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+                  <button class="border-0" (click)="sendMessage()"><i
+                      class="fas fa-paper-plane text-success"></i></button>
                 </div>
 
               </div>

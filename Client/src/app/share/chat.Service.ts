@@ -24,17 +24,18 @@ export class UserChatService {
   socketId: string;
   private messagesSubject = new BehaviorSubject<Message[]>(null);
   public messages$: Observable<Message[]> = this.messagesSubject.asObservable();
+  private socketInitializedSubject = new BehaviorSubject<boolean>(false);
+  public socketInitialized$: Observable<boolean> = this.socketInitializedSubject.asObservable();
   private onlineUsers = new BehaviorSubject<UserChat[]>(null); //Definimos nuestro BehaviorSubject, este debe tener un valor inicial siempre
   public currentDataUserChat$ = this.onlineUsers.asObservable(); //Tenemos un observable con el valor actual del BehaviorSubject
-  public qtyItems = new Subject<number>();
   constructor(private userService: UserService) {
 
-    //Establecer un observable para los datos del carrito
     this.user = this.userService.currentUserValue;
 
     //Obtener los datos de la variable orden guardada en el localStorage
     this.onlineUsers = new BehaviorSubject<any>(
       JSON.parse(localStorage.getItem('chatUsers'))
+
     );
     this.messagesSubject = new BehaviorSubject<any>(
       JSON.parse(localStorage.getItem('messages'))
@@ -54,15 +55,22 @@ export class UserChatService {
 
     this.socket.on('connect', () => {
       console.log('Conectado al servidor');
+      this.socketInitializedSubject.next(true);
       this.socket.emit('entrarChat', this.user, (resp: any) => {
         console.log('Usuarios conectados', resp);
         this.addToChat(resp);
+
       });
     });
 
     // Otras configuraciones y lógica del socket
   }
-  saveCart(): void {
+
+  isSocketInitialized(): boolean {
+    return this.socketInitializedSubject.getValue();
+  }
+
+  saveUsers(): void {
     localStorage.setItem(
       'chatUsers',
       JSON.stringify(this.onlineUsers.getValue())
@@ -107,66 +115,28 @@ export class UserChatService {
     this.onlineUsers.next(listUserChat); //Enviamos el valor al Observable
 
     //Actualizar la información en el localStorage
-    this.saveCart();
+    this.saveUsers();
   }
 
-  public removeFromCart(newData: UserChat) {
-    //Obtenemos la lista
-    let listChat = this.onlineUsers.getValue();
-    //Buscamos el item del chat para eliminar
-    let objIndex = listChat.findIndex((obj) => obj.id == newData.id);
-    if (objIndex != -1) {
-      //Eliminamos el item del array del carrito
-      listChat.splice(objIndex, 1);
-    }
-    this.onlineUsers.next(listChat); //Enviamos el valor al Observable
 
-    //Actualizar la información en el localStorage
-    this.saveCart();
-  }
-  //Obtener todos los items del carrito
-  get getItems() {
-    return this.onlineUsers.getValue();
-  }
+
 
   get getMessages() {
     return this.messagesSubject.getValue();
   }
-  //Gestiona el conteo de los items del carrito como un Observable
-  get countItems(): Observable<number> {
-    return this.qtyItems.asObservable();
-  }
-  setItems() {
-    return this.onlineUsers.getValue();
-  }
 
-  //Borra toda los items del carrito
-  public deleteCart() {
+
+
+  public deleteData() {
     this.onlineUsers.next(null); //Enviamos el valor al Observable
+    this.messagesSubject.next(null);
     //Actualizar cantidad de items a 0
-    this.qtyItems.next(0);
     //Actualizar la información en el localStorage
-    this.saveCart();
+    this.saveUsers();
+    this.saveMessages();
   }
 
   sendMessage(idVendedor: number | null, message: string) {
-    // if (this.getItems != null) {
-    //   this.socket.emit(
-    //     'mensajePrivado',
-    //     { para: this.socketId, mensaje: message },
-    //     (resp: any) => {
-    //       // console.log('respuesta server:', resp);
-    //     }
-    //   );
-    // } else {
-    //   this.socket.emit(
-    //     'mensajePrivado',
-    //     { para: idVendedor, mensaje: message },
-    //     (resp: any) => {
-    //       // console.log('respuesta server:', resp);
-    //     }
-    //   );
-    // }
     this.socket.emit(
       'mensajePrivado',
       { para: idVendedor, mensaje: message },
@@ -191,7 +161,7 @@ export class UserChatService {
   getListaPersonas(): Observable<any> {
     return new Observable<{ user: any }>((observer) => {
       this.socket.on('listaPersona', (data: any) => {
-        this.deleteCart();
+        this.deleteData();
         console.log('Usuarios conectados: ', data);
         data.forEach(element => {
           this.addToChat(element);
@@ -213,13 +183,5 @@ export class UserChatService {
     this.socket.connect();
   }
 
-  // getNoti(): Observable<any> {
-  //   return new Observable<{ user: string; message: string }>((observer) => {
-  //     // Escuchar eventos de 'mensajePrivado' del servidor
-  //     this.socket.on('noti', (data: any) => {
-  //       this.addToChat(data);
-  //       observer.next(data);
-  //     });
-  //   });
-  // }
+
 }

@@ -38,6 +38,11 @@ export class ChatAdminComponent {
   }
   showMessages(id: number) {
     this.selectedUserId = id;
+    this.usuarios.forEach(x => {
+      if (x.id == id) {
+        x.messageCount = 0;
+      }
+    });
     const userMessages = this.messages.filter(message => message.id === id);
     this.combinedMessages = userMessages.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
   }
@@ -54,7 +59,9 @@ export class ChatAdminComponent {
         if (uniqueUsersMap.has(id)) {
           // Si el usuario ya existe en el mapa, aumenta la cantidad de mensajes en 1.
           const user = uniqueUsersMap.get(id);
-          user.messageCount++;
+          if (!message.isSended) {
+            user.messageCount++;
+          }
 
           // Actualiza la hora del mensaje más reciente si es más tarde que la actual.
           if (!user.lastMessageTime || date > new Date('1970-01-01T' + user.lastMessageTime + 'Z')) {
