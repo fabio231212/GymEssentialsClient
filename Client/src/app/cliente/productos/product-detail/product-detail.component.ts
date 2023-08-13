@@ -21,6 +21,7 @@ import { Subject, takeUntil, switchMap } from 'rxjs';
 import { UserService } from 'src/app/share/user.service';
 import { NotificacionService, TipoMessage } from 'src/app/share/notification.service';
 import { Comentario, ComentarioService } from 'src/app/share/comentarios.service';
+import { UserChatService } from 'src/app/share/chat.Service';
 
 @Component({
   selector: 'app-product-detail',
@@ -52,7 +53,8 @@ export class ProductDetailComponent {
     public formBuilder: FormBuilder,
     private gService: GenericService,
     private route: ActivatedRoute,
-    private commentService: ComentarioService
+    private commentService: ComentarioService,
+    private chatService: UserChatService
   ) {
     let id = this.route.snapshot.paramMap.get('idProducto');
     if (!isNaN(Number(id))) {
@@ -63,8 +65,8 @@ export class ProductDetailComponent {
       });
       this.idProducto = Number(id);
       this.reactiveForm();
-
     }
+
 
   }
   reactiveForm() {
@@ -79,7 +81,9 @@ export class ProductDetailComponent {
     return this.form.controls[control].hasError(error);
   };
 
+
   ngOnInit() {
+
     this.commentService.comentarios$
       .pipe(takeUntil(this.destroy$))
       .subscribe((comentarios) => (this.comentarios = comentarios));
