@@ -9,15 +9,16 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor() {}
+  constructor() { }
 
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    const isExternalApi = request.url.startsWith('https://ubicaciones.paginasweb.cr');
     const token = localStorage.getItem('token');
 
-    if (token) {
+    if (token && !isExternalApi) {
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`,

@@ -1,0 +1,10 @@
+<h1>Selecciona una dirección:</h1>
+<div *ngFor="let direccion of direcciones">
+  <mat-checkbox (change)="onGuardarSeleccion(direccion)" [value]="direccion">
+    {{ direccion.codPostal }} - {{direccion.distrito}} - {{direccion.canton}} - {{direccion.provincia}}
+  </mat-checkbox>
+</div>
+
+<br>
+
+<button mat-raised-button color="primary" (click)="dialogRef.close()">Cancelar</button>
