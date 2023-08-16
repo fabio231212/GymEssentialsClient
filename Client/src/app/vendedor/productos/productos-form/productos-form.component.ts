@@ -144,9 +144,9 @@ export class ProductosFormComponent implements OnInit {
       ],
       descripcion: [null, Validators.compose([Validators.required, Validators.minLength(50)])],
       stock: [null, Validators.required],
-      descuento: [null],
+      descuento: [0,null],
       precio: [null, Validators.required],
-      precioOferta: [null],
+      precioOferta: [0,null],
       estadoProductoId: [null, Validators.required],
       categoriaProductoId: [null, Validators.required],
       marcas: [null, [Validators.required]],
@@ -242,13 +242,15 @@ export class ProductosFormComponent implements OnInit {
       formData.append('imagenes', this.imagenes[i]);
     }
 
+    console.log(formData);
+
     // Accion API create enviando el FormData
     this.gService
       .create('productos', formData)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         this.respProducto = data;
-        this.router.navigate(['/productos'], {
+        this.router.navigate(['/vendedor/productos/' + this.currentUser.userId],{
           queryParams: { create: 'true' },
         });
       });
@@ -306,7 +308,7 @@ export class ProductosFormComponent implements OnInit {
       .subscribe((data: any) => {
         //Obtener respuesta
         this.respProducto = data;
-        this.router.navigate(['/productos'], {
+        this.router.navigate(['/vendedor/productos/' + this.currentUser.userId], {
           queryParams: { update: 'true' },
         });
       });

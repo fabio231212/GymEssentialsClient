@@ -72,7 +72,10 @@ export class UserService {
       map((user) => {
         // almacene los detalles del usuario y el token jwt
         // en el almacenamiento local para mantener al usuario conectado entre las actualizaciones de la página
-
+        if (user.token == null) {
+          return null;
+        }
+        console.log('user', user);
         localStorage.setItem('token', user.token);
         this.authenticated.next(true);
         this.userSubject.next(this.getDecodedToken(JSON.stringify(user)));

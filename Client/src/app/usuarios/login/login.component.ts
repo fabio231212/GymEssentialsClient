@@ -60,9 +60,9 @@ export class LoginComponent implements OnInit {
       auth = params['auth'] || '';
       if (register) {
         this.noti.mensaje(
-          'Advertencia',
-          'Usuario no encontrado. Por favor, verifica tus credenciales.',
-          TipoMessage.warning
+          'Usuario',
+          'Usuario registrado! Especifique sus credenciales',
+          TipoMessage.success
         );
       }
       if (auth) {
@@ -83,6 +83,14 @@ export class LoginComponent implements OnInit {
     this.userService
       .loginUser(this.loginForm.value)
       .subscribe((respuesta: any) => {
+        if (respuesta.status === null) {
+          this.noti.mensaje(
+            'Advertencia',
+            'Usuario no encontrado. Por favor, verifica tus credenciales.',
+            TipoMessage.warning
+          );
+        }
+
         let user = this.userService.currentUserValue;
 
         if (user.roles.includes('Administrador') && !user.roles.includes('Vendedor')) {

@@ -192,7 +192,7 @@ export class CreateComponent implements OnInit {
       .createUser(formData) // Pasa los valores del formulario
       .subscribe((respuesta: any) => {
         this.usuario = respuesta;
-        this.router.navigate(['/log-in'], {
+        this.router.navigate(['/login'], {
           // Mostrar un mensaje
           queryParams: { register: 'true' },
         });

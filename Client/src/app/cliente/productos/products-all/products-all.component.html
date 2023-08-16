@@ -2,7 +2,7 @@
   <mat-sidenav #sidenav [opened]="sidenavOpen" [mode]="sidenavOpen ? 'side' : 'over'" class="filter-sidenav">
     <ng-scrollbar pointerEventsMethod="scrollbar" visibility="hover">
       <mat-accordion displayMode="flat" multi="true">
-        <!-- <mat-expansion-panel expanded>
+        <mat-expansion-panel expanded>
           <mat-expansion-panel-header>
             <mat-panel-title>
               <h4>Categorías</h4>
@@ -10,23 +10,15 @@
           </mat-expansion-panel-header>
           <div class="categories-wrapper categories-dropdown">
             <ng-scrollbar pointerEventsMethod="scrollbar" [autoHeightDisabled]="false">
-              <app-category-list [categories]="categories" [categoryParentId]="0"
-                (change)="onChangeCategory($event)"></app-category-list>
+              <button mat-menu-item (click)="toggleCategoria('')">
+                <span>Todos</span>
+              </button>
+              <div *ngFor="let cat of categoriasList">
+                <button mat-menu-item (click)="toggleCategoria(cat.descripcion)">
+                  <span>{{cat.descripcion}}</span>
+                </button>
+              </div>
             </ng-scrollbar>
-          </div>
-        </mat-expansion-panel> -->
-
-        <mat-expansion-panel expanded>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <h4>Categorías</h4>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="filter-buttons">
-            <button mat-raised-button *ngFor="let cat of categoriasList" (click)="cat.selected = !cat.selected"
-              [class.selected]="cat.selected">
-              {{cat.descripcion}}
-            </button>
           </div>
         </mat-expansion-panel>
 
@@ -34,7 +26,7 @@
         <mat-expansion-panel expanded>
           <mat-expansion-panel-header>
             <mat-panel-title>
-              <h4>Price</h4>
+              <h4>Precio:</h4>
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div fxLayout="row" fxLayoutAlign="space-between center" class="text-muted">
@@ -42,10 +34,10 @@
             <span>Hasta: <b>${{priceTo}}</b></span>
           </div>
           <div fxLayout="row" fxLayoutAlign="space-between center" class="filter-price">
-            <!-- <mat-slider color="primary" max="2000" min="1" thumb-label="true"><input matSliderThumb
-                [(ngModel)]="priceFrom" /></mat-slider>
-            <mat-slider color="warn" max="2000" min="1" thumb-label="true"><input matSliderThumb
-                [(ngModel)]="priceTo" /></mat-slider> -->
+            <mat-slider color="primary" [max]="priceTo" min="1" thumb-label="true" discrete="true" step="1"> <input matSliderThumb [(ngModel)]="priceFrom" (change)="applyFilters()">
+            </mat-slider>
+            <mat-slider color="primary" max="200" [min]="priceFrom" thumb-label="true" discrete="true"> <input matSliderThumb [(ngModel)]="priceTo" (change)="applyFilters()">
+            </mat-slider>
           </div>
         </mat-expansion-panel>
 
@@ -56,8 +48,8 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="filter-buttons">
-            <button mat-raised-button *ngFor="let tam of tamannosList" (click)="tam.selected = !tam.selected"
-              [class.selected]="tam.selected">
+            <button mat-raised-button *ngFor="let tam of tamannosList" (click)="toggleSize(tam.descripcion)"
+              (click)=" tam.selected = !tam.selected;" [class.selected]="tam.selected">
               {{tam.descripcion}}
             </button>
           </div>
@@ -70,8 +62,8 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div fxLayout="column">
-            <mat-checkbox mat-raised-button *ngFor="let est of estadosList">
-              {{est.descripcion}}
+            <mat-checkbox mat-raised-button *ngFor="let est of estadosList" (click)="toggleEstado(est.descripcion)">
+              {{ est.descripcion }}
             </mat-checkbox>
           </div>
         </mat-expansion-panel>
@@ -83,8 +75,8 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="filter-brands">
-            <button mat-raised-button *ngFor="let marca of marcasList" (click)="marca.selected = !marca.selected"
-              [class.selected]="marca.selected">
+            <button mat-raised-button *ngFor="let marca of marcasList" (click)="toggleMarca(marca.descripcion)"
+              (click)=" marca.selected = !marca.selected;" [class.selected]="marca.selected">
               {{marca.descripcion}}
             </button>
           </div>
@@ -137,7 +129,7 @@
     </div>
 
     <div *ngIf="viewType == 'grid'" fxLayout="row wrap" class="products-wrapper">
-      <div *ngFor="let product of datos | paginate: { itemsPerPage: count, currentPage: page }" fxFlex="100"
+      <div *ngFor="let product of datosFiltrados | paginate: { itemsPerPage: count, currentPage: page }" fxFlex="100"
         [fxFlex.gt-sm]="viewCol" fxFlex.sm="50" class="col">
         <mat-card class="product-item text-center">
           <mat-chip-listbox *ngIf="product.descuento > 0">
@@ -163,20 +155,17 @@
                 <p class="new-price">${{ product.precio | number : "1.2-2" }}</p>
               </ng-template>
             </div>
-            <!-- <app-rating [ratingsCount]="product.ratingsCount" [ratingsValue]="product.ratingsValue"
-              [direction]="'column'"></app-rating> -->
           </div>
           <div class="divider mt-2"></div>
           <div class="icons">
-            <app-controls [product]="datos" [requireStockQuantity]="false" [type]="'all'"></app-controls>
-            <!-- <app-controls [product]="product" (onOpenProductDialog)="openProductDialog(product)"></app-controls> -->
+            <app-controls [product]="datosFiltrados" [requireStockQuantity]="false" [type]="'all'"></app-controls>
           </div>
         </mat-card>
       </div>
     </div>
 
     <div *ngIf="viewType == 'list'" fxLayout="row wrap" class="products-wrapper">
-      <div *ngFor="let product of datos | paginate: { itemsPerPage: count, currentPage: page }" fxFlex="100"
+      <div *ngFor="let product of datosFiltrados | paginate: { itemsPerPage: count, currentPage: page }" fxFlex="100"
         class="col">
         <mat-card class="product-item">
           <div fxLayout="row wrap">
@@ -196,16 +185,6 @@
               </a>
               <p class="py-1 text-muted lh">{{product.descripcion}}</p>
               <div fxLayout="row" fxLayoutAlign="space-between center" class="prices">
-                <!-- <div fxLayout="column" fxLayoutAlign="center start">
-
-                  <p *ngIf="product.precioOferta != 0; else noOferta"  class="old-price text-muted" >
-                    ${{ product.precioOferta | number : "1.2-2" }}
-                  </p>
-                  <ng-template #noOferta>
-                    <p class="new-price">${{ product.precio | number : "1.2-2" }}</p>
-                  </ng-template>
-                </div> -->
-
                 <div fxLayout="column" fxLayoutAlign="center start">
                   <p class="old-price text-muted">
                     <span *ngIf="product.precioOferta > 0">${{ product.precio | number : "1.2-2" }}</span>
@@ -218,27 +197,25 @@
                   </ng-template>
                 </div>
 
-                <!-- <app-rating [ratingsCount]="product.ratingsCount" [ratingsValue]="product.ratingsValue"
-                  [direction]="'column'"></app-rating> -->
               </div>
               <div class="divider"></div>
-              <!-- <div class="icons">
-                              <app-controls [product]="product" (onOpenProductDialog)="openProductDialog(product)"></app-controls>
-                          </div> -->
+              <div class="icons">
+                <app-controls [product]="datosFiltrados" [requireStockQuantity]="false" [type]="'all'"></app-controls>
+              </div>
             </div>
           </div>
         </mat-card>
       </div>
     </div>
-    <!--
-    <div *ngIf="datos.length > 0" fxLayout="row wrap">
+
+    <div *ngIf="datosFiltrados.length > 0" fxLayout="row wrap">
       <div fxFlex="100">
         <mat-card class="p-0 text-center">
           <pagination-controls class="product-pagination" [autoHide]="true" [maxSize]="5"
             (pageChange)="onPageChanged($event)"></pagination-controls>
         </mat-card>
       </div>
-    </div> -->
+    </div>
 
   </mat-sidenav-content>
 </mat-sidenav-container>
