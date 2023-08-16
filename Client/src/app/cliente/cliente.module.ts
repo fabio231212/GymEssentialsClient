@@ -13,6 +13,9 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { ProductZoomComponent } from './productos/product-detail/product-zoom/product-zoom.component';
 import { RouterModule, Routes } from '@angular/router';
 import { NotificacionService } from '../share/notification.service';
+import { CarritoComponent } from './facturas/carrito/carrito.component';
+import { CheckoutComponent } from './facturas/checkout/checkout.component';
+
 
 // export const routes: Routes = [
 //   { path: '', component: ProductsAllComponent, pathMatch: 'full' },
@@ -28,7 +31,11 @@ import { NotificacionService } from '../share/notification.service';
     ProductsAllComponent,
     FacturaDetailComponent,
     FacturasxclienteComponent,
-    ProductZoomComponent
+    ProductZoomComponent,
+    CarritoComponent,
+    CheckoutComponent
+
+
 
   ],
   imports: [

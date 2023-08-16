@@ -1,0 +1,266 @@
+<mat-stepper #horizontalStepper [formGroup]="billingForm" [orientation]="stepperOrientation" linear="true"
+  class="mat-elevation-z2">
+
+  <mat-step label="Dirección">
+    <span class="text-muted">Información de Envío</span>
+    <button *ngIf="direcciones.length>0" mat-button (click)="abrirDialogDireccion()"
+      color="primary">{{this.infoDireccion?this.infoDireccion.codPostal + '-' + this.infoDireccion.sennas: 'Seleccionar
+      Dirección'}}
+      <mat-icon>keyboard_arrow_left</mat-icon>
+      <mat-icon>location_on</mat-icon> </button>
+    <div>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Provincia</mat-label>
+        <mat-select placeholder="Provincia" formControlName="provincia" (selectionChange)="onProvinceChange()" required>
+          <mat-option *ngFor="let provincia of provincias" [value]="provincia.name" [attr.id]="provincia.id">
+            <span>{{ provincia.name }}</span>
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="errorHandling('provincia', 'required')">La provincia es requerida</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Cantón</mat-label>
+        <mat-select placeholder="Cantón" formControlName="canton" (selectionChange)="onCantonChange()" required>
+          <mat-option *ngFor="let canton of cantones" [value]="canton.name">
+            <span>{{ canton.name }}</span>
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="errorHandling('canton', 'required')">El cantón es requerido</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Distrito</mat-label>
+        <mat-select placeholder="Distrito" formControlName="distrito" required>
+          <mat-option *ngFor="let distrito of distritos" [value]="distrito.name">
+            <span>{{ distrito.name }}</span>
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="errorHandling('distrito', 'required')">El distrito es requerido</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Código Zip/Postal</mat-label>
+        <input matInput placeholder="Zip/Postal Code" formControlName="zip" required>
+        <mat-error *ngIf="errorHandling('zip', 'required')">El código postal es requerido</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Otras Señas</mat-label>
+        <input matInput placeholder="Dirección (calle, apartamento, casa, unidad etc.)" formControlName="otrasSennas"
+          required>
+        <mat-error *ngIf="errorHandling('otrasSennas', 'required')">Otras señas son requeridas</mat-error>
+        <mat-error *ngIf="errorHandling('otrasSennas', 'minlength')">Otras señas debe tener al menos 25
+          carácteres</mat-error>
+      </mat-form-field>
+      <div fxLayout="row" fxLayoutAlign="center center" class="mt-2 p-1">
+        <button mat-mini-fab matStepperPrevious color="primary" matTooltip="Anterior" matTooltipPosition="before"
+          class="mr-1"><mat-icon>navigate_before</mat-icon></button>
+        <button mat-mini-fab matStepperNext color="primary" matTooltip="Siguiente"
+          matTooltipPosition="after"><mat-icon>navigate_next</mat-icon></button>
+      </div>
+    </div>
+  </mat-step>
+
+  <!-- <mat-step label="Método de Entrega">
+    <div class="p-2">
+      <mat-radio-group formControlName="deliveryMethod" fxLayout="column" fxLayoutAlign="center" required
+        name="methods">
+        <mat-radio-button *ngFor="let method of deliveryMethods" color="primary" [value]="method"
+          class="mt-1"><b>{{method.name}}</b> {{method.desc}}</mat-radio-button>
+      </mat-radio-group>
+      <div fxLayout="row" fxLayoutAlign="center center" class="mt-2 p-1">
+        <button mat-mini-fab matStepperPrevious color="primary" matTooltip="Back" matTooltipPosition="before"
+          class="mr-1"><mat-icon>navigate_before</mat-icon></button>
+        <button mat-mini-fab matStepperNext color="primary" matTooltip="Next"
+          matTooltipPosition="after"><mat-icon>navigate_next</mat-icon></button>
+      </div>
+    </div>
+  </mat-step> -->
+  <mat-step label="Método de Pago">
+    <div>
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxLayout="column" fxLayoutAlign="start start" class="py-3 px-1">
+          <span class="text-muted">Información de Tarjeta</span>
+          <div class="d-flex"> <img src="assets/images/others/card-icon.png" alt="">
+            <button *ngIf="tarjetas.length>0" mat-button (click)="abrirDialogoTarjetas()"
+              color="primary">{{this.infoTarjeta?this.infoTarjeta.numTarjeta.slice(-4) + ' seleccionada': 'Seleccionar
+              Tarjeta'}}
+              <mat-icon>keyboard_arrow_left</mat-icon>
+              <mat-icon>credit_card</mat-icon> </button>
+          </div>
+
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Nombre Titular</mat-label>
+            <input matInput placeholder="Titular de la tarjeta" formControlName="cardHolderName" required>
+            <mat-error *ngIf="errorHandling('cardHolderName', 'required')">El nombre del titular es
+              requerido</mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Número de Tarjeta</mat-label>
+            <input matInput placeholder="XXXX-XXXX-XXXX-XXXX" formControlName="cardNumber" required>
+            <mat-error *ngIf="errorHandling('cardNumber', 'required')">El número de tarjeta es requerido</mat-error>
+            <mat-error *ngIf="errorHandling('cardNumber', 'invalidCreditCard')">Formato de Tarjeta inválido</mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Mes de Vencimiento</mat-label>
+            <mat-select placeholder="Mes de Vencimiento" formControlName="expiredMonth" required>
+              <mat-option *ngFor="let month of months" [value]="month.name">
+                {{month.name}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="errorHandling('expiredMonth', 'required')">El mes de vencimiento es requerido</mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Año de Vencimiento</mat-label>
+            <mat-select placeholder="Año de Vencimiento" formControlName="expiredYear" required>
+              <mat-option *ngFor="let year of years" [value]="year">
+                {{year}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="errorHandling('expiredYear','required')">El año de vencimiento es requerido</mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>CVV</mat-label>
+            <input matInput placeholder="CVV" formControlName="cvv" required>
+            <mat-error *ngIf="errorHandling('cvv','required')">CVV es requerido</mat-error>
+            <mat-error *ngIf="errorHandling('cvv','minlength')">Mínimo 3 dígitos</mat-error>
+            <mat-error *ngIf="errorHandling('cvv','maxlength')">Máximo 4 dígitos</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center center" class="mt-2 p-1">
+        <button mat-mini-fab matStepperPrevious color="primary" matTooltip="Back" matTooltipPosition="before"
+          class="mr-1"><mat-icon>navigate_before</mat-icon></button>
+        <button mat-mini-fab matStepperNext color="primary" matTooltip="Next"
+          matTooltipPosition="after"><mat-icon>navigate_next</mat-icon></button>
+      </div>
+    </div>
+  </mat-step>
+  <mat-step label="Resumen de Orden">
+    <div id="htmlData">
+      <div fxLayout="row wrap">
+        <div fxFlex="100" class="p-1">
+          <h3 class="text-muted">Resumen de Orden</h3>
+          <div class="divider"></div>
+          <div class="mat-mdc-table review-order-table">
+            <div class="mat-mdc-header-row">
+              <div class="mat-mdc-header-cell">Producto</div>
+              <div class="mat-mdc-header-cell">Nombre</div>
+              <div class="mat-mdc-header-cell">Precio Unitario</div>
+              <div class="mat-mdc-header-cell">Cantidad</div>
+              <div class="mat-mdc-header-cell">Total</div>
+            </div>
+            <div *ngFor="let item of cartList" class="mat-mdc-row">
+              <div class="mat-mdc-cell"><img class="product-image" [src]=" item.product.imagenes[0].imgUrl"></div>
+              <div class="mat-mdc-cell">{{item.product.nombre}}</div>
+              <div class="mat-mdc-cell">${{item.product.precioOferta>0?item.product.precioOferta:item.product.precio |
+                number : '1.2-2'}}</div>
+              <div class="mat-mdc-cell text-muted"> {{item.cantidad}} </div>
+              <div class="mat-mdc-cell">${{ item.subtotal | number : '1.2-2'}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div fxLayout="row wrap">
+        <div fxFlex="100" class="p-2">
+          <h3 class="text-muted mt-3">Usuario</h3>
+          <div class="divider"></div>
+        </div>
+        <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-2">
+          <p class="text-muted">Nombre:</p>
+          <p>{{user.nombre}} {{user.apellidos}}</p>
+        </div>
+        <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-2">
+          <p class="text-muted">Email:</p>
+          <p>{{user.mail}}</p>
+        </div>
+      </div>
+      <div fxLayout="row wrap">
+        <div fxFlex="100" class="p-2">
+          <h3 class="text-muted mt-3">Información de Entrega</h3>
+          <div class="divider"></div>
+        </div>
+        <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-2">
+          <p class="text-muted">Distrito:</p>
+          <p>{{billingForm.controls['distrito'].value}}</p>
+        </div>
+        <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-2">
+          <p class="text-muted">Cantón:</p>
+          <p>{{billingForm.controls['canton'].value}}</p>
+        </div>
+        <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-2">
+          <p class="text-muted">Provincia:</p>
+          <p>{{billingForm.controls['provincia'].value}}</p>
+        </div>
+        <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-2">
+          <p class="text-muted">Señas:</p>
+          <p>{{billingForm.controls['otrasSennas'].value}}</p>
+        </div>
+
+      </div>
+      <!-- <div fxLayout="row wrap">
+      <div fxFlex="100" class="p-2">
+        <h3 class="text-muted mt-3">Información de Entrega</h3>
+        <div class="divider"></div>
+
+        <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-2">
+          <p class="text-muted">Distrito:</p>
+          <p>{{billingForm.controls['distrito'].value}}</p>
+        </div>
+        <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-2">
+          <p class="text-muted">Cantón:</p>
+          <p>{{billingForm.controls['canton'].value}}</p>
+        </div>
+        <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-2">
+          <p class="text-muted">Provincia:</p>
+          <p>{{billingForm.controls['provincia'].value}}</p>
+        </div>
+        <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-2">
+          <p class="text-muted">Señas:</p>
+          <p>{{billingForm.controls['otrasSennas'].value}}</p>
+        </div>
+
+      </div>
+    </div> -->
+      <div fxLayout="row">
+        <div fxFlex="100" class="p-2">
+          <h3 class="text-muted mt-3">Información de Pago</h3>
+          <div class="divider"></div>
+          <p class="py-2"><span class="text-muted mr-1">Tarjeta No:</span><span>XXXX-XXXX-XXXX-
+              {{billingForm.controls['cardNumber'].value.slice(-4)}}</span></p>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center center" class="p-2">
+        <h2><span class="text-muted mr-1">Precio Total:</span><span>${{cartService.getTotal() | number :
+            '1.2-2'}}</span>
+        </h2>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center center" class="mt-3 p-2">
+        <button mat-mini-fab matStepperPrevious color="primary" matTooltip="Back" matTooltipPosition="before"
+          class="mr-1"><mat-icon>navigate_before</mat-icon></button>
+        <button mat-raised-button matStepperNext color="primary" (click)="registrarOrden()"
+          [disabled]="!billingForm.valid">Confirmar Compra</button>
+      </div>
+
+    </div>
+  </mat-step>
+  <mat-step label="Confirmation">
+    <div fxLayout="column" fxLayoutAlign="center center" class="p-2 text-center">
+      <button mat-fab color="primary"><mat-icon>check</mat-icon></button>
+      <h2 class="py-3">¡Su Orden ha sido procesada!</h2>
+      <p class="text-muted">Enviamos la Factura a su email registrado. Para dudas con respecto a su pedido
+        por favor visitar el historial de pedidos o el chat de soporte con el vendedor ¡Gracias por preferirnos!</p>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center center" class="mt-3 p-2">
+      <a [routerLink]="['/']" mat-raised-button color="primary">Volver a Comprar</a>
+    </div>
+
+  </mat-step>
+</mat-stepper>

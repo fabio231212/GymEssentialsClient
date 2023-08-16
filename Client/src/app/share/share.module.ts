@@ -46,6 +46,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
 import { ChatAdminComponent } from '../admin/chat-admin/chat-admin.component';
 import { FormsModule } from '@angular/forms';
+import { DialogTarjetaComponent } from './dialog-tarjeta/dialog-tarjeta.component';
+import { DialogDireccionComponent } from './dialog-direccion/dialog-direccion.component';
 
 @NgModule({
   providers: [
@@ -95,6 +97,9 @@ import { FormsModule } from '@angular/forms';
     MatTooltipModule,
     MatStepperModule,
     NgScrollbarModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatCheckboxModule,
     // PipesModule
   ],
   exports: [
@@ -141,13 +146,15 @@ import { FormsModule } from '@angular/forms';
     ProductDialogComponent,
     ChatComponent,
 
-    
+
   ],
   declarations: [
     ControlsComponent,
     ProductsCarouselComponent,
     ProductDialogComponent,
     ChatComponent,
+    DialogTarjetaComponent,
+    DialogDireccionComponent,
   ],
 })
-export class ShareModule {}
+export class ShareModule { }

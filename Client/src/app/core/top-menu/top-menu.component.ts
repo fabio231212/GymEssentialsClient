@@ -18,6 +18,7 @@ import { UserService } from 'src/app/share/user.service';
 // TOP MENU
 import { TranslateService } from '@ngx-translate/core';
 import { UserChatService } from 'src/app/share/chat.Service';
+import { CartService } from 'src/app/share/cart.service';
 
 @Component({
   selector: 'app-top-menu',
@@ -37,7 +38,8 @@ export class TopMenuComponent implements OnInit {
   // TOP MENU
   public currencies = ['USD', 'EUR'];
   public currency: any;
-
+  public cartList = [];
+  public qtyItems = 0;
   public settings: Settings;
   constructor(
     public appSettings: AppSettings,
@@ -48,12 +50,23 @@ export class TopMenuComponent implements OnInit {
     private authService: UserService,
     private chatService: UserChatService,
     private userService: UserService,
+    public cartService: CartService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.settings = this.appSettings.settings;
+    this.qtyItems = this.cartService.quantityItems()
+
   }
 
   ngOnInit() {
+    this.cartService.currentDataCart$.subscribe(data => {
+      this.cartList = data;
+
+    })
+
+    this.cartService.countItems.subscribe((value) => {
+      this.qtyItems = value;
+    })
     //Subscripción a la información del usuario actual
     this.authService.currentUser.subscribe((x) => (this.currentUser = x));
     //Subscripción al boolean que indica si esta autenticado
@@ -209,6 +222,7 @@ export class TopMenuComponent implements OnInit {
       this.chatService.getDisconnected();
       this.chatService.deleteData();
     }
+    this.cartService.deleteCart();
     localStorage.removeItem('token');
 
     localStorage.removeItem('messages');

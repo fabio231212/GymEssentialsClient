@@ -1,0 +1,11 @@
+<h1>Selecciona una tarjeta:</h1>
+<div *ngFor="let tarjeta of tarjetas">
+  <mat-checkbox (change)="onGuardarSeleccion(tarjeta)" [value]="tarjeta">
+    {{ tarjeta.propietarioTarjeta }} - XXXX-XXXX-XXXX-{{ tarjeta.numTarjeta.slice(-4) }} - {{ tarjeta.mesVencimiento }} {{
+    tarjeta.anioVencimiento }}
+  </mat-checkbox>
+</div>
+
+<br>
+
+<button mat-raised-button color="primary" (click)="dialogRef.close()">Cancelar</button>

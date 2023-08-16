@@ -1,250 +1,263 @@
 <mat-card class="shipping-card">
-    <mat-stepper [linear]="true" [formGroup]="registerForm" [orientation]="stepperOrientation">
-        <!-- Step 1: Informacion personal -->
-        <mat-step>
-            <ng-template matStepLabel>Información Personal</ng-template>
-            <div>
-                <mat-form-field appearance="outline" class="w-100 mt-2">
-                    <mat-label>Nombre</mat-label>
-                    <input matInput placeholder="Nombre Completo" formControlName="nombre">
-                    <mat-error *ngIf="errorHandling('nombre', 'required')">El nombre es requerido</mat-error>
-                    <mat-error *ngIf="errorHandling('nombre', 'minlength')">El nombre es debe tener al menos 5 carácteres</mat-error>
-                </mat-form-field>
-                <!-- Other personal information fields here -->
-                <mat-form-field appearance="outline" class="w-100 mt-2">
-                    <mat-label>Apellidos</mat-label>
-                    <input matInput placeholder="Apellidos" formControlName="apellidos">
-                    <mat-error *ngIf="errorHandling('apellidos', 'required')">Los apellidos son requeridos</mat-error>
-                    <mat-error *ngIf="errorHandling('apellidos', 'minlength')">Los apellidos deben tener al menos 10 carácteres</mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="outline" class="w-100 mt-2">
-                    <mat-label>Identificación</mat-label>
-                    <input matInput placeholder="Cédula (101110111)" formControlName="cedula"  required maxlength="9">
-                    <mat-error *ngIf="errorHandling('cedula', 'required')">La cédula es requerida</mat-error>
-                    <mat-error *ngIf="errorHandling('cedula', 'pattern')">La cédula debe tener 9 dígitos númericos de la siguiente manera: 101110111</mat-error>
-                </mat-form-field>
-                <div appearance="outline" class="w-100 mt-2 d-flex justify-content-center">
-                    <mat-card class="example-card">
-                        <img *ngIf="previsualizacion.length > 0" mat-card-image [src]="previsualizacion[0]"
-                            alt="Foto de Perfil">
-                        <mat-card-actions class="d-flex justify-content-center">
-                            <button mat-button *ngIf="previsualizacion.length > 0" (click)="deleteImage()">ELIMINAR</button>
-                            <div class="div-input">
-                                <label class="button-input" *ngIf="previsualizacion.length <= 0">
-                                    <mat-icon>add_photo_alternate</mat-icon>
-                                    <span>Seleccionar Imagen</span>
-                                    <input type="file" (change)="onImageSelected($event)" accept="image/*" formControlName="fotoPerfil" required class="ocultar-input">
-                                  </label>
-                                  
-                                <mat-error *ngIf="errorHandling('fotoPerfil', 'required')">La foto de perfil es requerida</mat-error>
-                            </div>
-                        </mat-card-actions>
-                    </mat-card>
-                </div>
-                <div fxLayout="row" fxLayoutAlign="center center" class="mt-2 p-1">
-                    <button mat-mini-fab matStepperPrevious color="primary" matTooltip="Anterior"
-                        matTooltipPosition="before" class="mr-1"><mat-icon>navigate_before</mat-icon></button>
-                    <button mat-mini-fab matStepperNext color="primary" matTooltip="Siguiente"
-                        matTooltipPosition="after"><mat-icon>navigate_next</mat-icon></button>
-                </div>
-            </div>
-        </mat-step>
+  <mat-stepper [linear]="true" [formGroup]="registerForm" [orientation]="stepperOrientation">
+    <!-- Step 1: Informacion personal -->
+    <mat-step>
+      <ng-template matStepLabel>Información Personal</ng-template>
+      <div>
+        <mat-form-field appearance="outline" class="w-100 mt-2">
+          <mat-label>Nombre</mat-label>
+          <input matInput placeholder="Nombre Completo" formControlName="nombre">
+          <mat-error *ngIf="errorHandling('nombre', 'required')">El nombre es requerido</mat-error>
+          <mat-error *ngIf="errorHandling('nombre', 'minlength')">El nombre es debe tener al menos 5
+            carácteres</mat-error>
+        </mat-form-field>
+        <!-- Other personal information fields here -->
+        <mat-form-field appearance="outline" class="w-100 mt-2">
+          <mat-label>Apellidos</mat-label>
+          <input matInput placeholder="Apellidos" formControlName="apellidos">
+          <mat-error *ngIf="errorHandling('apellidos', 'required')">Los apellidos son requeridos</mat-error>
+          <mat-error *ngIf="errorHandling('apellidos', 'minlength')">Los apellidos deben tener al menos 10
+            carácteres</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100 mt-2">
+          <mat-label>Identificación</mat-label>
+          <input matInput placeholder="Cédula (101110111)" formControlName="cedula" required maxlength="9">
+          <mat-error *ngIf="errorHandling('cedula', 'required')">La cédula es requerida</mat-error>
+          <mat-error *ngIf="errorHandling('cedula', 'pattern')">La cédula debe tener 9 dígitos númericos de la siguiente
+            manera: 101110111</mat-error>
+        </mat-form-field>
+        <div appearance="outline" class="w-100 mt-2 d-flex justify-content-center">
+          <mat-card class="example-card">
+            <img *ngIf="previsualizacion.length > 0" mat-card-image [src]="previsualizacion[0]" alt="Foto de Perfil">
+            <mat-card-actions class="d-flex justify-content-center">
+              <button mat-button *ngIf="previsualizacion.length > 0" (click)="deleteImage()">ELIMINAR</button>
+              <div class="div-input">
+                <label class="button-input" *ngIf="previsualizacion.length <= 0">
+                  <mat-icon>add_photo_alternate</mat-icon>
+                  <span>Seleccionar Imagen</span>
+                  <input type="file" (change)="onImageSelected($event)" accept="image/*" formControlName="fotoPerfil"
+                    required class="ocultar-input">
+                </label>
 
-        <!-- Step 2: Datos de contacto -->
-        <mat-step>
-            <ng-template matStepLabel>Datos de Contacto</ng-template>
-            <div>
-                <mat-form-field appearance="outline" class="w-100 mt-2">
-                    <mat-label>Email</mat-label>
-                    <input matInput placeholder="Email" formControlName="email" required />
-                    <mat-error *ngIf="errorHandling('email', 'required')">El Email es requerido</mat-error>
-                    <mat-error *ngIf="errorHandling('email', 'email')">El Email tiene un formato inválido</mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="outline" class="w-100 mt-2">
-                    <mat-label>Número Telefónico</mat-label>
-                    <input matInput placeholder="Número Telefónico" formControlName="numCelular" required maxlength="8" />
-                    <mat-error *ngIf="errorHandling('numCelular', 'required')">El Número Telefónico es
-                        requerido</mat-error>
-                        <mat-error *ngIf="errorHandling('numCelular', 'pattern')">El Número Telefónico es inválido debe tener 8 números</mat-error>
-                </mat-form-field>
-                <div fxLayout="row" fxLayoutAlign="center center" class="mt-2 p-1">
-                    <button mat-mini-fab matStepperPrevious color="primary" matTooltip="Anterior"
-                        matTooltipPosition="before" class="mr-1"><mat-icon>navigate_before</mat-icon></button>
-                    <button mat-mini-fab matStepperNext color="primary" matTooltip="Siguiente"
-                        matTooltipPosition="after"><mat-icon>navigate_next</mat-icon></button>
-                </div>
-            </div>
-        </mat-step>
+                <mat-error *ngIf="errorHandling('fotoPerfil', 'required')">La foto de perfil es requerida</mat-error>
+              </div>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center" class="mt-2 p-1">
+          <button mat-mini-fab matStepperPrevious color="primary" matTooltip="Anterior" matTooltipPosition="before"
+            class="mr-1"><mat-icon>navigate_before</mat-icon></button>
+          <button mat-mini-fab matStepperNext color="primary" matTooltip="Siguiente"
+            matTooltipPosition="after"><mat-icon>navigate_next</mat-icon></button>
+        </div>
+      </div>
+    </mat-step>
 
-        <!-- Step 3: Seguridad - Roles y contrasenas -->
-        <mat-step>
-            <ng-template matStepLabel>Seguridad</ng-template>
-            <div>
-                <mat-form-field appearance="outline" class="w-100 mt-1">
-                    <mat-label>Roles</mat-label>
-                    <mat-select formControlName="roles" required>
-                        <mat-option *ngFor="let rol of listRoles" [value]="rol.id">
-                            <span>{{ rol.descripcion }}</span>
-                        </mat-option>
-                        <mat-option [value]=0>
-                            <span>Ambos</span>
-                        </mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="errorHandling('roles', 'required')">La roles son requeridos</mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="outline" class="w-100 mt-1">
-                    <mat-label>Clave</mat-label>
-                    <input matInput [type]="hide ? 'password' : 'text'" placeholder="Clave usuario"
-                        formControlName="clave" />
-                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                        [attr.aria-pressed]="hide">
-                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                    </button>
-                    <mat-error *ngIf="errorHandling('clave', 'required')" >La clave es requerida</mat-error>
-                        <mat-error *ngIf="errorHandling('clave', 'pattern')">
-                            La contraseña debe tener al menos 8 caracteres e incluir al menos un dígito, una letra minúscula, una letra mayúscula y un carácter especial (por ejemplo, !@#$%^&*)
-                        </mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="outline" class="w-100 mt-1">
-                    <mat-label>Confirmar clave</mat-label>
-                    <input matInput [type]="hide2 ? 'password' : 'text'" placeholder=" Confirmar Clave"
-                        formControlName="confirmPassword" />
-                    <button mat-icon-button matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'"
-                        [attr.aria-pressed]="hide">
-                        <mat-icon>{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
-                    </button>
-                    <mat-error *ngIf="errorHandling('confirmPassword', 'required')">La clave es requerida</mat-error>
-                    <mat-error *ngIf="errorHandling('confirmPassword', 'pattern')" >
-                        La contraseña debe tener al menos 8 caracteres e incluir al menos un dígito, una letra minúscula, una letra mayúscula y un carácter especial (por ejemplo, !@#$%^&*)
-                    </mat-error>
-                    <mat-error *ngIf="errorHandling('confirmPassword', 'mismatchedPasswords')" >
-                        Las contraseñas no coinciden
-                    </mat-error>
-                </mat-form-field>
-                <div fxLayout="row" fxLayoutAlign="center center" class="mt-2 p-1" *ngIf="!esVendedor">
-                    <button mat-mini-fab color="primary" class="mr-1" (click)="onRegisterFormSubmit()">
-                        <mat-icon>person_add</mat-icon>
-                    </button>
-                    <button mat-mini-fab color="primary" (click)="onReset()">
-                        <mat-icon>cancel</mat-icon></button>
-                </div>
-                <div fxLayout="row" fxLayoutAlign="center center" class="mt-2 p-1" *ngIf="esVendedor">
-                    <button mat-mini-fab matStepperPrevious color="primary" matTooltip="Anterior"
-                        matTooltipPosition="before" class="mr-1"><mat-icon>navigate_before</mat-icon></button>
-                    <button mat-mini-fab matStepperNext color="primary" matTooltip="Siguiente"
-                        matTooltipPosition="after"><mat-icon>navigate_next</mat-icon></button>
-                </div>
-            </div>
-        </mat-step>
-        <mat-step label="Dirección" *ngIf="esVendedor">
-            <div>
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Provincia</mat-label>
-                    <mat-select placeholder="Provincia" formControlName="provincia" (selectionChange)="onProvinceChange()" required>
-                        <mat-option *ngFor="let provincia of provincias" [value]="provincia.name" [attr.id]="provincia.id" >
-                            <span>{{ provincia.name }}</span>
-                        </mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="errorHandling('provincia', 'required')">La provincia es requerida</mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Cantón</mat-label>
-                    <mat-select placeholder="Cantón" formControlName="canton" (selectionChange)="onCantonChange()" required>
-                        <mat-option *ngFor="let canton of cantones" [value]="canton.name">
-                            <span>{{ canton.name }}</span>
-                        </mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="errorHandling('canton', 'required')">El cantón es requerido</mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Distrito</mat-label>
-                    <mat-select placeholder="Distrito" formControlName="distrito" required>
-                        <mat-option *ngFor="let distrito of distritos" [value]="distrito.name">
-                            <span>{{ distrito.name }}</span>
-                        </mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="errorHandling('distrito', 'required')">El distrito es requerido</mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Código Zip/Postal</mat-label>
-                    <input matInput placeholder="Zip/Postal Code" formControlName="zip" required>
-                    <mat-error *ngIf="errorHandling('zip', 'required')">El código postal es requerido</mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Otras Señas</mat-label>
-                    <input matInput placeholder="Dirección (calle, apartamento, casa, unidad etc.)"
-                        formControlName="otrasSennas" required>
-                        <mat-error *ngIf="errorHandling('otrasSennas', 'required')">Otras señas son requeridas</mat-error>
-                        <mat-error *ngIf="errorHandling('otrasSennas', 'minlength')">Otras señas debe tener al menos 25 carácteres</mat-error>
-                </mat-form-field>
-                <div fxLayout="row" fxLayoutAlign="center center" class="mt-2 p-1" *ngIf="esVendedor">
-                    <button mat-mini-fab matStepperPrevious color="primary" matTooltip="Anterior"
-                        matTooltipPosition="before" class="mr-1"><mat-icon>navigate_before</mat-icon></button>
-                    <button mat-mini-fab matStepperNext color="primary" matTooltip="Siguiente"
-                        matTooltipPosition="after"><mat-icon>navigate_next</mat-icon></button>
-                </div>
-            </div>
-        </mat-step>
-        <mat-step label="Método de Pago" *ngIf="esVendedor">
-            <div fxLayout="row wrap">
-                <div fxFlex="100" fxLayout="column" fxLayoutAlign="start start" class="py-3 px-1">
-                    <span class="text-muted">Credit Card</span>
-                    <img src="assets/images/others/card-icon.png" alt="">
-                </div>
-                <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Card holder name</mat-label>
-                        <input matInput placeholder="Card holder name" formControlName="propietarioTarjeta" required>
-                        <mat-error *ngIf="errorHandling('propietarioTarjeta', 'required')">El nombre del Propietario es requerido</mat-error>
-                        <mat-error *ngIf="errorHandling('propietarioTarjeta', 'minlength')">El nombre del Propietario debe tener al menos 5 carácteres</mat-error>
-                    </mat-form-field>
-                </div>
-                <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Card number</mat-label>
-                        <input matInput placeholder="Card number" formControlName="numeroTarjeta" required>
-                        <mat-error *ngIf="errorHandling('numeroTarjeta', 'required')">El número de tarjeta es requerido</mat-error>
-                        <mat-error *ngIf="errorHandling('numeroTarjeta', 'invalidCreditCard')">El número de tarjeta es inválido</mat-error>
-                    </mat-form-field>
-                </div>
-                <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Mes de Vencimiento</mat-label>
-                        <mat-select placeholder="Mes de Vencimiento" formControlName="mesVencimiento" required>
-                            <mat-option *ngFor="let month of months" [value]="month.value">
-                                {{month.name}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="errorHandling('mesVencimiento', 'required')">El mes de vencimiento es requerido</mat-error>
-                    </mat-form-field>
-                </div>
-                <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Año de Vencimiento</mat-label>
-                        <mat-select placeholder="Año de Vencimiento" formControlName="anioVencimiento" required>
-                            <mat-option *ngFor="let year of years" [value]="year">
-                                {{year}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="errorHandling('anioVencimiento', 'required')">El año de vencimiento es requerido</mat-error>
-                    </mat-form-field>
-                </div>
-                <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>CVV</mat-label>
-                        <input matInput placeholder="CVV" formControlName="cvv" required maxlength="3">
-                        <mat-error *ngIf="errorHandling('cvv', 'required')">El código de seguridad es requerido</mat-error>
-                        <mat-error *ngIf="errorHandling('cvv', 'pattern')">El código de seguridad debe tener únicamente 3 números</mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-            <div fxLayout="row" fxLayoutAlign="center center" class="mt-2 p-1">
-                <button mat-mini-fab matStepperPrevious color="primary" matTooltip="Anterior"
-                matTooltipPosition="before" class="mr-1"><mat-icon>navigate_before</mat-icon></button>
-                <button mat-mini-fab color="primary" class="mr-1" (click)="onRegisterFormSubmit()">
-                    <mat-icon>person_add</mat-icon>
-                </button>
-            </div>
-        </mat-step>
-    </mat-stepper>
+    <!-- Step 2: Datos de contacto -->
+    <mat-step>
+      <ng-template matStepLabel>Datos de Contacto</ng-template>
+      <div>
+        <mat-form-field appearance="outline" class="w-100 mt-2">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="Email" formControlName="email" required />
+          <mat-error *ngIf="errorHandling('email', 'required')">El Email es requerido</mat-error>
+          <mat-error *ngIf="errorHandling('email', 'email')">El Email tiene un formato inválido</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100 mt-2">
+          <mat-label>Número Telefónico</mat-label>
+          <input matInput placeholder="Número Telefónico" formControlName="numCelular" required maxlength="8" />
+          <mat-error *ngIf="errorHandling('numCelular', 'required')">El Número Telefónico es
+            requerido</mat-error>
+          <mat-error *ngIf="errorHandling('numCelular', 'pattern')">El Número Telefónico es inválido, debe tener 8
+            números</mat-error>
+        </mat-form-field>
+        <div fxLayout="row" fxLayoutAlign="center center" class="mt-2 p-1">
+          <button mat-mini-fab matStepperPrevious color="primary" matTooltip="Anterior" matTooltipPosition="before"
+            class="mr-1"><mat-icon>navigate_before</mat-icon></button>
+          <button mat-mini-fab matStepperNext color="primary" matTooltip="Siguiente"
+            matTooltipPosition="after"><mat-icon>navigate_next</mat-icon></button>
+        </div>
+      </div>
+    </mat-step>
+
+    <!-- Step 3: Seguridad - Roles y contrasenas -->
+    <mat-step>
+      <ng-template matStepLabel>Seguridad</ng-template>
+      <div>
+        <mat-form-field appearance="outline" class="w-100 mt-1">
+          <mat-label>Roles</mat-label>
+          <mat-select formControlName="roles" required>
+            <mat-option *ngFor="let rol of listRoles" [value]="rol.id">
+              <span>{{ rol.descripcion }}</span>
+            </mat-option>
+            <mat-option [value]=0>
+              <span>Ambos</span>
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="errorHandling('roles', 'required')">La roles son requeridos</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100 mt-1">
+          <mat-label>Clave</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" placeholder="Clave usuario" formControlName="clave" />
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="errorHandling('clave', 'required')">La clave es requerida</mat-error>
+          <mat-error *ngIf="errorHandling('clave', 'pattern')">
+            La contraseña debe tener al menos 8 caracteres e incluir al menos un dígito, una letra minúscula, una letra
+            mayúscula y un carácter especial (por ejemplo, !@#$%^&*)
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100 mt-1">
+          <mat-label>Confirmar clave</mat-label>
+          <input matInput [type]="hide2 ? 'password' : 'text'" placeholder=" Confirmar Clave"
+            formControlName="confirmPassword" />
+          <button mat-icon-button matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide">
+            <mat-icon>{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="errorHandling('confirmPassword', 'required')">La clave es requerida</mat-error>
+          <mat-error *ngIf="errorHandling('confirmPassword', 'pattern')">
+            La contraseña debe tener al menos 8 caracteres e incluir al menos un dígito, una letra minúscula, una letra
+            mayúscula y un carácter especial (por ejemplo, !@#$%^&*)
+          </mat-error>
+          <mat-error *ngIf="errorHandling('confirmPassword', 'mismatchedPasswords')">
+            Las contraseñas no coinciden
+          </mat-error>
+        </mat-form-field>
+        <div fxLayout="row" fxLayoutAlign="center center" class="mt-2 p-1" *ngIf="!esVendedor">
+          <button mat-mini-fab color="primary" class="mr-1" (click)="onRegisterFormSubmit()">
+            <mat-icon>person_add</mat-icon>
+          </button>
+          <button mat-mini-fab color="primary" (click)="onReset()">
+            <mat-icon>cancel</mat-icon></button>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center" class="mt-2 p-1" *ngIf="esVendedor">
+          <button mat-mini-fab matStepperPrevious color="primary" matTooltip="Anterior" matTooltipPosition="before"
+            class="mr-1"><mat-icon>navigate_before</mat-icon></button>
+          <button mat-mini-fab matStepperNext color="primary" matTooltip="Siguiente"
+            matTooltipPosition="after"><mat-icon>navigate_next</mat-icon></button>
+        </div>
+      </div>
+    </mat-step>
+    <mat-step label="Dirección" *ngIf="esVendedor">
+      <div>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Provincia</mat-label>
+          <mat-select placeholder="Provincia" formControlName="provincia" (selectionChange)="onProvinceChange()"
+            required>
+            <mat-option *ngFor="let provincia of provincias" [value]="provincia.name" [attr.id]="provincia.id">
+              <span>{{ provincia.name }}</span>
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="errorHandling('provincia', 'required')">La provincia es requerida</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Cantón</mat-label>
+          <mat-select placeholder="Cantón" formControlName="canton" (selectionChange)="onCantonChange()" required>
+            <mat-option *ngFor="let canton of cantones" [value]="canton.name">
+              <span>{{ canton.name }}</span>
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="errorHandling('canton', 'required')">El cantón es requerido</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Distrito</mat-label>
+          <mat-select placeholder="Distrito" formControlName="distrito" required>
+            <mat-option *ngFor="let distrito of distritos" [value]="distrito.name">
+              <span>{{ distrito.name }}</span>
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="errorHandling('distrito', 'required')">El distrito es requerido</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Código Zip/Postal</mat-label>
+          <input matInput placeholder="Zip/Postal Code" formControlName="zip" required>
+          <mat-error *ngIf="errorHandling('zip', 'required')">El código postal es requerido</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Otras Señas</mat-label>
+          <input matInput placeholder="Dirección (calle, apartamento, casa, unidad etc.)" formControlName="otrasSennas"
+            required>
+          <mat-error *ngIf="errorHandling('otrasSennas', 'required')">Otras señas son requeridas</mat-error>
+          <mat-error *ngIf="errorHandling('otrasSennas', 'minlength')">Otras señas debe tener al menos 25
+            carácteres</mat-error>
+        </mat-form-field>
+        <div fxLayout="row" fxLayoutAlign="center center" class="mt-2 p-1" *ngIf="esVendedor">
+          <button mat-mini-fab matStepperPrevious color="primary" matTooltip="Anterior" matTooltipPosition="before"
+            class="mr-1"><mat-icon>navigate_before</mat-icon></button>
+          <button mat-mini-fab matStepperNext color="primary" matTooltip="Siguiente"
+            matTooltipPosition="after"><mat-icon>navigate_next</mat-icon></button>
+        </div>
+      </div>
+    </mat-step>
+    <mat-step label="Método de Pago" *ngIf="esVendedor">
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxLayout="column" fxLayoutAlign="start start" class="py-3 px-1">
+          <span class="text-muted">Credit Card</span>
+          <img src="assets/images/others/card-icon.png" alt="">
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Card holder name</mat-label>
+            <input matInput placeholder="Card holder name" formControlName="propietarioTarjeta" required>
+            <mat-error *ngIf="errorHandling('propietarioTarjeta', 'required')">El nombre del Propietario es
+              requerido</mat-error>
+            <mat-error *ngIf="errorHandling('propietarioTarjeta', 'minlength')">El nombre del Propietario debe tener al
+              menos 5 carácteres</mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Card number</mat-label>
+            <input matInput placeholder="Card number" formControlName="numeroTarjeta" required>
+            <mat-error *ngIf="errorHandling('numeroTarjeta', 'required')">El número de tarjeta es requerido</mat-error>
+            <mat-error *ngIf="errorHandling('numeroTarjeta', 'invalidCreditCard')">El número de tarjeta es
+              inválido</mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Mes de Vencimiento</mat-label>
+            <mat-select placeholder="Mes de Vencimiento" formControlName="mesVencimiento" required>
+              <mat-option *ngFor="let month of months" [value]="month.value">
+                {{month.name}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="errorHandling('mesVencimiento', 'required')">El mes de vencimiento es
+              requerido</mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Año de Vencimiento</mat-label>
+            <mat-select placeholder="Año de Vencimiento" formControlName="anioVencimiento" required>
+              <mat-option *ngFor="let year of years" [value]="year">
+                {{year}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="errorHandling('anioVencimiento', 'required')">El año de vencimiento es
+              requerido</mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>CVV</mat-label>
+            <input matInput placeholder="CVV" formControlName="cvv" required maxlength="3">
+            <mat-error *ngIf="errorHandling('cvv', 'required')">El código de seguridad es requerido</mat-error>
+            <mat-error *ngIf="errorHandling('cvv', 'pattern')">El código de seguridad debe tener únicamente 3
+              números</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center center" class="mt-2 p-1">
+        <button mat-mini-fab matStepperPrevious color="primary" matTooltip="Anterior" matTooltipPosition="before"
+          class="mr-1"><mat-icon>navigate_before</mat-icon></button>
+        <button mat-mini-fab color="primary" class="mr-1" (click)="onRegisterFormSubmit()">
+          <mat-icon>person_add</mat-icon>
+        </button>
+      </div>
+    </mat-step>
+  </mat-stepper>
 </mat-card>
