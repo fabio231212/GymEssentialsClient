@@ -50,11 +50,15 @@ export class ControlsComponent implements OnInit {
   }
 
   verifyRole() {
+    if (this.userService.currentUserValue == null) {
+      return false;
+    }
     if (this.userService.currentUserValue.roles.some(role => ['Administrador', 'Vendedor'].includes(role)) &&
       !this.userService.currentUserValue.roles.includes('Comprador')) {
       return false;
     }
     return true;
+
   }
 
   public increment() {
@@ -151,7 +155,7 @@ export class ControlsComponent implements OnInit {
     //Notificar al usuario
     this.notificacion.mensaje(
       'Orden',
-      'Producto : ' + this.product.nombre + ' agregado a la orden',
+      'Producto agregado a la orden',
       TipoMessage.success
     )
     // });
