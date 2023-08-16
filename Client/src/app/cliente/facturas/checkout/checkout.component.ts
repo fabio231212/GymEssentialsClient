@@ -3,7 +3,9 @@ import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
+import { Route } from '@angular/router';
 import { id } from '@swimlane/ngx-charts';
+import { Router } from '@angular/router';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { filter, map, Subject, Subscription, takeUntil } from 'rxjs';
@@ -48,7 +50,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   distritoSeleccionado: any;
   provinciaSeleccionada: any;
 
-  constructor(private gService: GenericService,
+
+  constructor(public router: Router, private gService: GenericService,
     private noti: NotificacionService, public appService: AppService,
     public formBuilder: UntypedFormBuilder,
     public mediaObserver: MediaObserver,
@@ -128,6 +131,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   registrarOrden() {
+
     if (this.cartService.getItems != null) {
 
       if (!this.billingForm.valid) {
@@ -195,8 +199,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       }
       this.gService.create('facturas/', infoOrden)
         .subscribe((respuesta: any) => {
-          this.noti.mensaje('Orden',
-            'Orden registrada #' + respuesta.id,
+          this.noti.mensaje("Factura", respuesta.message,
             TipoMessage.success)
           this.cartService.deleteCart();
           // this.total=this.cartService.getTotal();
@@ -230,7 +233,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.billingForm.controls['expiredYear'].setValue(this.infoTarjeta.anioVencimiento.toString());
         this.billingForm.controls['cardHolderName'].setValue(this.infoTarjeta.propietarioTarjeta);
         this.billingForm.controls['cardNumber'].setValue(this.infoTarjeta.numTarjeta);
-
+        this.billingForm.controls['expiredMonth'].disable();
+        this.billingForm.controls['expiredYear'].disable();
+        this.billingForm.controls['cardHolderName'].disable();
+        this.billingForm.controls['cardNumber'].disable();
 
       }
     });
@@ -246,15 +252,24 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       height: 'auto',
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(async (result) => {
       if (result) {
         this.infoDireccion = result;
         console.log(this.infoDireccion);
         this.billingForm.controls['provincia'].setValue(this.infoDireccion.provincia);
+        await this.onProvinceChange();
         this.billingForm.controls['canton'].setValue(this.infoDireccion.canton);
+        this.onCantonChange();
         this.billingForm.controls['distrito'].setValue(this.infoDireccion.distrito);
         this.billingForm.controls['zip'].setValue(this.infoDireccion.codPostal);
         this.billingForm.controls['otrasSennas'].setValue(this.infoDireccion.sennas);
+
+        this.billingForm.controls['provincia'].disable();
+        this.billingForm.controls['canton'].disable();
+        this.billingForm.controls['distrito'].disable();
+        this.billingForm.controls['zip'].disable();
+        this.billingForm.controls['otrasSennas'].disable();
+
 
       }
     });
@@ -363,5 +378,38 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
       }
     }
+  }
+
+  deleteInfoDireccion() {
+    this.infoDireccion = null;
+    this.billingForm.controls['provincia'].enable();
+    this.billingForm.controls['canton'].enable();
+    this.billingForm.controls['distrito'].enable();
+    this.billingForm.controls['zip'].enable();
+    this.billingForm.controls['otrasSennas'].enable();
+
+    this.billingForm.controls['provincia'].setValue('');
+    this.billingForm.controls['canton'].setValue('');
+    this.billingForm.controls['distrito'].setValue('');
+    this.billingForm.controls['zip'].setValue('');
+    this.billingForm.controls['otrasSennas'].setValue('');
+
+
+  }
+
+  deleteInfoTarjeta() {
+    this.infoTarjeta = null;
+
+    this.billingForm.controls['expiredMonth'].enable();
+    this.billingForm.controls['expiredYear'].enable();
+    this.billingForm.controls['cardHolderName'].enable();
+    this.billingForm.controls['cardNumber'].enable();
+
+    this.billingForm.controls['expiredMonth'].setValue('');
+    this.billingForm.controls['expiredYear'].setValue('');
+    this.billingForm.controls['cardHolderName'].setValue('');
+    this.billingForm.controls['cardNumber'].setValue('');
+
+
   }
 }

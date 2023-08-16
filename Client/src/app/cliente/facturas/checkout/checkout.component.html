@@ -8,6 +8,11 @@
       Dirección'}}
       <mat-icon>keyboard_arrow_left</mat-icon>
       <mat-icon>location_on</mat-icon> </button>
+
+    <button *ngIf="infoDireccion" mat-button (click)="deleteInfoDireccion()" color="primary">Eliminar
+      <mat-icon>delete</mat-icon>
+    </button>
+
     <div>
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>Provincia</mat-label>
@@ -84,6 +89,8 @@
               Tarjeta'}}
               <mat-icon>keyboard_arrow_left</mat-icon>
               <mat-icon>credit_card</mat-icon> </button>
+              <button *ngIf="infoTarjeta" mat-button (click)="deleteInfoTarjeta()" color="primary">Eliminar
+                <mat-icon>delete</mat-icon></button>
           </div>
 
         </div>

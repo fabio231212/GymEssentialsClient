@@ -7,6 +7,7 @@ import { GenericService } from '../generic.service';
 import { CartService } from '../cart.service';
 import { NotificacionService, TipoMessage } from '../notification.service';
 import { Subject, takeUntil } from 'rxjs';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-controls',
@@ -27,7 +28,7 @@ export class ControlsComponent implements OnInit {
   constructor(public appService: AppService, public snackBar: MatSnackBar, private gService: GenericService,
     private dialog: MatDialog,
     private cartService: CartService,
-    private notificacion: NotificacionService) { }
+    private notificacion: NotificacionService, private userService: UserService) { }
 
   ngOnInit() {
     if (this.itemCart) {
@@ -46,6 +47,14 @@ export class ControlsComponent implements OnInit {
     } else {
       this.align = 'center center';
     }
+  }
+
+  verifyRole() {
+    if (this.userService.currentUserValue.roles.some(role => ['Administrador', 'Vendedor'].includes(role)) &&
+      !this.userService.currentUserValue.roles.includes('Comprador')) {
+      return false;
+    }
+    return true;
   }
 
   public increment() {
