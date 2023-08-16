@@ -2,6 +2,12 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Data, AppService } from '../../app.service';
 import { Product } from '../../app.models';
+import { MatDialog } from '@angular/material/dialog';
+import { GenericService } from '../generic.service';
+import { CartService } from '../cart.service';
+import { NotificacionService, TipoMessage } from '../notification.service';
+import { Subject, takeUntil } from 'rxjs';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-controls',
@@ -11,18 +17,23 @@ import { Product } from '../../app.models';
 export class ControlsComponent implements OnInit {
   @Input('requireStockQuantity') requireStockQuantity: boolean;
   @Input() product: any;
+  @Input() itemCart: any;
   @Input() type: string;
   @Output() onOpenProductDialog: EventEmitter<any> = new EventEmitter();
   @Output() onQuantityChange: EventEmitter<any> = new EventEmitter<any>();
+  destroy$: Subject<boolean> = new Subject<boolean>();
   public count: number = 1;
   public align = 'center center';
   public precio: number;
-  constructor(public appService: AppService, public snackBar: MatSnackBar) {}
+  constructor(public appService: AppService, public snackBar: MatSnackBar, private gService: GenericService,
+    private dialog: MatDialog,
+    private cartService: CartService,
+    private notificacion: NotificacionService, private userService: UserService) { }
 
   ngOnInit() {
-    if (this.product) {
-      if (this.product.cartCount > 0) {
-        this.count = this.product.cartCount;
+    if (this.itemCart) {
+      if (this.itemCart.cantidad > 0) {
+        this.count = this.itemCart.cantidad;
       }
     }
     this.layoutAlign();
@@ -38,25 +49,68 @@ export class ControlsComponent implements OnInit {
     }
   }
 
+  verifyRole() {
+    if (this.userService.currentUserValue.roles.some(role => ['Administrador', 'Vendedor'].includes(role)) &&
+      !this.userService.currentUserValue.roles.includes('Comprador')) {
+      return false;
+    }
+    return true;
+  }
+
   public increment() {
+    // this.precio =
+    //   this.product.precioOferta > 0
+    //     ? this.product.precioOferta
+    //     : this.product.precio;
+    // if (this.count < this.product.stock) {
+    //   this.count++;
+    //   this.product.cantidad = this.count;
+
+    //   this.changeQuantity(this.product);
+    // } else {
+    //   this.snackBar.open(
+    //     'La cantidad selecciona excede el stock disponible ' +
+    //     this.count +
+    //     ' items.',
+    //     '×',
+    //     { panelClass: 'error', verticalPosition: 'top', duration: 3000 }
+    //   );
+    // }
     this.precio =
-      this.product.precioOferta > 0
-        ? this.product.precioOferta
-        : this.product.precio;
-    if (this.count < this.product.stock) {
+      this.itemCart.product.precioOferta > 0
+        ? this.itemCart.product.precioOferta
+        : this.itemCart.product.precio;
+    if (this.count < this.itemCart.product.stock) {
       this.count++;
-      let obj = {
-        productId: this.product.id,
-        stock: this.count,
-        precio: this.precio,
-        total: this.count * this.precio,
-      };
-      this.changeQuantity(obj);
+      this.itemCart.cantidad = this.count;
+
+      this.changeQuantity(this.itemCart);
     } else {
       this.snackBar.open(
         'La cantidad selecciona excede el stock disponible ' +
-          this.count +
-          ' items.',
+        this.count +
+        ' items.',
+        '×',
+        { panelClass: 'error', verticalPosition: 'top', duration: 3000 }
+      );
+    }
+  }
+
+  public incrementItemCart() {
+    this.precio =
+      this.itemCart.product.precioOferta > 0
+        ? this.itemCart.product.precioOferta
+        : this.itemCart.product.precio;
+    if (this.count < this.itemCart.product.stock) {
+      this.count++;
+      this.itemCart.product.cantidad = this.count;
+
+      this.changeQuantity(this.itemCart);
+    } else {
+      this.snackBar.open(
+        'La cantidad selecciona excede el stock disponible ' +
+        this.count +
+        ' items.',
         '×',
         { panelClass: 'error', verticalPosition: 'top', duration: 3000 }
       );
@@ -64,15 +118,17 @@ export class ControlsComponent implements OnInit {
   }
 
   public decrement() {
+    // if (this.count > 1) {
+    //   this.count--;
+    //   this.product.cantidad = this.count;
+
+    //   this.changeQuantity(this.product);
+    // }
     if (this.count > 1) {
       this.count--;
-      let obj = {
-        productId: this.product.id,
-        stock: this.count,
-        precio: this.precio,
-        total: this.count * this.precio,
-      };
-      this.changeQuantity(obj);
+      this.itemCart.cantidad = this.count;
+
+      this.changeQuantity(this.itemCart);
     }
   }
 
@@ -84,29 +140,21 @@ export class ControlsComponent implements OnInit {
     this.appService.addToWishList(product);
   }
 
-  public addToCart(product: Product): void {
-    const currentProduct = this.appService.Data.cartList.find(
-      (item) => item.id === product.id
-    );
-    if (currentProduct) {
-      const availableCount = this.product.availibilityCount;
-      const addedCount = currentProduct.cartCount + this.count;
+  public addToCart(idProducto: number): void {
+    // this.gService
+    //   .get('productos', idProducto)
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe((data: any) => {
+    //Agregar videojuego obtenido del API al carrito
 
-      if (addedCount <= availableCount) {
-        product.cartCount = addedCount;
-      } else {
-        const errorMessage = `You cannot add more items than available. In stock ${availableCount} items and you already added ${currentProduct.cartCount} item(s) to your cart`;
-        this.snackBar.open(errorMessage, '×', {
-          panelClass: 'error',
-          verticalPosition: 'top',
-          duration: 5000,
-        });
-        return;
-      }
-    } else {
-      product.cartCount = this.count;
-    }
-    this.appService.addToCart(product);
+    this.cartService.addToCart(this.product);
+    //Notificar al usuario
+    this.notificacion.mensaje(
+      'Orden',
+      'Producto : ' + this.product.nombre + ' agregado a la orden',
+      TipoMessage.success
+    )
+    // });
   }
 
   public openProductDialog(event) {

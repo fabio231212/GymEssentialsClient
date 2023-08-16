@@ -1,19 +1,19 @@
-.main{
-    min-height: 400px;
-    min-height: calc(100vh - 288px);
-    padding: 16px;
-    box-sizing: border-box;
+.main {
+  min-height: 400px;
+  min-height: calc(100vh - 288px);
+  padding: 16px;
+  box-sizing: border-box;
 }
-.sidenav{
-    width: 250px;
-    padding: 8px 16px;
-    position: fixed;
-    .close{
-        margin-left: 178px;
-    }
-    .divider{
-        margin: 8px 0;
-    }
+.sidenav {
+  width: 250px;
+  padding: 8px 16px;
+  position: fixed;
+  .close {
+    margin-left: 178px;
+  }
+  .divider {
+    margin: 8px 0;
+  }
 }
 .navbar-logo {
   width: 250px; /* Ajusta el valor según el tamaño deseado */
@@ -33,21 +33,25 @@
   }
 }
 
-.main{
+.main {
   min-height: 400px;
   min-height: calc(100vh - 288px);
   padding: 16px;
   box-sizing: border-box;
 }
-.sidenav{
+.sidenav {
   width: 250px;
   padding: 8px 16px;
   position: fixed;
-  .close{
-      margin-left: 178px;
+  .close {
+    margin-left: 178px;
   }
-  .divider{
-      margin: 8px 0;
+  .divider {
+    margin: 8px 0;
   }
 }
 
+.product-image {
+  object-fit: contain;
+  height: 75px;
+}

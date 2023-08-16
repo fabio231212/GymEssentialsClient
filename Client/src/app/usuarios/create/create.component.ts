@@ -67,7 +67,7 @@ export class CreateComponent implements OnInit {
 
   constructor(
     private gService: GenericService,
-    private noti: NotificacionService,
+
     public formBuilder: FormBuilder,
     public router: Router,
     public snackBar: MatSnackBar,
@@ -192,7 +192,7 @@ export class CreateComponent implements OnInit {
       .createUser(formData) // Pasa los valores del formulario
       .subscribe((respuesta: any) => {
         this.usuario = respuesta;
-        this.router.navigate(['/log-in'], {
+        this.router.navigate(['/login'], {
           // Mostrar un mensaje
           queryParams: { register: 'true' },
         });
@@ -354,7 +354,7 @@ export class CreateComponent implements OnInit {
         }
       }
     }
-    
+
   async onCantonChange() {
       this.distritos = [];
       const selectedProvinceName = this.registerForm.get('provincia').value;

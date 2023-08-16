@@ -47,6 +47,14 @@ import { AuthInterceptor } from './auth.interceptor';
 import { ChatAdminComponent } from '../admin/chat-admin/chat-admin.component';
 import { FormsModule } from '@angular/forms';
 
+import { DialogTarjetaComponent } from './dialog-tarjeta/dialog-tarjeta.component';
+import { DialogDireccionComponent } from './dialog-direccion/dialog-direccion.component';
+import { MainCarouselComponent } from './main-carousel/main-carousel.component';
+import { BannersComponent } from './banners/banners.component';
+import { BrandsCarouselComponent } from './brands-carousel/brands-carousel.component';
+
+
+
 @NgModule({
   providers: [
     {
@@ -95,6 +103,9 @@ import { FormsModule } from '@angular/forms';
     MatTooltipModule,
     MatStepperModule,
     NgScrollbarModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatCheckboxModule,
     // PipesModule
   ],
   exports: [
@@ -140,14 +151,24 @@ import { FormsModule } from '@angular/forms';
     ProductsCarouselComponent,
     ProductDialogComponent,
     ChatComponent,
-
+    MainCarouselComponent,
+    BannersComponent,
+    BrandsCarouselComponent,
     
+
+
   ],
   declarations: [
     ControlsComponent,
     ProductsCarouselComponent,
     ProductDialogComponent,
     ChatComponent,
+    DialogTarjetaComponent,
+    DialogDireccionComponent,
+    MainCarouselComponent,
+    BannersComponent,
+    BrandsCarouselComponent
+
   ],
 })
-export class ShareModule {}
+export class ShareModule { }
