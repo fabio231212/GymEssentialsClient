@@ -53,7 +53,11 @@ export class AuthGuard implements CanActivate {
         }
 
         // Si el usuario no tiene los roles necesarios, redirigir al usuario a una página de acceso no autorizado
-        this.router.navigate(['/unauthorized']);
+        // this.router.navigate(['']),{ queryParams: { auth: 'no' }};
+        this.router.navigate([''], {
+          // Mostrar un mensaje
+          queryParams: { auth: 'no' },
+        });
         return false;
       } catch (error) {
         // Si hay un error al decodificar el token, redirigir al usuario a la página de inicio de sesión
@@ -70,49 +74,3 @@ export class AuthGuard implements CanActivate {
     }
   }
 }
-//   isAuthenticated: boolean;
-//   currentUser: any;
-//   constructor(private userService: UserService, private router: Router) {
-//     //Subscribirse para obtener si esta autenticado
-//     this.userService.isAuthenticated.subscribe(
-//       (valor) => (this.isAuthenticated = valor)
-//     );
-//     //Subscribirse para obtener el usuario autenticado
-//     this.userService.currentUser.subscribe((x) => (this.currentUser = x));
-//   }
-//   canActivate(
-//     route: ActivatedRouteSnapshot,
-//     state: RouterStateSnapshot
-//   ):
-//     | Observable<boolean | UrlTree>
-//     | Promise<boolean | UrlTree>
-//     | boolean
-//     | UrlTree {
-//     let url: string = state.url;
-//     return this.checkUserLogin(route, url);
-//   }
-//   //Verificar que el rol del usuario coincida
-//   //con alguno de los indicados
-//   checkUserLogin(route: ActivatedRouteSnapshot, url: any): boolean {
-//     if (this.isAuthenticated) {
-//       const userRole = this.currentUser.user.role;
-//       //roles.length && roles.indexOf(verify.role)===-1
-//       if (
-//         route.data['roles'].length &&
-//         !route.data['roles'].includes(userRole)
-//       ) {
-//         this.router.navigate(['/login'], {
-//           //Parametro para mostrar mensaje en login
-//           queryParams: { auth: 'no' },
-//         });
-//         return false;
-//       }
-//       return true;
-//     }
-
-//     this.router.navigate(['/login'], {
-//       queryParams: { auth: 'no' },
-//     });
-//     return false;
-//   }
-// }

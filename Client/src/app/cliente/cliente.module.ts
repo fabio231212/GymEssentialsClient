@@ -15,6 +15,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NotificacionService } from '../share/notification.service';
 import { CarritoComponent } from './facturas/carrito/carrito.component';
 import { CheckoutComponent } from './facturas/checkout/checkout.component';
+import { FormsModule } from '@angular/forms';
 
 
 // export const routes: Routes = [
@@ -45,6 +46,7 @@ import { CheckoutComponent } from './facturas/checkout/checkout.component';
     NgxPaginationModule,
     ShareModule,
     ReactiveFormsModule,
+    FormsModule
   ],
 })
 export class ClienteModule { }

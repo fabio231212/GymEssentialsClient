@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import {MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -13,18 +13,15 @@ import { UserService } from 'src/app/share/user.service';
   styleUrls: ['./producto-xvendedor.component.scss']
 })
 export class ProductoXVendedorComponent implements OnInit  {
-  datos:any;
+  datos:any[]=[];
   destroy$:Subject<boolean>=new Subject<boolean>();
   isAutenticated: boolean;
   currentUser: any;
+  public viewCol: number = 25;
+  public page: any;
+  public count = 12;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-  //@ViewChild(MatTable) table!: MatTable<VideojuegoAllItem>;
-  dataSource= new MatTableDataSource<any>();
 
-  /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['nombre', 'precio','stock','descripcion','acciones'];
 
   constructor(private router:Router,
     private route:ActivatedRoute,
@@ -52,12 +49,20 @@ export class ProductoXVendedorComponent implements OnInit  {
       .pipe(takeUntil(this.destroy$))
       .subscribe((data:any)=>{
         console.log(data);
-        this.datos=data;
-        this.dataSource = new MatTableDataSource(this.datos);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;        
+        this.datos=data;      
       });   
   }
+
+  public onPageChanged(event){
+    this.page = event; 
+    window.scrollTo(0,0); 
+  }
+
+  @HostListener('window:resize')
+  public onWindowResize():void { 
+    (window.innerWidth < 1280) ? this.viewCol = 33.3 : this.viewCol = 25;
+  }
+ 
   // detalle(id:number){
   //   this.router.navigate(['/videojuego',id],
   //   {

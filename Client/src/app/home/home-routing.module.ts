@@ -5,7 +5,7 @@ import { Socket } from 'socket.io-client';
 import { SocketGuard } from '../share/Socket.guard';
 
 export const routes: Routes = [
-  { path: '', component: InicioComponent, pathMatch: 'full', canActivate: [SocketGuard] }
+  { path: 'Inicio', component: InicioComponent, canActivate: [SocketGuard] }
 ];
 
 @NgModule({

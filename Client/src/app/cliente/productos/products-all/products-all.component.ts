@@ -7,6 +7,7 @@ import {
   PLATFORM_ID,
   Inject,
   HostListener,
+  ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -21,6 +22,7 @@ import { GenericService } from 'src/app/share/generic.service';
   styleUrls: ['./products-all.component.scss'],
 })
 export class ProductsAllComponent implements OnInit {
+  @ViewChild('sidenav', { static: true }) sidenav: any;
   public sidenavOpen: boolean = true;
   private sub: any;
   public viewType: string = 'grid';
@@ -31,11 +33,11 @@ export class ProductsAllComponent implements OnInit {
   public categorias: any[];
   public marcas: any[];
   public tamanos: any[];
-  public priceFrom: number = 0;
-  public priceTo: number = 100;
+   priceFrom = 0;
+   priceTo: number = 100;
   public page: any;
   public settings: Settings;
-  public datos: any;
+  public datos: any[] = [];
   destroy$: Subject<boolean> = new Subject<boolean>();
   //Lista de marcas
   marcasList: any;
@@ -45,6 +47,13 @@ export class ProductsAllComponent implements OnInit {
   categoriasList: any;
   //Lista de estados
   estadosList: any;
+
+  selectedBrands: any[] = [];
+  selectedSizes: any[] = [];
+  selectedStates: any[] = [];
+  datosFiltrados: any[] = [];
+  selectedCategories: any = '';
+
   constructor(
     private gService: GenericService,
     public appSettings: AppSettings,
@@ -76,7 +85,71 @@ export class ProductsAllComponent implements OnInit {
     this.listaEstadosProductos();
   }
 
-  listaMarcas() {
+  async applyFilters() {
+    this.datosFiltrados = this.datos.filter((product) => {
+      const brandMatch =
+        this.selectedBrands.length === 0 ||
+        product.marcas.some((marca) =>
+          this.selectedBrands.includes(marca.descripcion)
+        );
+      const sizeMatch =
+        this.selectedSizes.length === 0 ||
+        product.tamannos.some((tam) =>
+        this.selectedSizes.includes(tam.descripcion)
+      );
+      const categoryMatch =
+      this.selectedCategories === '' || 
+      product.categoriaProducto.descripcion === this.selectedCategories;
+
+      const estadoMatch = this.selectedStates.length === 0 ||
+      this.selectedStates.includes(product.estadoProducto.descripcion);
+
+      const priceMatch = product.descuento > 0 ? product.precioOferta >= this.priceFrom && product.precioOferta <= this.priceTo :
+      product.precio >= this.priceFrom && product.precio <= this.priceTo;
+
+    return brandMatch && sizeMatch && categoryMatch && estadoMatch && priceMatch;
+    });
+  }
+
+
+  async toggleMarca(brand: string) {
+    if (this.selectedBrands.includes(brand)) {
+      this.selectedBrands = this.selectedBrands.filter((b) => b !== brand);
+    } else {
+      this.selectedBrands.push(brand);
+    }
+    this.applyFilters();
+  }
+
+ async toggleSize(size: string) {
+    if (this.selectedSizes.includes(size)) {
+      this.selectedSizes = this.selectedSizes.filter((s) => s !== size);
+    } else {
+      this.selectedSizes.push(size);
+    }
+    this.applyFilters();
+  }
+
+  async toggleCategoria(cat: string) {
+    if (this.selectedCategories === cat || cat === '') {
+      this.selectedCategories = ''; // Restablecer la categoría seleccionada
+    } else {
+      this.selectedCategories = cat; // Establecer la categoría seleccionada
+    }
+    this.applyFilters();
+  }
+
+  toggleEstado(est: any) {
+    if (this.selectedStates.includes(est)) {
+      this.selectedStates = this.selectedStates.filter((e) => e !== est);
+    } else {
+      this.selectedStates.push(est);
+    }
+    this.applyFilters();
+  }
+  
+
+ listaMarcas() {
     this.marcasList = null;
     this.gService
       .list('marcas')
@@ -129,10 +202,6 @@ export class ProductsAllComponent implements OnInit {
     this.listaProductos();
   }
 
-  // public changeSorting(sort){
-  //   this.sort = sort;
-  // }
-
   public changeViewType(viewType, viewCol) {
     this.viewType = viewType;
     this.viewCol = viewCol;
@@ -152,6 +221,8 @@ export class ProductsAllComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         this.datos = data;
+        this.datosFiltrados = data;
+        console.log(this.datos);
       });
   }
 }

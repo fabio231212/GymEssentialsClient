@@ -4,6 +4,7 @@ import { InicioComponent } from './home/inicio/inicio.component';
 import { TopMenuComponent } from './core/top-menu/top-menu.component';
 import { NotificacionService } from './share/notification.service';
 import { AdminComponent } from './admin/admin.component';
+import { AuthGuard } from './share/auth.guard';
 
 const routes: Routes = [
   // { path:'inicio',component: InicioComponent},
@@ -11,7 +12,7 @@ const routes: Routes = [
 
   {
     path: '', component: TopMenuComponent, children: [
-      { path: '', loadChildren: () => import('./home/home-routing.module').then(m => m.HomeRoutingModule) },
+      { path: '', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
       // { path: 'account', loadChildren: () => import('./pages/account/account.module').then(m => m.AccountModule), data: { breadcrumb: 'Account Settings' } },
       // { path: 'compare', loadChildren: () => import('./pages/compare/compare.module').then(m => m.CompareModule), data: { breadcrumb: 'Compare' } },
       // { path: 'wishlist', loadChildren: () => import('./pages/wishlist/wishlist.module').then(m => m.WishlistModule), data: { breadcrumb: 'Wishlist' } },
@@ -24,7 +25,7 @@ const routes: Routes = [
   },
   {
     path: 'admin', component: AdminComponent, children: [
-      { path: '', loadChildren: () => import('./admin/admin-routing.module').then(m => m.AdminRoutingModule) },
+      { path: '', canActivate:[AuthGuard], loadChildren: () => import('./admin/admin-routing.module').then(m => m.AdminRoutingModule), },
     ]
   },
   {

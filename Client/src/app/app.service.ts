@@ -16,6 +16,7 @@ export class Data {
 
 @Injectable()
 export class AppService {
+
   public Data = new Data(
     [], // categories
     [], // compareList
@@ -28,6 +29,25 @@ export class AppService {
   public url = environment.apiURL + '/assets/data/';
 
   constructor(public http: HttpClient, public snackBar: MatSnackBar) { }
+
+    public Data = new Data(
+        [], // categories
+        [], // compareList
+        [],  // wishList
+        [],  // cartList
+        null, //totalPrice,
+        0 //totalCartCount
+    )
+    
+    public url = 'http://localhost:4200/assets/data/'; 
+
+    constructor(public http:HttpClient, public snackBar: MatSnackBar) { }
+    
+
+    public getBanners(): Observable<any[]>{
+        return this.http.get<any[]>(this.url + 'banners.json');
+    }
+
 
   public getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(this.url + 'categories.json');
@@ -59,6 +79,7 @@ export class AppService {
     this.snackBar.open(message, '×', { panelClass: [status], verticalPosition: 'top', duration: 3000 });
   }
 
+
   public addToWishList(product: Product) {
     let message, status;
     if (this.Data.wishList.filter(item => item.id == product.id)[0]) {
@@ -82,6 +103,31 @@ export class AppService {
     if (this.Data.cartList.filter(item => item.id == product.id)[0]) {
       let item = this.Data.cartList.filter(item => item.id == product.id)[0];
       item.cartCount = product.cartCount;
+
+    public getBrands(){
+        return [  
+            { name: 'aloha', image: '../assets/images/brands/aloha.png' },
+            { name: 'dream', image: '../assets/images/brands/dream.png' },  
+            { name: 'congrats', image: '../assets/images/brands/congrats.png' },
+            { name: 'best', image: '../assets/images/brands/best.png' },
+            { name: 'original', image: '../assets/images/brands/original.png' },
+            { name: 'retro', image: '../assets/images/brands/retro.png' },
+            { name: 'king', image: '../assets/images/brands/king.png' },
+            { name: 'love', image: '../assets/images/brands/love.png' },
+            { name: 'the', image: '../assets/images/brands/the.png' },
+            { name: 'easter', image: '../assets/images/brands/easter.png' },
+            { name: 'with', image: '../assets/images/brands/with.png' },
+            { name: 'special', image: '../assets/images/brands/special.png' },
+            { name: 'bravo', image: '../assets/images/brands/bravo.png' }
+        ];
+    }
+
+    public getDeliveryMethods(){
+        return [
+            { value: 'free', name: 'Free Delivery', desc: '$0.00 / Delivery in 7 to 14 business Days' },
+            { value: 'standard', name: 'Standard Delivery', desc: '$7.99 / Delivery in 5 to 7 business Days' },
+            { value: 'express', name: 'Express Delivery', desc: '$29.99 / Delivery in 1 business Days' }
+        ]
     }
     else {
       this.Data.cartList.push(product);

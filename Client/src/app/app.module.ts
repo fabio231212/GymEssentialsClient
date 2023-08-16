@@ -85,9 +85,9 @@ import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
    imports: [
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     HttpClientModule,
     NgxSpinnerModule,
     GoogleMapsModule,
