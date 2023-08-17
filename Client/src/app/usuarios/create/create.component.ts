@@ -304,7 +304,6 @@ export class CreateComponent implements OnInit {
     this.previsualizacion = []; // Limpiamos la vista previa anterior
     this.previsualizarImagen(imagenSeleccionada);
     this.imagen = imagenSeleccionada;
-    console.log(this.imagen);
   }
   previsualizarImagen(file: File) {
     const reader = new FileReader();

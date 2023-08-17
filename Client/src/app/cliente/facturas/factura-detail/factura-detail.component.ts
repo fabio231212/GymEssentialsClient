@@ -26,6 +26,7 @@ export class FacturaDetailComponent {
     if (!isNaN(Number(id))) {
       this.getProductById(Number(id));
     }
+    console.log(this.datos);
   }
 
   getProductById(idFactura: any) {
@@ -34,11 +35,10 @@ export class FacturaDetailComponent {
       .list('facturas/' + idFactura)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
-        console.log(data);
         this.datos = data;
-        const ultimosDigitos = this.datos.numTarjeta.slice(-4);
+        const ultimosDigitos = this.datos.metodoPago.numTarjeta.slice(-4);
         // Dar formato al número de tarjeta con los últimos 4 dígitos visibles y el resto oculto
-        this.datos.numTarjeta = `XXX-XXX-XXX-${ultimosDigitos}`;
+        this.datos.metodoPago.numTarjeta = `XXX-XXX-XXX-${ultimosDigitos}`;
         //this.image = this.datos.imagenes.URL;
       });
   }
@@ -48,10 +48,10 @@ export class FacturaDetailComponent {
   }
   volver() {
     this.router.navigate(
-      ['/facturas/facturasxusuario/', this.datos.usuarioId],
-      {
-        relativeTo: this.route,
-      }
+      ['/cliente/facturas/facturasxusuario/', this.datos.usuarioId],
+      // {
+      //   relativeTo: this.route,
+      // }
     );
   }
 }

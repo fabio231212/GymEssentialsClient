@@ -21,7 +21,7 @@ export class ProdfactxvendedorComponent {
   dataSource = new MatTableDataSource<any>();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['comprador', 'fechaCompra', 'cantidad', 'subtotal', 'acciones'];
+  displayedColumns = ['comprador', 'fechaCompra', 'producto', 'cantidad', 'subtotal', 'acciones'];
 
   constructor(
     private router: Router,

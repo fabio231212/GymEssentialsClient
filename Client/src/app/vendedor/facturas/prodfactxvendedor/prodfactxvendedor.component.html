@@ -1,6 +1,6 @@
 <mat-card class="full-width">
     <!-- Titulo del Card -->
-    <mat-card-title> Pedidos </mat-card-title>
+    <!-- <mat-card-title> Pedidos </mat-card-title> -->
     <mat-card-content>
       <!-- Table -->
       <div class="mat-elevation-z8" *ngIf="dataSource">
@@ -18,6 +18,14 @@
             </th>
             <td mat-cell *matCellDef="let row">
               {{ row.encabezadosFactura.usuarioId }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="producto">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Producto Comprado
+            </th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.producto.nombre }}
             </td>
           </ng-container>
           <!-- Columna precio -->

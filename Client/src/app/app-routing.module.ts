@@ -13,14 +13,7 @@ const routes: Routes = [
   {
     path: '', component: TopMenuComponent, children: [
       { path: '', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
-      // { path: 'account', loadChildren: () => import('./pages/account/account.module').then(m => m.AccountModule), data: { breadcrumb: 'Account Settings' } },
-      // { path: 'compare', loadChildren: () => import('./pages/compare/compare.module').then(m => m.CompareModule), data: { breadcrumb: 'Compare' } },
-      // { path: 'wishlist', loadChildren: () => import('./pages/wishlist/wishlist.module').then(m => m.WishlistModule), data: { breadcrumb: 'Wishlist' } },
-      // { path: 'cart', loadChildren: () => import('./pages/cart/cart.module').then(m => m.CartModule), data: { breadcrumb: 'Cart' } },
-      // { path: 'checkout', loadChildren: () => import('./pages/checkout/checkout.module').then(m => m.CheckoutModule), data: { breadcrumb: 'Checkout' } },
-      // { path: 'contact', loadChildren: () => import('./pages/contact/contact.module').then(m => m.ContactModule), data: { breadcrumb: 'Contact' } },
-      // { path: 'brands', loadChildren: () => import('./pages/brands/brands.module').then(m => m.BrandsModule), data: { breadcrumb: 'Brands' } },
-      { path: 'cliente', loadChildren: () => import('./cliente/cliente-routing.module').then(m => m.ClienteRoutingModule), data: { breadcrumb: 'All Products' } }
+      { path: 'cliente', loadChildren: () => import('./cliente/cliente-routing.module').then(m => m.ClienteRoutingModule)}
     ]
   },
   {

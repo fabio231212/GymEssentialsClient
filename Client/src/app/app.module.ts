@@ -81,6 +81,7 @@ import { AppSettings } from './app.settings';
 import { AppService } from './app.service';
 import { AppInterceptor } from './utils/app-interceptor';
 import { ToastrModule } from 'ngx-toastr';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -112,6 +113,7 @@ import { ToastrModule } from 'ngx-toastr';
   providers: [
     AppSettings,
     AppService,   
+    DatePipe,
     { provide: OverlayContainer, useClass: CustomOverlayContainer },
     { provide: MAT_MENU_SCROLL_STRATEGY, useFactory: menuScrollStrategy, deps: [Overlay] },
     

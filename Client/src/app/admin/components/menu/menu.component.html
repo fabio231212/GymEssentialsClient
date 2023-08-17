@@ -17,11 +17,35 @@
       <mat-icon class="menu-icon">list</mat-icon>
       <span class="menu-title">Lista de Productos</span>
     </a>
-    <a mat-button fxLayout="row" fxLayoutAlign="start center" [routerLink]="'/vendedor/productos/crear'">
+    <a mat-button fxLayout="row" fxLayoutAlign="start center" [routerLink]="'/vendedor/productos/crear'"  *ngIf="currentUser.roles.includes('Vendedor')">
       <mat-icon class="menu-icon">add_circle_outline</mat-icon>
       <span class="menu-title">Añadir Producto</span>
     </a>
   </div>
   <!-- Fin Productos -->
 
+  <!-- USUARIOS -->
+  <a mat-button fxLayout="row" fxLayoutAlign="start center" routerLink="/admin/usuarios/" *ngIf="currentUser.roles == 'Administrador'" >
+    <mat-icon class="menu-icon">people</mat-icon>
+    <span class="menu-title">Usuarios</span>
+  </a>
+  <!-- FIN USUARIOS -->
+
+  <!-- FACTURAS -->
+  <a mat-button fxLayout="row" fxLayoutAlign="start center"  *ngIf="currentUser.roles.includes('Vendedor')" id="facturas" (click)="toggleSubMenu('facturas', 'subMenuFacturas')">
+    <mat-icon class="menu-icon">receipt</mat-icon>
+    <span class="menu-title">Facturas</span>
+    <mat-icon class="menu-expand-icon transition-2">arrow_drop_down</mat-icon>
+  </a>
+  <div class="sub-menu" id="subMenuFacturas">
+    <a mat-button fxLayout="row" fxLayoutAlign="start center" [routerLink]="'/vendedor/facturas/' + currentUser.userId">
+      <mat-icon class="menu-icon">list</mat-icon>
+      <span class="menu-title">Lista de Facturas</span>
+    </a>
+  </div>
+  <!-- FIN FACTURAS -->
 </div>
+
+
+
+

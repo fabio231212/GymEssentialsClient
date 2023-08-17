@@ -7,7 +7,7 @@ import { ProductoXVendedorComponent } from './productos/producto-xvendedor/produ
 
 export const routes: Routes = [ 
   {
-    path: 'facturas',
+    path: 'facturas/:idVendedor',
     component: ProdfactxvendedorComponent,
     canActivate:[AuthGuard],
     data: { roles:['Vendedor'] ,breadcrumb: 'Facturas por Vendedor' },
@@ -16,14 +16,14 @@ export const routes: Routes = [
     path: 'productos/crear',
     component: ProductosFormComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['Administrador', 'Vendedor'], breadcrumb: 'Crear Producto' },
+    data: { roles: [ 'Vendedor'], breadcrumb: 'Crear Producto' },
   },
   { path: 'productos/:idVendedor', component: ProductoXVendedorComponent, canActivate:[AuthGuard], data: {roles: ['Administrador', 'Vendedor'], breadcrumb: 'Tus Productos' } },
   {
     path: 'productos/editar/:id',
     component: ProductosFormComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['Administrador', 'Vendedor'], breadcrumb: 'Editar Producto' },
+    data: { roles: ['Vendedor'], breadcrumb: 'Editar Producto' },
   },
 
 ];

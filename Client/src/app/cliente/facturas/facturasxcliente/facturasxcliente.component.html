@@ -1,6 +1,6 @@
 <mat-card class="full-width">
   <!-- Titulo del Card -->
-  <mat-card-title> Pedidos </mat-card-title>
+  <!-- <mat-card-title> Pedidos </mat-card-title> -->
   <mat-card-content>
     <!-- Table -->
     <div class="mat-elevation-z8" *ngIf="dataSource">
@@ -30,7 +30,7 @@
             Método de Pago
           </th>
           <td mat-cell *matCellDef="let row">
-            {{ row.metodoPago.descripcion }}
+            {{ row.metodoPago.numTarjeta }}
           </td>
         </ng-container>
 

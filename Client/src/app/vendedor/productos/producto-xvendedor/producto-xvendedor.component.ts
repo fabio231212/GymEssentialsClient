@@ -27,7 +27,10 @@ export class ProductoXVendedorComponent implements OnInit  {
     private route:ActivatedRoute,
     private gService:GenericService,
     private authService: UserService,) {
-    
+      this.authService.currentUser.subscribe((x)=>(this.currentUser=x));
+      //Subscripción al boolean que indica si esta autenticado
+      this.authService.isAuthenticated.subscribe((valor)=>(this.isAutenticated=valor));
+  
       let id=this.route.snapshot.paramMap.get('idVendedor');
       if(!isNaN(Number(id))){
         this.listaProductoXvendedor(Number(id));
@@ -37,20 +40,27 @@ export class ProductoXVendedorComponent implements OnInit  {
   
   ngOnInit() {
     //Subscripción a la información del usuario actual
-    this.authService.currentUser.subscribe((x)=>(this.currentUser=x));
-    //Subscripción al boolean que indica si esta autenticado
-    this.authService.isAuthenticated.subscribe((valor)=>(this.isAutenticated=valor));
 
  }
 
   listaProductoXvendedor(idVendedor:any){
     //localhost:3000/videojuego
-    this.gService.list('productos/idVendedor/'+idVendedor)
+    if (this.currentUser.roles.includes('Vendedor')) {
+      this.gService.list('productos/idVendedor/'+idVendedor)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data:any)=>{
         console.log(data);
         this.datos=data;      
       });   
+    }else if (this.currentUser.roles.includes('Administrador')) {
+      this.gService.list('productos')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data:any)=>{
+        console.log(data);
+        this.datos=data;      
+      });    
+    }
+
   }
 
   public onPageChanged(event){

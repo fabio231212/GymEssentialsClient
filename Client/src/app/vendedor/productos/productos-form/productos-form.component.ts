@@ -203,6 +203,10 @@ export class ProductosFormComponent implements OnInit {
   crearProducto(): void {
     this.submitted = true;
 
+    if (this.currentUser.roles.includes('Administrador')) {
+      return;
+    }
+
     if (this.productoForm.invalid) {
       return;
     }
@@ -242,7 +246,6 @@ export class ProductosFormComponent implements OnInit {
       formData.append('imagenes', this.imagenes[i]);
     }
 
-    console.log(formData);
 
     // Accion API create enviando el FormData
     this.gService
@@ -258,6 +261,10 @@ export class ProductosFormComponent implements OnInit {
 
   //Actualizar Videojuego
   actualizarProducto() {
+
+    if (this.currentUser.roles.includes('Administrador')) {
+      return;
+    }
     //Establecer submit verdadero
     this.submitted = true;
     //Verificar validación

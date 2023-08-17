@@ -10,7 +10,7 @@ export class ProvinceService {
 
   // https://web.archive.org/web/20230330004601/https://programando.paginasweb.cr/2016/04/29/lista-de-provincias-cantones-y-distritos-de-costa-rica-en-formato-json/
 
-  getProvinces(): Promise<any> {
+ async getProvinces(): Promise<any> {
     const url = 'https://ubicaciones.paginasweb.cr/provincias.json';
 
 
@@ -25,7 +25,7 @@ export class ProvinceService {
       .toPromise();
   }
 
-  getCantons(province: string): Promise<any> {
+ async getCantons(province: string): Promise<any> {
     try {
       const url = `https://ubicaciones.paginasweb.cr/provincia/${province}/cantones.json`;
       return this.http.get(url).toPromise();
@@ -34,7 +34,7 @@ export class ProvinceService {
     }
   }
 
-  getDistritos(province: string, canton: string): Promise<any> {
+ async getDistritos(province: string, canton: string): Promise<any> {
     try {
       const url = `https://ubicaciones.paginasweb.cr/provincia/${province}/canton/${canton}/distritos.json`;
       return this.http.get(url).toPromise();

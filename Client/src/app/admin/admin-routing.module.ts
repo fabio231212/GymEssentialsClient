@@ -11,7 +11,7 @@ const routes: Routes = [
   { 
     path: 'admin', 
     component: AdminComponent, canActivate:[AuthGuard],
-    data: { roles: ['Administrador', 'Vendedor'], breadcrumb: 'DashBoard' },
+    data: { roles: ['Administrador', 'Vendedor']},
     children: [
       {path: 'vendedor', loadChildren: () => import('../vendedor/vendedor-routing.module').then(m => m.VendedorRoutingModule) },
       {path: 'usuarios',component: UsuariosComponent, canActivate:[AuthGuard], data: { roles: ['Administrador'], breadcrumb: 'Lista de Usuarios' }},

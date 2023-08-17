@@ -12,15 +12,15 @@
           <div class="mat-mdc-header-cell">Total</div>
         </div>
         <div *ngFor="let item of datos.detallesFactura" class="mat-mdc-row">
-          <!-- <div class="mat-mdc-cell"><img [src]="product.images[0].small"></div> -->
-          <div class="mat-mdc-cell">{{ item.producto.id }}</div>
+          <div class="mat-mdc-cell"><img [src]="item.producto.imagenes[0].imgUrl"></div>
+          <!-- <div class="mat-mdc-cell">{{ item.producto.id }}</div> -->
           <div class="mat-mdc-cell">{{ item.producto.nombre }}</div>
           <div class="mat-mdc-cell">
             ${{ item.producto.precio | number : "1.2-2" }}
           </div>
-          <div class="mat-mdc-cell text-muted">{{ item.producto.stock }}</div>
+          <div class="mat-mdc-cell text-muted">{{ item.cantidad }}</div>
           <div class="mat-mdc-cell">
-            ${{ item.producto.precio * item.producto.stock | number : "1.2-2" }}
+            ${{ item.producto.precio * item.cantidad | number : "1.2-2" }}
           </div>
         </div>
       </div>
@@ -74,7 +74,7 @@
       </p>
       <p class="py-2">
         <span class="text-muted mr-1">Tarjeta:</span
-        ><span>{{ datos.numTarjeta }}</span>
+        ><span>{{ datos.metodoPago.numTarjeta }}</span>
       </p>
     </div>
   </div>

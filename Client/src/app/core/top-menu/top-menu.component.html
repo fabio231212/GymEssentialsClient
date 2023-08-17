@@ -55,16 +55,12 @@
               <mat-icon class="mat-icon-sm">settings</mat-icon>
               <span>Ajustes</span>
             </a>
-            <!-- <a *ngIf="currentUser.roles.includes('Administrador')" mat-menu-item [routerLink]="'admin/usuarios/'"
-              [routerLinkActive]>
-              <mat-icon class="mat-icon-sm">people</mat-icon>
-              <span>Ver Usuarios</span>
-            </a> -->
-            <!-- <a *ngIf="currentUser.roles.includes('Vendedor')" mat-menu-item
-              [routerLink]="'productos/productoxvendedor/' + currentUser.userId" [routerLinkActive]>
-              <mat-icon class="mat-icon-sm">category</mat-icon>
-              <span>Mis Productos</span>
-            </a> -->
+            <a *ngIf="currentUser && currentUser.roles.includes('Comprador')" mat-menu-item
+              [routerLink]="'/cliente/facturas/facturasxusuario/' + currentUser.userId"
+              [routerLinkActive]="'horizontal-active-link'">
+              <mat-icon class="mat-icon-sm">favorite</mat-icon>
+              <span>Ver Mis Facturas</span>
+            </a>
             <a mat-menu-item routerLink="/">
               <mat-icon class="mat-icon-sm">help</mat-icon>
               <span>Ayuda</span>
@@ -165,7 +161,7 @@
                       matTooltip="Limpiar Todo" matTooltipPosition="after">
                       <mat-icon>remove_shopping_cart</mat-icon>
                     </button>
-                    <a [routerLink]="['/checkout']" mat-mini-fab color="primary" matTooltip="Checkout"
+                    <a [routerLink]="['cliente/checkout']" mat-mini-fab color="primary" matTooltip="Checkout"
                       matTooltipPosition="before">
                       <mat-icon>check</mat-icon>
                     </a>

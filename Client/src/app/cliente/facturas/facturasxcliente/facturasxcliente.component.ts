@@ -40,14 +40,18 @@ export class FacturasxclienteComponent {
       .list('facturas/idUsuario/' + idVendedor)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
-        console.log(data);
         this.datos = data;
         this.datos.forEach((item: any) => {
           item.fechaCompra = this.datePipe.transform(
             item.fechaCompra,
             'dd/MM/yyyy'
           );
+          const ultimosDigitos = item.metodoPago.numTarjeta.slice(-4);
+          // Dar formato al número de tarjeta con los últimos 4 dígitos visibles y el resto oculto
+          item.metodoPago.numTarjeta = `XXX-XXX-XXX-${ultimosDigitos}`;
         });
+
+        console.log(this.datos);
 
         this.dataSource = new MatTableDataSource(this.datos);
         this.dataSource.sort = this.sort;
@@ -61,7 +65,7 @@ export class FacturasxclienteComponent {
   }
 
   detalle(id: number) {
-    this.router.navigate(['/facturas/', id], {
+    this.router.navigate(['/cliente/facturas/facturaDetalle/', id], {
       relativeTo: this.route,
     });
   }
