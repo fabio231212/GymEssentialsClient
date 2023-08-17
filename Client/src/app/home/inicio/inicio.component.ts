@@ -13,11 +13,11 @@ import { NotificacionService, TipoMessage } from 'src/app/share/notification.ser
 export class InicioComponent implements OnInit {
 
   public slides = [
-    { title: 'Viva la Testosterona', subtitle: 'Special for today', image: 'assets/images/carousel/banner1.jpg' },
-    { title: 'Summer collection', subtitle: 'New Arrivals On Sale', image: 'assets/images/carousel/banner2.jpg' },
-    { title: 'The biggest sale', subtitle: 'Special for today', image: 'assets/images/carousel/banner3.jpg' },
-    { title: 'Summer collection', subtitle: 'New Arrivals On Sale', image: 'assets/images/carousel/banner4.jpg' },
-    { title: 'The biggest sale', subtitle: 'Special for today', image: 'assets/images/carousel/banner5.jpg' }
+    { title: 'Testosterona para la vida', subtitle: 'Descubre los beneficios', image: 'assets/images/carousel/ronniepolicia.jpg' },
+    { title: 'Trembo... legal?', subtitle: '¡Aprovecha Ahora!', image: 'assets/images/carousel/arnold.jpg' },
+    { title: 'Creatina con descuento', subtitle: '¡Compruébalo ahora!', image: 'assets/images/carousel/chris.jpg' },
+    { title: 'Suplementación 100% legal', subtitle: 'Cómpralos antes de que se acaben', image: 'assets/images/carousel/legalizeTrembo.jpg' },
+    { title: 'Los más vendidos', subtitle: 'Especial para hoy', image: 'assets/images/carousel/mike.jpg' }
   ];
 
   public brands = [];
@@ -35,7 +35,7 @@ export class InicioComponent implements OnInit {
   // public newArrivalsProducts: Array<Product>;
 
 
-  constructor(public appService:AppService, private gService: GenericService, private noti: NotificacionService,public router: Router,
+  constructor(public appService: AppService, private gService: GenericService, private noti: NotificacionService, public router: Router,
     private route: ActivatedRoute,) { }
 
   ngOnInit() {
@@ -45,8 +45,8 @@ export class InicioComponent implements OnInit {
     this.mensajes();
   }
 
-  public onLinkClick(e){
-    this.getProducts(e.tab.textLabel.toLowerCase()); 
+  public onLinkClick(e) {
+    this.getProducts(e.tab.textLabel.toLowerCase());
   }
 
 
@@ -108,13 +108,13 @@ export class InicioComponent implements OnInit {
     this.destroy$.unsubscribe();
   }
 
-  public getBanners(){
-    this.appService.getBanners().subscribe(data=>{
+  public getBanners() {
+    this.appService.getBanners().subscribe(data => {
       this.banners = data;
     })
   }
 
-  public getBrands(){
+  public getBrands() {
     this.brands = this.appService.getBrands();
   }
 
@@ -126,7 +126,7 @@ export class InicioComponent implements OnInit {
       auth = params['auth'] || '';
       if (auth) {
         this.noti.mensaje('Usuario', 'Acceso denegado', TipoMessage.warning);
-        
+
       }
     });
   }
