@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
   infoUsuario: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
   datos: any;
+  paramValue: any;
 
   constructor(
     private gService: GenericService,
@@ -39,10 +40,12 @@ export class LoginComponent implements OnInit {
     this.crearFormularioLogin();
   }
 
+
+
   public crearFormularioLogin() {
     this.loginForm = this.formBuilder.group({
       // email: ['', Validators.compose([Validators.required, emailValidator])],
-      email: ['', Validators.compose([Validators.required])],
+      email: ['', [Validators.required, Validators.email]],
       clave: ['', Validators.required],
     });
   }

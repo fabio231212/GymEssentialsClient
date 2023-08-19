@@ -6,6 +6,7 @@
           <mat-label>Email</mat-label>
           <input matInput placeholder="Email" formControlName="email" required />
           <mat-error *ngIf="errorHandling('email', 'required')">El email es requerido</mat-error>
+          <mat-error *ngIf="errorHandling('email', 'email')">El email tiene un formato inválido</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline" class="w-100 mt-2">
           <mat-label>Clave</mat-label>
