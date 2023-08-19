@@ -8,16 +8,17 @@ import { VendedorRoutingModule } from '../vendedor/vendedor-routing.module';
 
 const routes: Routes = [
 
-  { 
-    path: 'admin', 
+  {
+    path: 'admin',
     component: AdminComponent, canActivate:[AuthGuard],
     data: { roles: ['Administrador', 'Vendedor']},
     children: [
+      { path: '', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) }, 
       {path: 'vendedor', loadChildren: () => import('../vendedor/vendedor-routing.module').then(m => m.VendedorRoutingModule) },
       {path: 'usuarios',component: UsuariosComponent, canActivate:[AuthGuard], data: { roles: ['Administrador'], breadcrumb: 'Lista de Usuarios' }},
-      {path: 'adminChat',component: ChatAdminComponent,data: { roles: ['Administrador', 'Vendedor'], breadcrumb: 'Chat' }},  
+      {path: 'adminChat',component: ChatAdminComponent,data: { roles: ['Administrador', 'Vendedor'], breadcrumb: 'Chat' }},
     ]
-  } 
+  }
 ];
 
 
