@@ -34,6 +34,15 @@
           </td>
         </ng-container>
 
+        <ng-container matColumnDef="estado">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Estado de la Factura
+          </th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.estadoPedido.descripcion }}
+          </td>
+        </ng-container>
+
         <ng-container matColumnDef="total">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Total</th>
           <td mat-cell *matCellDef="let row">{{ row.total }}</td>

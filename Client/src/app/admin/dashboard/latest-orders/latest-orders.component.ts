@@ -48,7 +48,7 @@ export class LatestOrdersComponent implements OnInit {
   }
 
   detalle(id: number) {
-    this.router.navigate(['/cliente/facturas/facturaDetalle/', id], {
+    this.router.navigate(['/vendedor/facturas/facturaDetalle/', id], {
       relativeTo: this.route,
     });
   }

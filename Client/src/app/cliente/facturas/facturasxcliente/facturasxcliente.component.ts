@@ -21,7 +21,7 @@ export class FacturasxclienteComponent {
   dataSource = new MatTableDataSource<any>();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'fechaCompra', 'total', 'metodoPago', 'acciones'];
+  displayedColumns = ['id', 'fechaCompra', 'total', 'metodoPago', 'estado', 'acciones'];
 
   constructor(
     private router: Router,
