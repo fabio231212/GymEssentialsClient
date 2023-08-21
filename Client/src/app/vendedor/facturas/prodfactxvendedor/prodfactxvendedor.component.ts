@@ -8,6 +8,8 @@ import { GenericService } from 'src/app/share/generic.service';
 import { DatePipe } from '@angular/common';
 import { UserService } from 'src/app/share/user.service';
 import { NotificacionService, TipoMessage } from 'src/app/share/notification.service';
+import { MatDialog } from '@angular/material/dialog';
+import { EvaluacionUsuarioComponent } from '../evaluacion-usuario/evaluacion-usuario.component';
 
 @Component({
   selector: 'app-prodfactxvendedor',
@@ -34,6 +36,7 @@ export class ProdfactxvendedorComponent {
     private datePipe: DatePipe,
     private authService: UserService,
     private noti: NotificacionService,
+    public dialog: MatDialog
   ) {
     let id = this.route.snapshot.paramMap.get('idVendedor');
     if (!isNaN(Number(id))) {
@@ -64,6 +67,18 @@ export class ProdfactxvendedorComponent {
         console.log(this.dataSource);
       });
   }
+
+  openEvDialog(id: number) {
+
+    const dialogRef = this.dialog.open(EvaluacionUsuarioComponent, {
+      width: '2000px',
+      data: { id: id, isVendedor: false },
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+
+    });
+  }
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
@@ -76,16 +91,16 @@ export class ProdfactxvendedorComponent {
     };
 
     this.gService
-      .update('facturas/actualizarEstado' , datos)
+      .update('facturas/actualizarEstado', datos)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         this.listaProdFactVendedor(this.currentUser.userId);
       });
-      this.noti.mensaje(
-        '',
-        'El estado del detalle de la factura ha sido actualizado',
-        TipoMessage.success
-      );  
+    this.noti.mensaje(
+      '',
+      'El estado del detalle de la factura ha sido actualizado',
+      TipoMessage.success
+    );
   }
 
   filtrarPendientes() {

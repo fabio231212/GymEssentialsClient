@@ -36,6 +36,10 @@
       <p>{{ datos.usuario.nombre }} {{ datos.usuario.apellidos }}</p>
     </div>
     <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-2">
+      <p class="text-muted">Calificación:</p>
+      <p>{{ promedioCalificacion | number : "1.2-2"}} estrellas </p>
+    </div>
+    <div fxLayout="column" fxFlex="100" fxFlex.gt-sm="25" class="p-2">
       <p class="text-muted">Email:</p>
       <p>{{ datos.usuario.email }}</p>
     </div>

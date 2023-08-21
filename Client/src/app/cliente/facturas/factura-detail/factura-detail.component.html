@@ -10,6 +10,8 @@
           <div class="mat-mdc-header-cell">Precio Unitario</div>
           <div class="mat-mdc-header-cell">Cantidad</div>
           <div class="mat-mdc-header-cell">Total</div>
+          <div class="mat-mdc-header-cell">Acciones</div>
+
         </div>
         <div *ngFor="let item of datos.detallesFactura" class="mat-mdc-row">
           <div class="mat-mdc-cell"><img [src]="item.producto.imagenes[0].imgUrl"></div>
@@ -21,6 +23,12 @@
           <div class="mat-mdc-cell text-muted">{{ item.cantidad }}</div>
           <div class="mat-mdc-cell">
             ${{ item.producto.precio * item.cantidad | number : "1.2-2" }}
+          </div>
+          <div class="mat-mdc-cell">
+            <button (click)="openEvDialog(item.producto.usuarioId)" mat-mini-fab color="accent"
+              matTooltip="Evaluar Comprador" aria-label="Evaluar Comprador" color="primary" *ngIf="item.estadoId == 3">
+              <mat-icon class="mat-18">star</mat-icon>
+            </button>
           </div>
         </div>
       </div>
@@ -69,19 +77,16 @@
       <h3 class="text-muted mt-3">Información de Pago</h3>
       <div class="divider"></div>
       <p class="py-2">
-        <span class="text-muted mr-1">Método de Pago:</span
-        ><span>{{ datos.metodoPago.descripcion }}</span>
+        <span class="text-muted mr-1">Método de Pago:</span><span>{{ datos.metodoPago.descripcion }}</span>
       </p>
       <p class="py-2">
-        <span class="text-muted mr-1">Tarjeta:</span
-        ><span>{{ datos.metodoPago.numTarjeta }}</span>
+        <span class="text-muted mr-1">Tarjeta:</span><span>{{ datos.metodoPago.numTarjeta }}</span>
       </p>
     </div>
   </div>
   <div fxLayout="row" fxLayoutAlign="center center" class="p-2">
     <h2>
-      <span class="text-muted mr-1">Total:</span
-      ><span>{{ datos.total | currency : "USD" }}</span>
+      <span class="text-muted mr-1">Total:</span><span>{{ datos.total | currency : "USD" }}</span>
     </h2>
   </div>
   <div fxLayout="row" fxLayoutAlign="center center" class="mt-3 p-2">

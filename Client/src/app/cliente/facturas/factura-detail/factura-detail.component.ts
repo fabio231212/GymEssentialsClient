@@ -5,6 +5,8 @@ import { UntypedFormBuilder } from '@angular/forms';
 import { filter, map, Subject, Subscription, takeUntil } from 'rxjs';
 import { GenericService } from 'src/app/share/generic.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { EvaluacionUsuarioComponent } from 'src/app/vendedor/facturas/evaluacion-usuario/evaluacion-usuario.component';
 
 @Component({
   selector: 'app-factura-detail',
@@ -20,13 +22,25 @@ export class FacturaDetailComponent {
     public formBuilder: UntypedFormBuilder,
     private gService: GenericService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router, public dialog: MatDialog
   ) {
     let id = this.route.snapshot.paramMap.get('idFactura');
     if (!isNaN(Number(id))) {
       this.getProductById(Number(id));
     }
     console.log(this.datos);
+  }
+
+  openEvDialog(id: number) {
+
+    const dialogRef = this.dialog.open(EvaluacionUsuarioComponent, {
+      width: '2000px',
+      data: { id: id, isVendedor: true },
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+
+    });
   }
 
   getProductById(idFactura: any) {
@@ -42,10 +56,12 @@ export class FacturaDetailComponent {
         //this.image = this.datos.imagenes.URL;
       });
   }
+
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
   }
+
   volver() {
     this.router.navigate(
       ['/cliente/facturas/facturasxusuario/', this.datos.usuarioId],

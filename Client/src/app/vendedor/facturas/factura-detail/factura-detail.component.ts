@@ -17,6 +17,7 @@ export class FacturaDetailComponent {
   destroy$: Subject<boolean> = new Subject<boolean>();
   isAutenticated: boolean;
   currentUser: any;
+  promedioCalificacion: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -46,12 +47,24 @@ export class FacturaDetailComponent {
             return detalle.producto.usuarioId === this.currentUser.userId;
           });
         }
+
         this.datos = data;
+        this.getPromedioCalificacion(this.datos.usuario.id);
       });
   }
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
+  }
+
+  async getPromedioCalificacion(idUsuario: any) {
+    try {
+      const data = await this.gService.get('evaluacionUsuario/promedio', idUsuario).pipe(takeUntil(this.destroy$)).toPromise();
+      this.promedioCalificacion = data[0].promedio;
+    } catch (error) {
+      console.error(error);
+    }
+
   }
   volver() {
     this.router.navigate(
