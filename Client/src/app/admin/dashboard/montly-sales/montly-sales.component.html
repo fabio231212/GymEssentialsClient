@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="currentUser.roles.includes('Administrador')">
   <mat-card-header fxLayoutAlign="center">
     <mat-card-title>Top Productos</mat-card-title>
   </mat-card-header>

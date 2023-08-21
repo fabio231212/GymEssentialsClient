@@ -1,4 +1,5 @@
-<mat-card class="p-0">
+<mat-card class="p-0" *ngIf="currentUser.roles.includes('Vendedor')">
+  <mat-card-title class="mat-card-title text-center">Últimas Ventas</mat-card-title>
   <div class="mat-mdc-table admin-table header-sm truncated">
     <div class="mat-mdc-header-row">
       <div class="mat-mdc-header-cell">Producto</div>
@@ -26,3 +27,4 @@
     </div>
   </div>
 </mat-card>
+

@@ -1,7 +1,7 @@
 <div fxLayout="row wrap" #resizedDiv>
-  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="p-2">
+  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="p-2" *ngIf="currentUser.roles.includes('Administrador')">
     <mat-card class="p-0 gradient-purple">
-      <div class="p-2" fxLayoutAlign="space-between center">
+      <div class="p-2" fxLayoutAlign="space-between center" >
         <p>Top Vendedores</p>
         <div fxLayoutAlign="center center">
           <mat-icon class="icon-sm px-1">trending_up</mat-icon>
@@ -13,7 +13,7 @@
       </div>
     </mat-card>
   </div>
-  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="p-2">
+  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="p-2" *ngIf="currentUser.roles.includes('Administrador')">
     <mat-card class="p-0 gradient-teal">
       <div class="p-2" fxLayoutAlign="space-between center">
         <p>Peores Vendedores</p>
@@ -27,21 +27,22 @@
       </div>
     </mat-card>
   </div>
-  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="p-2">
+   <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="p-2" *ngIf="currentUser.roles.includes('Vendedor')">
     <mat-card class="p-0 gradient-indigo">
       <div class="p-2" fxLayoutAlign="space-between center">
-        <p>Refunds</p>
+        <p>Evaluaciones Clientes</p>
         <div fxLayoutAlign="center center">
-          <mat-icon class="icon-sm px-1">trending_down</mat-icon>
-          <span>-11%</span>
+          <!-- <mat-icon class="icon-sm px-1">trending_down</mat-icon>
+          <span>-11%</span> -->
         </div>
       </div>
       <div class="w-100 h-100p">
-        <ngx-charts-bar-vertical [scheme]="colorScheme" [results]="refunds" (select)="onSelect($event)">
+        <ngx-charts-bar-vertical [scheme]="colorScheme" [results]="evaluations" (select)="onSelect($event)">
         </ngx-charts-bar-vertical>
       </div>
     </mat-card>
   </div>
+  <!--  
   <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="p-2">
     <mat-card class="p-0 gradient-amber">
       <div class="p-2" fxLayoutAlign="space-between center">
@@ -57,5 +58,5 @@
         </ngx-charts-line-chart>
       </div>
     </mat-card>
-  </div>
+  </div> -->
 </div>

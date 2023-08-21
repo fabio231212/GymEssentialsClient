@@ -14,7 +14,7 @@ export class InfoCardsComponent implements OnInit {
   public worstSellers: any[];
   public top5Users: any[];
   public customers: any[];
-  public refunds: any[];
+  public evaluations: any[];
   datosTopSellers: any[];
   destroy$: Subject<boolean> = new Subject<boolean>();
   public colorScheme: any = {
@@ -23,6 +23,8 @@ export class InfoCardsComponent implements OnInit {
   public autoScale = true;
   @ViewChild('resizedDiv') resizedDiv: ElementRef;
   public previousWidthOfResizedDiv: number = 0;
+  isAutenticated: boolean;
+  currentUser: any;
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -33,9 +35,11 @@ export class InfoCardsComponent implements OnInit {
     this.customers = customers;
     this.getTop5();
     this.getWorstSellers();
-    this.refunds = refunds;
-    // this.worstSellers = this.addRandomValue('orders');
-    // this.customers = this.addRandomValue('customers');
+        //Subscripción a la información del usuario actual
+        this.userService.currentUser.subscribe((x) => (this.currentUser = x));
+        //Subscripción al boolean que indica si esta autenticado
+        this.userService.isAuthenticated.subscribe((valor) => (this.isAutenticated = valor));
+        this.getEvaluation();
 
   }
 
@@ -67,6 +71,17 @@ export class InfoCardsComponent implements OnInit {
         this.worstSellers = [...data]; // Assign here if needed immediately
       });
   }
+
+  getEvaluation() {
+    this.gService
+      .get('usuarios/evaluacionesVendedor', this.currentUser.userId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        this.evaluations = [...data]; // Assign here if needed immediately
+        console.log(this.evaluations);
+      });
+  }
+  
   ngAfterViewChecked() {
     // if (this.previousWidthOfResizedDiv != this.resizedDiv.nativeElement.clientWidth) {
     //   setTimeout(() => this.worstSellers = [...orders]);

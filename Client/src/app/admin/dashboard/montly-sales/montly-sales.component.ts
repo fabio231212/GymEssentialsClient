@@ -24,11 +24,17 @@ export class MontlySalesComponent implements OnInit {
   public doughnut = false;
   @ViewChild('resizedDiv') resizedDiv: ElementRef;
   public previousWidthOfResizedDiv: number = 0;
+  isAutenticated: boolean;
+  currentUser: any;
 
   constructor(private router: Router,
     private route: ActivatedRoute,
     private gService: GenericService,
-    private datePipe: DatePipe, private userService: UserService) { }
+    private datePipe: DatePipe, private userService: UserService) {
+      this.userService.currentUser.subscribe((x) => (this.currentUser = x));
+      //Subscripción al boolean que indica si esta autenticado
+      this.userService.isAuthenticated.subscribe((valor) => (this.isAutenticated = valor));
+     }
 
   ngOnInit() {
     this.getTop5();
@@ -48,6 +54,7 @@ export class MontlySalesComponent implements OnInit {
   }
 
   ngAfterViewChecked() {
+    if (this.resizedDiv) {
     if (this.previousWidthOfResizedDiv != this.resizedDiv.nativeElement.clientWidth) {
       if (this.data) {
         this.topProducts = [...this.data];
@@ -55,5 +62,5 @@ export class MontlySalesComponent implements OnInit {
     }
     this.previousWidthOfResizedDiv = this.resizedDiv.nativeElement.clientWidth;
   }
-
+  }
 }
