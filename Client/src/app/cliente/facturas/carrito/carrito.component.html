@@ -48,12 +48,22 @@
       <div class="mat-mdc-cell"></div>
       <div class="mat-mdc-cell text-right">
         <div fxLayout="column" fxLayoutAlign="center end" class="grand-total px-3">
-          <span class="text-bold">Total:</span>
+          <span class="text-bold">Subtotal:</span>
         </div>
       </div>
       <div class="mat-mdc-cell">
         <div fxLayout="column" fxLayoutAlign="center start" class="grand-total">
           <span>${{ cartService.getTotal()| number : "1.2-2" }}</span>
+        </div>
+      </div>
+      <div class="mat-mdc-cell text-right">
+        <div fxLayout="column" fxLayoutAlign="center end" class="grand-total px-3">
+          <span class="text-bold">Total:</span>
+        </div>
+      </div>
+      <div class="mat-mdc-cell">
+        <div fxLayout="column" fxLayoutAlign="center start" class="grand-total">
+          <span>${{ cartService.getTotal() * 0.13 + cartService.getTotal()| number : "1.2-2" }}</span>
         </div>
       </div>
       <div class="mat-mdc-cell text-center"><a [routerLink]="['/cliente/checkout/']" mat-raised-button

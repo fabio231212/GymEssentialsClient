@@ -163,7 +163,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           'usuarioId': this.user.userId,
           'numTarjeta': this.billingForm.controls['cardNumber'].value.slice(-4),
           'subtotal': this.cartService.getTotal(),
-          'total': this.cartService.getTotal(),
+          'total': this.cartService.getTotal() * 0.13 + this.cartService.getTotal(),
           'metodoPagoId': this.infoTarjeta ? this.infoTarjeta.id : null,
           'idDireccion': this.infoDireccion ? this.infoDireccion.id : null,
         },
