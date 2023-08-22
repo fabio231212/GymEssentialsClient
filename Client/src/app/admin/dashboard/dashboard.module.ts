@@ -9,6 +9,7 @@ import { InfoCardsComponent } from './info-cards/info-cards.component';
 import { AnalyticsComponent } from './analytics/analytics.component';
 import { MontlySalesComponent } from './montly-sales/montly-sales.component';
 import { LatestOrdersComponent } from './latest-orders/latest-orders.component';
+import { TopConsumerBySellerComponent } from './top-consumer-by-seller/top-consumer-by-seller.component';
 
 export const routes: Routes = [
   { path: '', component: DashboardComponent, pathMatch: 'full' }
@@ -21,7 +22,8 @@ export const routes: Routes = [
     InfoCardsComponent,
     AnalyticsComponent,
     MontlySalesComponent,
-    LatestOrdersComponent
+    LatestOrdersComponent,
+    TopConsumerBySellerComponent
   ],
   imports: [
     CommonModule,
