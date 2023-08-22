@@ -9,6 +9,8 @@ import { Product } from '../app.models';
 import { ProductoXVendedorComponent } from './productos/producto-xvendedor/producto-xvendedor.component';
 import { ProductosFormComponent } from './productos/productos-form/productos-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FacturaDetailComponent } from './facturas/factura-detail/factura-detail.component';
+import { EvaluacionUsuarioComponent } from './facturas/evaluacion-usuario/evaluacion-usuario.component';
 
 
 
@@ -17,7 +19,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   declarations: [
     ProdfactxvendedorComponent,
     ProductoXVendedorComponent,
-    ProductosFormComponent
+    ProductosFormComponent,
+    FacturaDetailComponent,
+    EvaluacionUsuarioComponent
   ],
   imports: [
     ReactiveFormsModule,

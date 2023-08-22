@@ -6,6 +6,8 @@ import { MatSort } from '@angular/material/sort';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GenericService } from 'src/app/share/generic.service';
 import { DatePipe } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { EvaluacionUsuarioComponent } from 'src/app/vendedor/facturas/evaluacion-usuario/evaluacion-usuario.component';
 
 @Component({
   selector: 'app-facturasxcliente',
@@ -21,7 +23,7 @@ export class FacturasxclienteComponent {
   dataSource = new MatTableDataSource<any>();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'fechaCompra', 'total', 'metodoPago', 'acciones'];
+  displayedColumns = ['id', 'fechaCompra', 'total', 'metodoPago', 'estado', 'acciones'];
 
   constructor(
     private router: Router,
@@ -34,6 +36,9 @@ export class FacturasxclienteComponent {
       this.listaFacturasxUsuario(Number(id));
     }
   }
+
+
+
 
   listaFacturasxUsuario(idVendedor: any) {
     this.gService

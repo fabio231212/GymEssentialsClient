@@ -18,13 +18,13 @@
           <button mat-mini-fab color="primary" matTooltip="View">
             <mat-icon>edit</mat-icon>
           </button>
-          <button  mat-mini-fab color="warn" matTooltip="View invoice" class="btn-invoice">
-                        <mat-icon>receipt</mat-icon>
+          <button mat-mini-fab color="warn" matTooltip="View invoice" class="btn-invoice"
+          (click)="detalle(item.encabezadosFacturaId)">
+            <mat-icon>receipt</mat-icon>
 
-                    </button>
+          </button>
         </div>
       </div>
     </div>
   </div>
 </mat-card>
-

@@ -149,7 +149,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           ['cantidad']: x.cantidad,
           ['precioUnitario']: x.precio,
           ['productoId']: x.product.id,
-          ['estadoPedidoId']: 1,
+          ['estadoId']: 1,
         })
       )
 

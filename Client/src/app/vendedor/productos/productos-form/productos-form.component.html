@@ -1,172 +1,172 @@
 <div class="p-2">
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>{{ titleForm }} Producto</mat-card-title>
-        </mat-card-header>
-        <mat-card-content class="pt-3">
-            <form [formGroup]="productoForm" (ngSubmit)="isCreate ? crearProducto() : actualizarProducto()" novalidate
-                autocomplete="off">
-                <input type="hidden" formControlName="id" />
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ titleForm }} Producto</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="pt-3">
+      <form [formGroup]="productoForm" (ngSubmit)="isCreate ? crearProducto() : actualizarProducto()" novalidate
+        autocomplete="off">
+        <input type="hidden" formControlName="id" />
 
-                <!-- PREVIEW IMAGEN -->
+        <!-- PREVIEW IMAGEN -->
 
 
-                <div fxFlex="100" fxFlex.gt-sm="40" class="px-2">
-                    <div class="image-grid">
-                        <mat-card class="card-size addImage">
-                            <input (change)="capturarImg($event)" type="file" multiple accept="image/*" id="fileInput"
-                                class="hidden-input" />
-                            <label for="fileInput" class="image-upload-label">
-                                <img src="http://localhost:8000/public/AddImage.png" class="product-image"
-                                    mat-card-image alt="Add Image">
-                            </label>
-                        </mat-card>
-                        <div *ngIf="previsualizacion" class="image-grid__container">
-                            <mat-card *ngFor="let imagen of previsualizacion; let i = index" class="card-size">
-                                <img [src]="imagen" alt="Imagen {{ i }}" class="product-image" mat-card-image>
-                                <div class="mat-card-actions">
-                                    <button (click)="eliminarImagen(i)" class="btn-eliminar">
-                                        <mat-icon>delete</mat-icon>
-                                    </button>
-                                </div>
-                            </mat-card>
-                        </div>
-                    </div>
-                    <mat-error *ngIf="errorImagenes">
-                        <strong>{{mensajeErrorImagenes}}</strong></mat-error>
+        <div fxFlex="100" fxFlex.gt-sm="40" class="px-2">
+          <div class="image-grid">
+            <mat-card class="card-size addImage">
+              <input (change)="capturarImg($event)" type="file" multiple accept="image/*" id="fileInput"
+                class="hidden-input" />
+              <label for="fileInput" class="image-upload-label">
+                <img src="http://localhost:8000/public/AddImage.png" class="product-image" mat-card-image
+                  alt="Add Image">
+              </label>
+            </mat-card>
+            <div *ngIf="previsualizacion" class="image-grid__container">
+              <mat-card *ngFor="let imagen of previsualizacion; let i = index" class="card-size">
+                <img [src]="imagen" alt="Imagen {{ i }}" class="product-image" mat-card-image>
+                <div class="mat-card-actions">
+                  <button (click)="eliminarImagen(i)" class="btn-eliminar">
+                    <mat-icon>delete</mat-icon>
+                  </button>
                 </div>
+              </mat-card>
+            </div>
+          </div>
+          <mat-error *ngIf="errorImagenes">
+            <strong>{{mensajeErrorImagenes}}</strong></mat-error>
+        </div>
 
 
 
 
-                <!-- PREVIEW IMAGE -->
-                <div fxFlex="100" fxFlex.gt-sm="60" class="px-2">
-                    <div fxLayout="row wrap">
-                        <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
-                            <mat-form-field appearance="outline" class="w-100">
-                                <mat-label>Nombre</mat-label>
-                                <input matInput formControlName="nombre" placeholder="Nombre" required />
-                                <mat-error *ngIf="errorHandling('nombre', 'required')">
-                                    Nombre es <strong>requerido</strong></mat-error>
-                                <mat-error *ngIf="errorHandling('nombre', 'minlength')">Nombre debe tener <strong>5
-                                        caracteres</strong></mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
-                            <mat-form-field appearance="outline" class="w-100">
-                                <mat-label>Categoría</mat-label>
-                                <mat-select formControlName="categoriaProductoId" required>
-                                    <mat-option *ngFor="let cat of categoriasList" [value]="cat.id">
-                                        <span>{{ cat.descripcion }}</span>
-                                    </mat-option>
-                                </mat-select>
-                                <mat-error>
-                                    La categoría es <strong>requerida</strong>
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
-                            <mat-form-field appearance="outline" class="w-100">
-                                <mat-label>Estado</mat-label>
-                                <mat-select formControlName="estadoProductoId" required>
-                                    <mat-option *ngFor="let est of estadosList" [value]="est.id">
-                                        <span>{{ est.descripcion }}</span>
-                                    </mat-option>
-                                </mat-select>
-                                <mat-error>
-                                    El estado es <strong>requerido</strong>
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
-                            <mat-form-field appearance="outline" class="w-100">
-                                <mat-label>Precio</mat-label>
-                                <input matInput formControlName="precio" type="number" />
-                                <mat-error *ngIf="errorHandling('precio', 'required')">
-                                    Precio es <strong>requerido</strong></mat-error>
-                            </mat-form-field>
-                        </div>
+        <!-- PREVIEW IMAGE -->
+        <div fxFlex="100" fxFlex.gt-sm="60" class="px-2">
+          <div fxLayout="row wrap">
+            <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Nombre</mat-label>
+                <input matInput formControlName="nombre" placeholder="Nombre" required />
+                <mat-error *ngIf="errorHandling('nombre', 'required')">
+                  Nombre es <strong>requerido</strong></mat-error>
+                <mat-error *ngIf="errorHandling('nombre', 'minlength')">Nombre debe tener <strong>5
+                    caracteres</strong></mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Categoría</mat-label>
+                <mat-select formControlName="categoriaProductoId" required>
+                  <mat-option *ngFor="let cat of categoriasList" [value]="cat.id">
+                    <span>{{ cat.descripcion }}</span>
+                  </mat-option>
+                </mat-select>
+                <mat-error>
+                  La categoría es <strong>requerida</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Estado</mat-label>
+                <mat-select formControlName="estadoProductoId" required>
+                  <mat-option *ngFor="let est of estadosList" [value]="est.id">
+                    <span>{{ est.descripcion }}</span>
+                  </mat-option>
+                </mat-select>
+                <mat-error>
+                  El estado es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Precio</mat-label>
+                <input matInput formControlName="precio" type="number" />
+                <mat-error *ngIf="errorHandling('precio', 'required')">
+                  Precio es <strong>requerido</strong></mat-error>
+              </mat-form-field>
+            </div>
 
 
 
-                        <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
-                            <div appearance="outline" class="w-100">
-                                <mat-checkbox formControlName="aplicarDescuento" (change)="toggleDescuento()"
-                                    [ngModel]="mostrarDescuento">Aplicar
-                                    descuento</mat-checkbox>
-                            </div>
-                        </div>
+            <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+              <div appearance="outline" class="w-100">
+                <mat-checkbox formControlName="aplicarDescuento" (change)="toggleDescuento()"
+                  [ngModel]="mostrarDescuento">Aplicar
+                  descuento</mat-checkbox>
+              </div>
+            </div>
 
 
-                        <div *ngIf="mostrarDescuento" fxFlex="100" fxFlex.gt-sm="50" class="px-1">
-                            <mat-form-field appearance="outline" class="w-100">
-                                <mat-label>Precio Oferta</mat-label>
-                                <input matInput formControlName="precioOferta" type="number" readonly />
-                                <mat-error *ngIf="errorHandling('precioOferta', 'required')">
-                                    El precio de oferta es <strong>requerido</strong></mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div *ngIf="mostrarDescuento" fxFlex="100" fxFlex.gt-sm="50" class="px-1">
-                            <mat-form-field appearance="outline" class="w-100">
-                                <mat-label>Descuento</mat-label>
-                                <input matInput formControlName="descuento" type="number" />
-                                <mat-error *ngIf="errorHandling('descuento', 'required')">
-                                    Descuento es <strong>requerido</strong></mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
-                            <mat-form-field appearance="outline" class="w-100">
-                                <mat-label>Stock</mat-label>
-                                <input matInput formControlName="stock" type="number" />
-                                <mat-error *ngIf="errorHandling('stock', 'required')">
-                                    Stock es <strong>requerido</strong></mat-error>
-                            </mat-form-field>
-                        </div>
+            <div *ngIf="mostrarDescuento" fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Precio Oferta</mat-label>
+                <input matInput formControlName="precioOferta" type="number" readonly />
+                <mat-error *ngIf="errorHandling('precioOferta', 'required')">
+                  El precio de oferta es <strong>requerido</strong></mat-error>
+              </mat-form-field>
+            </div>
+            <div *ngIf="mostrarDescuento" fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Descuento</mat-label>
+                <input matInput formControlName="descuento" type="number" />
+                <mat-error *ngIf="errorHandling('descuento', 'required')">
+                  Descuento es <strong>requerido</strong></mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Stock</mat-label>
+                <input matInput formControlName="stock" type="number" />
+                <mat-error *ngIf="errorHandling('stock', 'required')">
+                  Stock es <strong>requerido</strong></mat-error>
+              </mat-form-field>
+            </div>
 
-                        <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1">
-                            <mat-form-field appearance="outline" class="w-100">
-                                <mat-label>Tamaños</mat-label>
-                                <mat-select placeholder="Tamaños" formControlName="tamannos" multiple>
-                                    <mat-option *ngFor="let t of tamannosList" [value]="t.id">
-                                        <span>{{ t.descripcion }}</span>
-                                    </mat-option>
-                                </mat-select>
-                                <mat-error>
-                                    El tamaño es <strong>requerido</strong>
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1">
-                            <mat-form-field appearance="outline" class="w-100">
-                                <mat-label>Marcas</mat-label>
-                                <mat-select placeholder="Marcas" formControlName="marcas" multiple>
-                                    <mat-option *ngFor="let m of marcasList" [value]="m.id">
-                                        <span>{{ m.descripcion }}</span>
-                                    </mat-option>
-                                </mat-select>
-                                <mat-error>
-                                    La marca es <strong>requerida</strong></mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div fxFlex="100" class="px-1">
-                            <mat-form-field appearance="outline" class="w-100">
-                                <mat-label>Descripción</mat-label>
-                                <textarea matInput formControlName="descripcion" rows="7"></textarea>
-                                <mat-error *ngIf="errorHandling('descripcion', 'required')">
-                                    Descripción es <strong>requerido</strong></mat-error>
-                                <mat-error *ngIf="errorHandling('descripcion', 'minlength')">Descripción debe tener
-                                    <strong>50
-                                        caracteres</strong></mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div fxFlex="100" class="mt-2 text-center w-100">
-                            <button mat-raised-button color="primary" type="submit">
-                                Guardar
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </mat-card-content>
-    </mat-card>
+            <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Tamaños</mat-label>
+                <mat-select placeholder="Tamaños" formControlName="tamannos" multiple>
+                  <mat-option *ngFor="let t of tamannosList" [value]="t.id">
+                    <span>{{ t.descripcion }}</span>
+                  </mat-option>
+                </mat-select>
+                <mat-error>
+                  El tamaño es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Marcas</mat-label>
+                <mat-select placeholder="Marcas" formControlName="marcas" multiple>
+                  <mat-option *ngFor="let m of marcasList" [value]="m.id">
+                    <span>{{ m.descripcion }}</span>
+                  </mat-option>
+                </mat-select>
+                <mat-error>
+                  La marca es <strong>requerida</strong></mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" class="px-1">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Descripción</mat-label>
+                <textarea matInput formControlName="descripcion" rows="7"></textarea>
+                <mat-error *ngIf="errorHandling('descripcion', 'required')">
+                  Descripción es <strong>requerido</strong></mat-error>
+                <mat-error *ngIf="errorHandling('descripcion', 'minlength')">Descripción debe tener
+                  <strong>50
+                    caracteres</strong></mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" class="mt-2 text-center w-100">
+              <button mat-raised-button color="primary" type="submit">
+                Guardar
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>

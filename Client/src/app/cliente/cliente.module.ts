@@ -16,6 +16,7 @@ import { NotificacionService } from '../share/notification.service';
 import { CarritoComponent } from './facturas/carrito/carrito.component';
 import { CheckoutComponent } from './facturas/checkout/checkout.component';
 import { FormsModule } from '@angular/forms';
+import { EvaluacionUsuarioComponent } from '../vendedor/facturas/evaluacion-usuario/evaluacion-usuario.component';
 
 
 // export const routes: Routes = [
@@ -34,7 +35,7 @@ import { FormsModule } from '@angular/forms';
     FacturasxclienteComponent,
     ProductZoomComponent,
     CarritoComponent,
-    CheckoutComponent
+    CheckoutComponent,
 
 
 

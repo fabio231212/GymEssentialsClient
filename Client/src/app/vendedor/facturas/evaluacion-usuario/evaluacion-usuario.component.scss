@@ -1,0 +1,27 @@
+.product-image {
+  width: 400px;
+  height: 400px;
+  object-fit: contain;
+}
+
+/* Estilo para el contenedor del comentario */
+.comment-container {
+  display: flex;
+  align-items: center;
+}
+
+/* Estilo para el icono de estrella */
+.star-icon {
+  font-size: 18px;
+  color: #aaa;
+  /* Cambia el color según tus preferencias */
+  padding: 0 2px;
+  /* Espacio entre los iconos de estrella */
+}
+
+@media (min-width: 1280px) {
+  .mat-mdc-card.product-image img {
+    cursor: zoom-in;
+    cursor: url("../../../../assets/images/others/zoom.svg") 10 10, zoom-in;
+  }
+}
