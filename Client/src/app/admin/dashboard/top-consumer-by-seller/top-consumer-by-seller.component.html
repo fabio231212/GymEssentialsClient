@@ -1,0 +1,21 @@
+<mat-card *ngIf="currentUser.roles.includes('Vendedor')">
+    <mat-card-header fxLayoutAlign="center">
+      <mat-card-title>Top Compradores</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="pt-4">
+      <div fxLayout="row" fxLayoutAlign="space-around">
+        <mat-checkbox color="primary" class="example-margin" [checked]="explodeSlices"
+          (change)="explodeSlices = !explodeSlices">Explorar</mat-checkbox>
+        <mat-checkbox color="primary" class="example-margin" [checked]="showLabels"
+          (change)="showLabels = !showLabels">Mostrar Información</mat-checkbox>
+      </div>
+      <div class="w-100 h-300p" #resizedDiv>
+        <ngx-charts-pie-chart [scheme]="colorScheme" [results]="data" [legend]="showLegend"
+          [explodeSlices]="explodeSlices" [labels]="showLabels" [doughnut]="doughnut" [gradient]="gradient"
+          (select)="onSelect($event)">
+        </ngx-charts-pie-chart>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+

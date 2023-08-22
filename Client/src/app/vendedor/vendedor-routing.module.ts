@@ -4,13 +4,14 @@ import { ProdfactxvendedorComponent } from './facturas/prodfactxvendedor/prodfac
 import { ProductosFormComponent } from './productos/productos-form/productos-form.component';
 import { AuthGuard } from '../share/auth.guard';
 import { ProductoXVendedorComponent } from './productos/producto-xvendedor/producto-xvendedor.component';
+import { FacturaDetailComponent } from './facturas/factura-detail/factura-detail.component';
 
 export const routes: Routes = [ 
   {
     path: 'facturas/:idVendedor',
     component: ProdfactxvendedorComponent,
     canActivate:[AuthGuard],
-    data: { roles:['Vendedor'] ,breadcrumb: 'Facturas por Vendedor' },
+    data: { roles:['Vendedor'] ,breadcrumb: 'Pedidos' },
   },
   {
     path: 'productos/crear',
@@ -24,6 +25,12 @@ export const routes: Routes = [
     component: ProductosFormComponent,
     canActivate: [AuthGuard],
     data: { roles: ['Vendedor'], breadcrumb: 'Editar Producto' },
+  },
+  {
+    path: 'facturas/facturaDetalle/:idFactura',
+    component: FacturaDetailComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [ 'Vendedor'], breadcrumb: 'Facturas Detalle' },
   },
 
 ];

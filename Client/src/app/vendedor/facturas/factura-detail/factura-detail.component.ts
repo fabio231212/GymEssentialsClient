@@ -5,8 +5,7 @@ import { UntypedFormBuilder } from '@angular/forms';
 import { filter, map, Subject, Subscription, takeUntil } from 'rxjs';
 import { GenericService } from 'src/app/share/generic.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
-import { EvaluacionUsuarioComponent } from 'src/app/vendedor/facturas/evaluacion-usuario/evaluacion-usuario.component';
+import { UserService } from 'src/app/share/user.service';
 
 @Component({
   selector: 'app-factura-detail',
@@ -16,58 +15,60 @@ import { EvaluacionUsuarioComponent } from 'src/app/vendedor/facturas/evaluacion
 export class FacturaDetailComponent {
   datos: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
+  isAutenticated: boolean;
+  currentUser: any;
+  promedioCalificacion: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     public formBuilder: UntypedFormBuilder,
     private gService: GenericService,
     private route: ActivatedRoute,
-    private router: Router, public dialog: MatDialog
+    private router: Router,
+    private authService: UserService,
   ) {
     let id = this.route.snapshot.paramMap.get('idFactura');
     if (!isNaN(Number(id))) {
-      this.getProductById(Number(id));
+      this.getFacturaById(Number(id));
     }
-    console.log(this.datos);
+    this.authService.currentUser.subscribe((x) => (this.currentUser = x));
+    //Subscripción al boolean que indica si esta autenticado
+    this.authService.isAuthenticated.subscribe((valor) => (this.isAutenticated = valor));
   }
 
-  openEvDialog(id: number) {
-
-    const dialogRef = this.dialog.open(EvaluacionUsuarioComponent, {
-      width: '2000px',
-      data: { id: id, isVendedor: true },
-    });
-
-    dialogRef.afterClosed().subscribe(() => {
-
-    });
-  }
-
-  getProductById(idFactura: any) {
+  getFacturaById(idFactura: any) {
     //localhost:3000/videojuego
     this.gService
       .list('facturas/' + idFactura)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
+        if (data && data.detallesFactura) {
+          data.detallesFactura = data.detallesFactura.filter((detalle: any) => {
+            return detalle.producto.usuarioId === this.currentUser.userId;
+          });
+        }
+
         this.datos = data;
-        const ultimosDigitos = this.datos.metodoPago.numTarjeta.slice(-4);
-        // Dar formato al número de tarjeta con los últimos 4 dígitos visibles y el resto oculto
-        this.datos.metodoPago.numTarjeta = `XXX-XXX-XXX-${ultimosDigitos}`;
-        //this.image = this.datos.imagenes.URL;
+        this.getPromedioCalificacion(this.datos.usuario.id);
       });
   }
-
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
   }
 
+  async getPromedioCalificacion(idUsuario: any) {
+    try {
+      const data = await this.gService.get('evaluacionUsuario/promedio', idUsuario).pipe(takeUntil(this.destroy$)).toPromise();
+      this.promedioCalificacion = data[0].promedio;
+    } catch (error) {
+      console.error(error);
+    }
+
+  }
   volver() {
     this.router.navigate(
-      ['/cliente/facturas/facturasxusuario/', this.datos.usuarioId],
-      // {
-      //   relativeTo: this.route,
-      // }
+      ['/vendedor/facturas/', this.currentUser.userId],
     );
   }
 }

@@ -43,6 +43,7 @@ export class ProductDetailComponent {
   calificacionSeleccionada: number = 0;
   comentarios: Comentario[] = [];
   user: any;
+  promedioCalificacion: any;
 
   constructor(
     public appService: AppService,
@@ -53,8 +54,8 @@ export class ProductDetailComponent {
     public formBuilder: FormBuilder,
     private gService: GenericService,
     private route: ActivatedRoute,
-    private commentService: ComentarioService,
     private chatService: UserChatService
+
   ) {
     let id = this.route.snapshot.paramMap.get('idProducto');
     if (!isNaN(Number(id))) {
@@ -84,9 +85,6 @@ export class ProductDetailComponent {
 
   ngOnInit() {
 
-    this.commentService.comentarios$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((comentarios) => (this.comentarios = comentarios));
     this.userService.currentUser.subscribe((data) => {
       this.user = data;
     });
@@ -111,7 +109,7 @@ export class ProductDetailComponent {
     this.gService.create('comentario', data)
       .pipe(takeUntil(this.destroy$)).subscribe((resp: any) => {
         if (resp) {
-          this.commentService.agregarComentario(resp);
+          this.getComentarios(this.idProducto);
           this.form.reset();
           this.calificacionSeleccionada = 0;
           this.notiService.mensaje('Comentario', 'Comentario enviado con éxito', TipoMessage.success);
@@ -153,15 +151,34 @@ export class ProductDetailComponent {
   async getProductById(idProducto: any) {
     try {
       const data = await this.gService.get('productos/', idProducto).pipe(takeUntil(this.destroy$)).toPromise();
-      console.log(data);
       this.datos = data;
-      this.image = this.datos.imagenes[0].imgUrl;
 
-      if (Array.isArray(data.comentariosProducto)) {
-        for (const comentario of data.comentariosProducto) {
-          this.commentService.agregarComentario(comentario);
-        }
-      }
+      this.comentarios = this.datos.comentariosProducto;
+      this.image = this.datos.imagenes[0].imgUrl;
+      this.getPromedioCalificacion(this.datos.usuarioId);
+
+
+    } catch (error) {
+      console.error(error);
+    }
+
+  }
+
+  async getComentarios(idProducto: any) {
+    try {
+      const data = await this.gService.get('productos/', idProducto).pipe(takeUntil(this.destroy$)).toPromise();
+      console.log(data);
+      this.comentarios = data.comentariosProducto;
+    } catch (error) {
+      console.error(error);
+    }
+
+  }
+
+  async getPromedioCalificacion(idUsuario: any) {
+    try {
+      const data = await this.gService.get('evaluacionUsuario/promedio', idUsuario).pipe(takeUntil(this.destroy$)).toPromise();
+      this.promedioCalificacion = data[0].promedio;
     } catch (error) {
       console.error(error);
     }
@@ -183,35 +200,6 @@ export class ProductDetailComponent {
     this.image = image.imgUrl;
     this.zoomImage = image.imgUrl;
   }
-
-  // public onMouseMove(e) {
-  //   if (window.innerWidth >= 1280) {
-  //     var image, offsetX, offsetY, x, y, zoomer;
-  //     image = e.currentTarget;
-  //     offsetX = e.offsetX;
-  //     offsetY = e.offsetY;
-  //     x = (offsetX / image.offsetWidth) * 100;
-  //     y = (offsetY / image.offsetHeight) * 100;
-  //     zoomer = this.zoomViewer.nativeElement.children[0];
-  //     if (zoomer) {
-  //       zoomer.style.backgroundPosition = x + '% ' + y + '%';
-  //       zoomer.style.display = 'block';
-  //       zoomer.style.height = image.height + 'px';
-  //       zoomer.style.width = image.width + 'px';
-  //     }
-  //   }
-  // }
-
-  // public onMouseLeave(event) {
-  //   this.zoomViewer.nativeElement.children[0].style.display = 'none';
-  // }
-
-  // public openZoomViewer() {
-  //   this.dialog.open(ProductZoomComponent, {
-  //     data: this.zoomImage,
-  //     panelClass: 'zoom-dialog',
-  //   });
-  // }
 
   ngOnDestroy() {
     this.destroy$.next(true);

@@ -13,14 +13,19 @@ import { UserService } from 'src/app/share/user.service';
 export class LatestOrdersComponent implements OnInit {
   datos: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
+  isAutenticated: boolean;
+  currentUser: any;
   constructor(private router: Router,
     private route: ActivatedRoute,
     private gService: GenericService,
-    private datePipe: DatePipe, private userService: UserService) { }
+    private datePipe: DatePipe, private userService: UserService) { 
+      this.userService.currentUser.subscribe((x) => (this.currentUser = x));
+      //Subscripción al boolean que indica si esta autenticado
+      this.userService.isAuthenticated.subscribe((valor) => (this.isAutenticated = valor));
+    }
 
   ngOnInit(): void {
     this.userService.currentUser.subscribe((data: any) => {
-      console.log(data);
       this.listaProdFactVendedor(data.userId);
     })
 
@@ -48,7 +53,7 @@ export class LatestOrdersComponent implements OnInit {
   }
 
   detalle(id: number) {
-    this.router.navigate(['/cliente/facturas/facturaDetalle/', id], {
+    this.router.navigate(['/vendedor/facturas/facturaDetalle/', id], {
       relativeTo: this.route,
     });
   }
