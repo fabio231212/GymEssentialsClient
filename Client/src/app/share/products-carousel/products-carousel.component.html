@@ -12,7 +12,7 @@
           >
         </mat-chip-listbox>
         <a
-          [routerLink]="['/productos/productodetalle/', item.id]"
+        [routerLink]="['/cliente/productos/' + item.id]"
           class="image-link"
         >
           <img [src]="item.imagenes[0].imgUrl" class="product-image" />
@@ -24,7 +24,7 @@
         </h4>
 
         <a
-        [routerLink]="['/productos/productodetalle/', item.id]"
+        [routerLink]="['/cliente/productos/' + item.id]"
           class="title text-truncate"
         >
           {{ item.nombre }}

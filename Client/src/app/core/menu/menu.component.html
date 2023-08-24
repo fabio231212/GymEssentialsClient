@@ -2,7 +2,5 @@
   <a mat-button routerLink="/" routerLinkActive="horizontal-active-link">HOME</a>
 
   <a mat-button [routerLink]="'/cliente/productos'" [routerLinkActive]="'horizontal-active-link'">Productos</a>
-
-  <a mat-button   routerLink="/contact" routerLinkActive="horizontal-active-link">Contacto</a>
   <a mat-button *ngIf="currentUser && currentUser.roles.includes('Vendedor') || currentUser && currentUser.roles.includes('Administrador')" routerLink="/admin" routerLinkActive="horizontal-active-link">Admin</a>
 </mat-toolbar>
