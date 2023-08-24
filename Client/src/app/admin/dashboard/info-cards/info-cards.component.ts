@@ -16,7 +16,8 @@ export class InfoCardsComponent implements OnInit {
   public customers: any[];
   public evaluations: any[];
   public ventasPorMes: any[];
-  public topCategories : any[];
+  public topCategories: any[];
+  public countCategories: any[];
   datosTopSellers: any[];
   destroy$: Subject<boolean> = new Subject<boolean>();
   public colorScheme: any = {
@@ -37,13 +38,14 @@ export class InfoCardsComponent implements OnInit {
     this.customers = customers;
     this.getTop5();
     this.getWorstSellers();
-        //Subscripción a la información del usuario actual
-        this.userService.currentUser.subscribe((x) => (this.currentUser = x));
-        //Subscripción al boolean que indica si esta autenticado
-        this.userService.isAuthenticated.subscribe((valor) => (this.isAutenticated = valor));
-        this.getEvaluation();
-        this.getVentasXMes(this.currentUser.userId);
-        this.getCategoriasMasVendidas(this.currentUser.userId);
+    //Subscripción a la información del usuario actual
+    this.userService.currentUser.subscribe((x) => (this.currentUser = x));
+    //Subscripción al boolean que indica si esta autenticado
+    this.userService.isAuthenticated.subscribe((valor) => (this.isAutenticated = valor));
+    this.getEvaluation();
+    this.getVentasXMes(this.currentUser.userId);
+    this.getCategoriasMasVendidasByVend(this.currentUser.userId);
+    this.getCategoriasMasVendidas();
 
   }
 
@@ -82,29 +84,47 @@ export class InfoCardsComponent implements OnInit {
 
   getVentasXMes(idVendedor: any) {
     this.gService
-      .get('facturas/getVentasPorMesByVendedor' , idVendedor)
+      .get('facturas/getVentasPorMesByVendedor', idVendedor)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         const datosTransformados = {
           name: 'Ventas',
           series: data.map(item => ({
-              name: item.name,
-              value: parseFloat(item.value) // Convierte el valor a un número si es necesario
+            name: item.name,
+            value: parseFloat(item.value) // Convierte el valor a un número si es necesario
           }))
-      };  
-      this.ventasPorMes = [datosTransformados]; 
+        };
+        this.ventasPorMes = [datosTransformados];
       });
   }
 
-  getCategoriasMasVendidas(idVendedor: any) {
+  getCategoriasMasVendidasByVend(idVendedor: any) {
     this.gService
-    .get('productos/topCategoriesVendedor' , idVendedor)
-    .pipe(takeUntil(this.destroy$))
-    .subscribe((data: any) => {
-      this.topCategories = [...data]; // Assign here if needed immediately
-    });
+      .get('productos/topCategoriesVendedor', idVendedor)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        this.topCategories = [...data]; // Assign here if needed immediately
+      });
   }
-  
+  getCategoriasMasVendidas() {
+    this.gService
+      .list('productos/getCountCategories/')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        const datosTransformados = {
+          name: 'Categoría',
+          series: data.map(item => ({
+            name: item.name,
+            value: parseFloat(item.value) // Convierte el valor a un número si es necesario
+          }))
+        };
+        this.countCategories = [datosTransformados];
+      });
+
+
+  }
+
+
   ngAfterViewChecked() {
     this.previousWidthOfResizedDiv = this.resizedDiv.nativeElement.clientWidth;
   }

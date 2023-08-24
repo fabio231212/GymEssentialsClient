@@ -21,7 +21,8 @@ import { get } from 'http';
 export class TilesComponent implements AfterViewInit {
   destroy$: Subject<boolean> = new Subject<boolean>();
   cantCompras: number;
-  cantUsuarios: number;
+  countCompradores: number;
+  countVendedores: number;
   productosSinStock: any;
   productosConDescuento: any;
   productoMasVendido: any;
@@ -45,10 +46,12 @@ export class TilesComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.getCantCompras();
-    this.getCantidadUsuarios();
+    this.getCountVendedores();
+    this.getCountCompradores();
     this.getProductoMasVendido();
     this.getProductoSinStock();
     this.getProductoConDescuento();
+
   }
 
   getCantCompras() {
@@ -59,12 +62,20 @@ export class TilesComponent implements AfterViewInit {
         this.cantCompras = data;
       });
   }
-  getCantidadUsuarios() {
+  getCountVendedores() {
     this.gService
-      .list('usuarios/cantidad/')
+      .list('usuarios/getCountVendedores/')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
-        this.cantUsuarios = data;
+        this.countVendedores = data;
+      });
+  }
+  getCountCompradores() {
+    this.gService
+      .list('usuarios/getCountCompradores/')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        this.countCompradores = data;
       });
   }
   getProductoMasVendido() {
