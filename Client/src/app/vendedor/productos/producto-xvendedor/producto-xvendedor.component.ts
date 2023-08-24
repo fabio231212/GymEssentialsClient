@@ -49,14 +49,12 @@ export class ProductoXVendedorComponent implements OnInit  {
       this.gService.list('productos/idVendedor/'+idVendedor)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data:any)=>{
-        console.log(data);
         this.datos=data;      
       });   
     }else if (this.currentUser.roles.includes('Administrador')) {
       this.gService.list('productos')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data:any)=>{
-        console.log(data);
         this.datos=data;      
       });    
     }

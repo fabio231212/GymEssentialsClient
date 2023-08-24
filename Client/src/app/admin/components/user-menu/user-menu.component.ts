@@ -22,11 +22,8 @@ export class UserMenuComponent implements OnInit {
   }
 
   public logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('messages');
-    localStorage.removeItem('chatUsers');
-    this.authService.logout();
     this.router.navigate(['/']);
+    this.authService.logout();
     // this.router.navigate(['/login']);
   }
 

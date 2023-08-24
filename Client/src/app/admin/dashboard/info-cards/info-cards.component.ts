@@ -15,6 +15,8 @@ export class InfoCardsComponent implements OnInit {
   public top5Users: any[];
   public customers: any[];
   public evaluations: any[];
+  public ventasPorMes: any[];
+  public topCategories : any[];
   datosTopSellers: any[];
   destroy$: Subject<boolean> = new Subject<boolean>();
   public colorScheme: any = {
@@ -40,24 +42,22 @@ export class InfoCardsComponent implements OnInit {
         //Subscripción al boolean que indica si esta autenticado
         this.userService.isAuthenticated.subscribe((valor) => (this.isAutenticated = valor));
         this.getEvaluation();
+        this.getVentasXMes(this.currentUser.userId);
+        this.getCategoriasMasVendidas(this.currentUser.userId);
 
   }
 
   public onSelect(event) {
-    console.log(event);
   }
 
 
   ngOnDestroy() {
-    this.worstSellers[0].series.length = 0;
-    this.customers[0].series.length = 0;
   }
   getTop5() {
     this.gService
       .list('usuarios/top5/')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
-        console.log(data);
 
         this.top5Users = [...data]; // Assign here if needed immediately
       });
@@ -67,7 +67,6 @@ export class InfoCardsComponent implements OnInit {
       .list('usuarios/top3Worst/')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
-        console.log(data);
         this.worstSellers = [...data]; // Assign here if needed immediately
       });
   }
@@ -78,22 +77,35 @@ export class InfoCardsComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         this.evaluations = [...data]; // Assign here if needed immediately
-        console.log(this.evaluations);
       });
+  }
+
+  getVentasXMes(idVendedor: any) {
+    this.gService
+      .get('facturas/getVentasPorMesByVendedor' , idVendedor)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        const datosTransformados = {
+          name: 'Ventas',
+          series: data.map(item => ({
+              name: item.name,
+              value: parseFloat(item.value) // Convierte el valor a un número si es necesario
+          }))
+      };  
+      this.ventasPorMes = [datosTransformados]; 
+      });
+  }
+
+  getCategoriasMasVendidas(idVendedor: any) {
+    this.gService
+    .get('productos/topCategoriesVendedor' , idVendedor)
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((data: any) => {
+      this.topCategories = [...data]; // Assign here if needed immediately
+    });
   }
   
   ngAfterViewChecked() {
-    // if (this.previousWidthOfResizedDiv != this.resizedDiv.nativeElement.clientWidth) {
-    //   setTimeout(() => this.worstSellers = [...orders]);
-    //   // if (this.datosTopSellers) {
-    //   //   this.top5Users = [...this.datosTopSellers];
-    //   // }
-    //   // if (this.datosWorstSellers) {
-    //   //   this.worstSellers = [...this.datosWorstSellers];
-    //   // }
-    //   setTimeout(() => this.customers = [...customers]);
-    //   setTimeout(() => this.refunds = [...refunds]);
-    // }
     this.previousWidthOfResizedDiv = this.resizedDiv.nativeElement.clientWidth;
   }
 

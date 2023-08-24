@@ -39,10 +39,8 @@ export class ChatComponent {
       this.chatService.getMessage().subscribe((data) => {
         const dateParsed = new Date(data.fecha);
         this.createMessage(data.mensaje, data.nombre, dateParsed.toLocaleTimeString(), false)
-        console.log('Mensaje Recibido' + data);
       });
       this.chatService.getListaPersonas().subscribe((data) => {
-        console.log('Usuarios conectados' + data);
       });
 
     }

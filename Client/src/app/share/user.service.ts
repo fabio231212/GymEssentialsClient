@@ -36,7 +36,6 @@ export class UserService {
   //   let decodedToken = this.getDecodedToken(token);
   //   this.user = new BehaviorSubject<User>(decodedToken);
   //   this.currentUser$ = this.user.asObservable();
-  //   console.log('setUser', this.user.value);
   // }
 
   get currentUserValue(): User {
@@ -75,7 +74,6 @@ export class UserService {
         if (user.token == null) {
           return null;
         }
-        console.log('user', user);
         localStorage.setItem('token', user.token);
         this.authenticated.next(true);
         this.userSubject.next(this.getDecodedToken(JSON.stringify(user)));
@@ -93,6 +91,8 @@ export class UserService {
     if (usuario) {
       // eliminar usuario del almacenamiento local para cerrar la sesión del usuario
       localStorage.removeItem('token');
+      localStorage.removeItem('messages');
+      localStorage.removeItem('chatUsers');
       //Eliminarlo del observable del usuario actual
       this.userSubject.next(null);
       //Eliminarlo del observable del boleano si esta autenticado

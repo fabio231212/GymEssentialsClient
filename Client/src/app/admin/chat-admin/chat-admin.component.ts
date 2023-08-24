@@ -78,7 +78,6 @@ export class ChatAdminComponent {
 
       const uniqueUsers = Array.from(uniqueUsersMap.values());
       this.usuarios = uniqueUsers;
-      console.log(this.usuarios)
     }
   }
 
@@ -97,7 +96,6 @@ export class ChatAdminComponent {
         }
       });
     }
-    console.log(this.chatService.getMessages)
   }
   sendMessage() {
     if (this.message === '') return;

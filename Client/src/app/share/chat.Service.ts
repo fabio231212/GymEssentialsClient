@@ -54,10 +54,8 @@ export class UserChatService {
     this.socket.connect();
 
     this.socket.on('connect', () => {
-      console.log('Conectado al servidor');
       this.socketInitializedSubject.next(true);
       this.socket.emit('entrarChat', this.user, (resp: any) => {
-        console.log('Usuarios conectados', resp);
         this.addToChat(resp);
 
       });
@@ -141,7 +139,6 @@ export class UserChatService {
       'mensajePrivado',
       { para: idVendedor, mensaje: message },
       (resp: any) => {
-        // console.log('respuesta server:', resp);
       }
     );
   }
@@ -150,7 +147,6 @@ export class UserChatService {
     return new Observable<{ user: string; message: string }>((observer) => {
       // Escuchar eventos de 'mensajePrivado' del servidor
       this.socket.on('mensajePrivado', (data: any) => {
-        console.log('Mensaje recibido:', data);
         //  this.addToChat(data);
         this.socketId = data.id;
         observer.next(data);
@@ -162,7 +158,6 @@ export class UserChatService {
     return new Observable<{ user: any }>((observer) => {
       this.socket.on('listaPersona', (data: any) => {
         this.deleteData();
-        console.log('Usuarios conectados: ', data);
         data.forEach(element => {
           this.addToChat(element);
         });

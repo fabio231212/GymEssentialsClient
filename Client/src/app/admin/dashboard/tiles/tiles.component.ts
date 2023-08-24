@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GenericService } from 'src/app/share/generic.service';
 import { DatePipe } from '@angular/common';
 import { UserService } from 'src/app/share/user.service';
+import { get } from 'http';
 
 @Component({
   selector: 'app-tiles',
@@ -21,6 +22,8 @@ export class TilesComponent implements AfterViewInit {
   destroy$: Subject<boolean> = new Subject<boolean>();
   cantCompras: number;
   cantUsuarios: number;
+  productosSinStock: any;
+  productosConDescuento: any;
   productoMasVendido: any;
   isAutenticated: boolean;
   currentUser: any;
@@ -44,6 +47,8 @@ export class TilesComponent implements AfterViewInit {
     this.getCantCompras();
     this.getCantidadUsuarios();
     this.getProductoMasVendido();
+    this.getProductoSinStock();
+    this.getProductoConDescuento();
   }
 
   getCantCompras() {
@@ -68,7 +73,24 @@ export class TilesComponent implements AfterViewInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         this.productoMasVendido = data[0];
-        console.log(this.productoMasVendido);
+      });
+  }
+  getProductoSinStock() {
+    this.gService
+      .get('productos/sinStock', this.currentUser.userId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        this.productosSinStock = data;
+        console.log(this.productosSinStock);
+      });
+  }
+
+  getProductoConDescuento() {
+    this.gService
+      .get('productos/conDescuento', this.currentUser.userId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        this.productosConDescuento = data;
       });
   }
 }

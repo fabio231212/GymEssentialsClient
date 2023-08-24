@@ -40,7 +40,6 @@ export class ProductsCarouselComponent implements OnInit {
       .get('productos/', idProducto)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
-        console.log(data);
         this.product = data;
       });
   }

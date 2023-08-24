@@ -42,7 +42,6 @@ export class AuthGuard implements CanActivate {
       // Verificar si el token es válido y decodificarlo
       try {
         const decodedToken = jwt_decode(token) as DecodedToken;
-        console.log(decodedToken);
 
         // Verificar si el usuario tiene al menos uno de los roles necesarios para acceder a la ruta protegida
         const requiredRoles = route.data['roles'] as string[];
