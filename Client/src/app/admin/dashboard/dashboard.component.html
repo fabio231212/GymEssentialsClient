@@ -2,13 +2,15 @@
 <app-info-cards></app-info-cards>
 
 <div fxLayout="row wrap">
-    <div fxFlex="100" fxFlex.gt-sm="45" class="p-2">
-        <app-montly-sales *ngIf="currentUser.roles.includes('Administrador')"></app-montly-sales>
-        <app-top-consumer-by-seller *ngIf="currentUser.roles.includes('Vendedor')"></app-top-consumer-by-seller>
-    </div>
-    <div fxFlex="100" fxFlex.gt-sm="55" class="p-2">
-        <app-latest-orders></app-latest-orders>
-    </div>
+  <div fxFlex="100" fxFlex.gt-sm="100" class="p-2" *ngIf="currentUser.roles.includes('Administrador')">
+    <app-montly-sales></app-montly-sales>
+  </div>
+  <div fxFlex="100" fxFlex.gt-sm="45" class="p-2" *ngIf="currentUser.roles.includes('Vendedor')">
+    <app-top-consumer-by-seller></app-top-consumer-by-seller>
+  </div>
+  <div fxFlex="100" fxFlex.gt-sm="55" class="p-2">
+    <app-latest-orders></app-latest-orders>
+  </div>
 </div>
 
 <!-- <div fxLayout="row wrap">

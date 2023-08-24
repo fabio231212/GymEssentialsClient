@@ -43,7 +43,7 @@
         <mat-menu #accountMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-dropdown account">
           <span (mouseleave)="accountMenuTrigger.closeMenu()">
             <div fxLayout="row" fxLayoutAlign="space-around center" class="user-info">
-              <img src="assets/images/others/user.jpg" alt="user-image" width="50" />
+              <img [src]='currentUser.fotoPerfil' alt="user-image" width="50" />
               <p>
                 {{currentUser.mail}} <br />
                 <small>{{currentUser.nombre}} <span *ngIf="settings.rtl">&rlm;</span>(152<mat-icon
@@ -51,19 +51,11 @@
               </p>
             </div>
             <div class="divider"></div>
-            <a mat-menu-item routerLink="/account">
-              <mat-icon class="mat-icon-sm">settings</mat-icon>
-              <span>Ajustes</span>
-            </a>
             <a *ngIf="currentUser && currentUser.roles.includes('Comprador')" mat-menu-item
               [routerLink]="'/cliente/facturas/facturasxusuario/' + currentUser.userId"
               [routerLinkActive]="'horizontal-active-link'">
               <mat-icon class="mat-icon-sm">favorite</mat-icon>
               <span>Ver Mis Facturas</span>
-            </a>
-            <a mat-menu-item routerLink="/">
-              <mat-icon class="mat-icon-sm">help</mat-icon>
-              <span>Ayuda</span>
             </a>
             <div class="divider"></div>
             <button (click)="logout()" mat-menu-item>
@@ -86,7 +78,7 @@
           <img src="../../../assets/images/logo.png" alt="" class="navbar-logo" />
         </a>
       </div>
-      <div fxFlex fxShow="false" fxShow.gt-sm>
+      <!-- <div fxFlex fxShow="false" fxShow.gt-sm>
         <form method="get" class="search-form" fxLayout="row">
           <button mat-raised-button [matMenuTriggerFor]="categoriesMenu" #categoriesMenuTrigger="matMenuTrigger"
             type="button" class="mat-elevation-z0 categories text-truncate text-muted">
@@ -96,7 +88,6 @@
           <mat-menu #categoriesMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="categories-dropdown">
             <span (mouseleave)="categoriesMenuTrigger.closeMenu()">
               Categorias
-              <!-- <app-category-list [categories]="categories" [categoryParentId]="0" (change)="changeCategory($event)"></app-category-list> -->
             </span>
           </mat-menu>
           <input type="text" placeholder="Pulsa para buscar..." fxFlex />
@@ -104,7 +95,7 @@
             <mat-icon>search</mat-icon>
           </button>
         </form>
-      </div>
+      </div> -->
       <div fxFlex="20" fxLayout="row" fxLayoutAlign="end center">
         <div fxLayoutAlign="center center" [@.disabled]="true">
           <button mat-button [matMenuTriggerFor]="cartMenu" #cartMenuTrigger="matMenuTrigger" class="shopping-cart-btn">
@@ -172,7 +163,7 @@
           </mat-menu>
         </div>
         <div fxLayoutAlign="center center" fxHide="false" fxHide.gt-sm [@.disabled]="true">
-          <button mat-icon-button [matMenuTriggerFor]="searchMenu" #searchMenuTrigger="matMenuTrigger"
+          <!-- <button mat-icon-button [matMenuTriggerFor]="searchMenu" #searchMenuTrigger="matMenuTrigger"
             class="search-toggle-btn p-0">
             <mat-icon class="mat-icon-lg">search</mat-icon>
           </button>
@@ -189,7 +180,6 @@
                   <ng-template matMenuContent>
                     <span (mouseleave)="categories2MenuTrigger.closeMenu()">
                       Categorias
-                      <!-- <app-category-list [categories]="categories" [categoryParentId]="0" (change)="changeCategory($event)"></app-category-list> -->
                     </span>
                   </ng-template>
                 </mat-menu>
@@ -199,7 +189,7 @@
                 </button>
               </form>
             </ng-template>
-          </mat-menu>
+          </mat-menu> -->
         </div>
       </div>
     </mat-toolbar-row>

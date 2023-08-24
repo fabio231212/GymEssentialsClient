@@ -28,8 +28,8 @@
       <div class="icons">
         <a [routerLink]="['/vendedor/productos/editar/', product.id]" mat-mini-fab color="primary" *ngIf="!currentUser.roles.includes('Administrador')"
           matTooltip="Edit"><mat-icon>edit</mat-icon></a>
-        <a [routerLink]="['/admin/products/product-detail', product.id]" mat-mini-fab color="primary" matTooltip="View"
-          class="mx-2"><mat-icon>remove_red_eye</mat-icon></a>
+        <!-- <a [routerLink]="['/admin/products/product-detail', product.id]" mat-mini-fab color="primary" matTooltip="View"
+          class="mx-2"><mat-icon>remove_red_eye</mat-icon></a> -->
         <!-- <button mat-mini-fab color="warn" matTooltip="Remove"
           (click)="remove(product)"><mat-icon>delete</mat-icon></button> -->
       </div>
