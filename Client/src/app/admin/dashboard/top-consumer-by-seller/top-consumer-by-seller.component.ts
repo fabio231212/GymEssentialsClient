@@ -50,12 +50,10 @@ export class TopConsumerBySellerComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {;
         this.data = data;
-        console.log(this.data);
         this.compradoresConMasCompras = [...this.data]; // Assign here if needed immediately
       });
   }
   public onSelect(event) {
-    console.log(event);
   }
 
   ngAfterViewChecked() {

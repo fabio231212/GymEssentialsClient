@@ -1,5 +1,8 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { analytics } from '../dashboard.data';
+import { GenericService } from 'src/app/share/generic.service';
+import { UserService } from 'src/app/share/user.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-analytics',
@@ -23,21 +26,30 @@ export class AnalyticsComponent implements OnInit {
   public roundDomains = true;
   @ViewChild('resizedDiv') resizedDiv:ElementRef;
   public previousWidthOfResizedDiv:number = 0; 
+  isAutenticated: boolean;
+  currentUser: any;
+  destroy$: Subject<boolean> = new Subject<boolean>();
 
-  constructor() { }
-
-  ngOnInit() {
-    this.analytics = analytics; 
+  constructor(    private gService: GenericService, private userService: UserService) { 
+    this.userService.currentUser.subscribe((x) => (this.currentUser = x));
+    //Subscripción al boolean que indica si esta autenticado
+    this.userService.isAuthenticated.subscribe((valor) => (this.isAutenticated = valor));
   }
 
+  ngOnInit() {
+  }
+  
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
+  }
   onSelect(event) {
-    console.log(event);
   }
 
   ngAfterViewChecked() {    
-    if(this.previousWidthOfResizedDiv != this.resizedDiv.nativeElement.clientWidth){
-      this.analytics = [...analytics];
-    }
+    // if(this.previousWidthOfResizedDiv != this.resizedDiv.nativeElement.clientWidth){
+    //   this.analytics = [...analytics];
+    // }
     this.previousWidthOfResizedDiv = this.resizedDiv.nativeElement.clientWidth;
   }
 

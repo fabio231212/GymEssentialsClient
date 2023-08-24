@@ -44,13 +44,11 @@ export class MontlySalesComponent implements OnInit {
       .list('facturas/top5ProductosMasVendidos/')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
-        console.log(data);
         this.data = data;
         this.topProducts = [...this.data]; // Assign here if needed immediately
       });
   }
   public onSelect(event) {
-    console.log(event);
   }
 
   ngAfterViewChecked() {

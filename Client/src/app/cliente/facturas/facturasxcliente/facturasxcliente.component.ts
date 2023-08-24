@@ -56,7 +56,6 @@ export class FacturasxclienteComponent {
           item.metodoPago.numTarjeta = `XXX-XXX-XXX-${ultimosDigitos}`;
         });
 
-        console.log(this.datos);
 
         this.dataSource = new MatTableDataSource(this.datos);
         this.dataSource.sort = this.sort;

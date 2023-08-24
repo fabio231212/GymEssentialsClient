@@ -1,26 +1,45 @@
 <div fxLayout="row wrap">
-  <div fxFlex="100" fxFlex.xl="16.6" fxFlex.lg="16.6" fxFlex.md="33.3" fxFlex.sm="33.3" class="p-2" *ngIf="currentUser.roles.includes('Administrador')">
+  <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50"  class="p-2"
+    *ngIf="currentUser.roles.includes('Administrador')">
     <mat-card class="gradient-green tile p-2">
       <mat-icon>monetization_on</mat-icon>
       <h2>{{cantCompras}}</h2>
       <p>Compras</p>
     </mat-card>
   </div>
-  <div fxFlex="100" fxFlex.xl="16.6" fxFlex.lg="16.6" fxFlex.md="33.3" fxFlex.sm="33.3" class="p-2" *ngIf="currentUser.roles.includes('Administrador')">
+  <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50"  class="p-2"
+    *ngIf="currentUser.roles.includes('Administrador')">
     <mat-card class="gradient-orange tile p-2">
       <mat-icon>group</mat-icon>
       <h2>{{cantUsuarios}}</h2>
       <p>Usuarios</p>
     </mat-card>
   </div>
-    <div fxFlex="100" fxFlex.xl="16.6" fxFlex.lg="16.6" fxFlex.md="33.3" fxFlex.sm="33.3" class="p-2"  *ngIf="currentUser.roles.includes('Vendedor')">
+  <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50"  class="p-2"
+    *ngIf="currentUser.roles.includes('Vendedor')">
     <mat-card class="gradient-red tile p-2">
-      <mat-icon>local_offer</mat-icon>
+      <mat-icon>monetization_on</mat-icon>
       <h2 *ngIf="productoMasVendido?.totalCantidad">{{ productoMasVendido?.totalCantidad}}</h2>
       <p>{{ productoMasVendido ? productoMasVendido?.nombreProducto : 'Aún no se ha vendido ningún producto' }}</p>
     </mat-card>
   </div>
-  <!-- <div fxFlex="50" fxFlex.xl="16.6" fxFlex.lg="16.6" fxFlex.md="33.3" fxFlex.sm="33.3" class="p-2">
+<div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50"  class="p-2"
+  *ngIf="currentUser.roles.includes('Vendedor')">
+  <mat-card class="gradient-blue tile p-2">
+    <mat-icon>local_offer</mat-icon>
+    <h2 *ngIf="productoMasVendido?.totalCantidad">{{ productosConDescuento}}</h2>
+    <p>Productos con descuento</p>
+  </mat-card>
+</div>
+<div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50"  class="p-2"
+  *ngIf="currentUser.roles.includes('Vendedor')">
+  <mat-card class="gradient-green tile p-2">
+    <mat-icon>shopping_cart</mat-icon>
+    <h2 *ngIf="productoMasVendido?.totalCantidad">{{ productosSinStock}}</h2>
+    <p>Productos sin Stock</p>
+  </mat-card>
+</div>
+<!-- <div fxFlex="50" fxFlex.xl="16.6" fxFlex.lg="16.6" fxFlex.md="33.3" fxFlex.sm="33.3" class="p-2">
     <mat-card class="gradient-pink tile p-2">
       <mat-icon>shopping_cart</mat-icon>
       <h2>7520</h2>

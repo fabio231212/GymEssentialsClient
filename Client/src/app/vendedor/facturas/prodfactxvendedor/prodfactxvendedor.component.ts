@@ -52,7 +52,6 @@ export class ProdfactxvendedorComponent {
       .list('facturas/idVendedor/' + idVendedor)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
-        console.log(data);
         this.datos = data;
         this.datos.forEach((item: any) => {
           item.encabezadosFactura.fechaCompra = this.datePipe.transform(
@@ -64,7 +63,6 @@ export class ProdfactxvendedorComponent {
         this.dataSource = new MatTableDataSource(this.datos);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
-        console.log(this.dataSource);
       });
   }
 

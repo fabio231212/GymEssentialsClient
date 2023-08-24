@@ -203,7 +203,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             TipoMessage.success)
           this.cartService.deleteCart();
           // this.total=this.cartService.getTotal();
-          console.log(respuesta)
           this.openPDF();
         })
     } else {
@@ -227,7 +226,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.infoTarjeta = result;
-        console.log(this.infoTarjeta);
 
         this.billingForm.controls['expiredMonth'].setValue(this.infoTarjeta.mesVencimiento);
         this.billingForm.controls['expiredYear'].setValue(this.infoTarjeta.anioVencimiento.toString());
@@ -255,7 +253,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(async (result) => {
       if (result) {
         this.infoDireccion = result;
-        console.log(this.infoDireccion);
         this.billingForm.controls['provincia'].setValue(this.infoDireccion.provincia);
         await this.onProvinceChange();
         this.billingForm.controls['canton'].setValue(this.infoDireccion.canton);

@@ -69,7 +69,6 @@ export class ProductsAllComponent implements OnInit {
   ngOnInit() {
     this.count = this.counts[0];
     this.sub = this.activatedRoute.params.subscribe((params) => {
-      //console.log(params['name']);
     });
     if (window.innerWidth < 960) {
       this.sidenavOpen = false;
@@ -222,7 +221,6 @@ export class ProductsAllComponent implements OnInit {
       .subscribe((data: any) => {
         this.datos = data;
         this.datosFiltrados = data;
-        console.log(this.datos);
       });
   }
 }

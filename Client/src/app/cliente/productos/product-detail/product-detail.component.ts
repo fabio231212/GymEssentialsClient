@@ -167,7 +167,6 @@ export class ProductDetailComponent {
   async getComentarios(idProducto: any) {
     try {
       const data = await this.gService.get('productos/', idProducto).pipe(takeUntil(this.destroy$)).toPromise();
-      console.log(data);
       this.comentarios = data.comentariosProducto;
     } catch (error) {
       console.error(error);
@@ -191,7 +190,6 @@ export class ProductDetailComponent {
       .list('productos/categoria/' + idCategoria)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
-        console.log(data);
         this.relatedProducts = data;
       });
   }

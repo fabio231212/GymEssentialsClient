@@ -60,7 +60,6 @@ export class AppComponent {
             this.chatService.addMessage(message);
           });
           this.chatService.getListaPersonas().subscribe((data) => {
-            console.log(data);
           });
         }
       }

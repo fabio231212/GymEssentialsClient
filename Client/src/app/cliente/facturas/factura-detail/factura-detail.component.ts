@@ -28,7 +28,6 @@ export class FacturaDetailComponent {
     if (!isNaN(Number(id))) {
       this.getProductById(Number(id));
     }
-    console.log(this.datos);
   }
 
   openEvDialog(id: number) {
