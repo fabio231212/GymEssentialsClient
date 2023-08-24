@@ -35,7 +35,7 @@ export class ChatComponent {
 
   ngOnInit() {
     if (this.userService.currentUserValue != null) {
-     this.chatService.initializeSocket();
+      this.chatService.initializeSocket();
       this.chatService.getMessage().subscribe((data) => {
         const dateParsed = new Date(data.fecha);
         this.createMessage(data.mensaje, data.nombre, dateParsed.toLocaleTimeString(), false)
@@ -53,7 +53,8 @@ export class ChatComponent {
 
   sendMessage() {
 
-    if (this.mensaje.trim() !== '') {
+    if (this.mensaje.trim() === '') {
+      return;
     }
     this.chatService.sendMessage(this.idVendedor, this.mensaje);
     this.createMessage(this.mensaje, 'Usted', new Date().toLocaleTimeString(), true);

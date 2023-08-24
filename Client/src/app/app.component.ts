@@ -37,15 +37,13 @@ export class AppComponent {
 
   ngOnInit() {
 
-    // if (this.userService.currentUserValue != null && this.user.roles.includes('Vendedor')) {
-    // this.chatService.initializeSocket();
+
     this.socketInitializedSubscription = this.chatService.socketInitialized$.subscribe(
       (socketInitialized) => {
         if (socketInitialized) {
           if (this.userService.currentUserValue != null && this.user.roles.includes('Vendedor')) {
           this.showButtonMessage = true;
           this.chatService.currentDataUserChat$.subscribe((data) => { });
-          // this.router.navigate(['']);  //redirect other pages to homepage on browser refresh
 
           this.chatService.getMessage().subscribe((data) => {
             const dateParsed = new Date(data.fecha);
